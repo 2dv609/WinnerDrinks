@@ -1,23 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './WheelComponent.css'
-import Winwheel from 'winwheel'
-import { render } from '@testing-library/react';
 
+const DEG = 360
+const colors = ['#9ede73', '#f7ea00', '#e48900', '#be0000']
+const TIME = 3
 
 function WheelComponent(props) {
-  const deg = 360
   const list = [0, 1, 2, 3]
-  const colors = ['9ede73', 'f7ea00', 'e48900', 'be0000']
-  const rotateDeg = deg / list.length
-  const time = 3
-  const [degreeResult, setDegreeResult] = useState(null)
+  const rotateDeg = DEG / list.length
+  const [isReset, setIsReset] = useState(true)
+  const [result, setResult] = useState(undefined)
+  const [errorMessage, setErrorMessage] = useState(undefined)
   
-  function randomIntFromInterval(min, max) { // min and max included 
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+  /**
+   * Function that generate random integer in span (min and max included).
+   * @param {Number} min Min number
+   * @param {Number} max Max number
+   * @returns {Number} Random number generated
+   */
+  const randomIntFromInterval = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
 
+  /**
+   * Function that generates random degrees that the wheel will spin.
+   * @param {Number} index Index of the winning element
+   * @returns {Number} Degrees generated
+   */
   const getRandomRotationDegrees = (index) => {
-
     let degreeWinner;
     switch(index) {
       case(0):
@@ -25,11 +33,9 @@ function WheelComponent(props) {
         break
       case(1):
         degreeWinner = randomIntFromInterval(136, 225)
-
         break
       case(2):
         degreeWinner = randomIntFromInterval(46, 135)
-
         break
       case(3):
         degreeWinner = randomIntFromInterval(0, 45)
@@ -42,64 +48,96 @@ function WheelComponent(props) {
     return rotateDegrees
   }
   
+  /**
+   * Function that is called when user click spin-button.
+   * Calls the other function and set the winner.
+   */
   const startSpin = () => {
-    const winnerIndex = randomIntFromInterval(1, list.length) - 1 // int of index of winner in array
-    console.log('Winner: ' + list[winnerIndex])
-    const random = getRandomRotationDegrees(winnerIndex)
-  
-    let styleSheet = document.styleSheets[0];
-      
-    let keyframes = `
-    @keyframes spin {
-      from {transform:rotate(0deg);}
-      to {transform:rotate(${random}deg);}
-    }`
-  
-    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-  
-    setTimeout(() => getWinner(winnerIndex), (time) * 1000 + 500);
+    if(isReset) {
+      setErrorMessage(undefined)
+
+      const winnerIndex = randomIntFromInterval(1, list.length) - 1
+      const degrees = getRandomRotationDegrees(winnerIndex)
+    
+      let styleSheet = document.styleSheets[0];
+
+      let keyframes = `
+      @keyframes spin {
+        from {transform:rotate(0deg);}
+        to {transform:rotate(${degrees}deg);}
+      }`
+    
+      styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+    
+      setTimeout(() => getWinner(winnerIndex), (TIME) * 1000 + 500);
+    } else {
+      setErrorMessage('Please reset the wheel...')
+      console.log('Please reset the wheel...')
+    }
+
+    setIsReset(false)
   }
 
+  /**
+   * Function that get and set the winner.
+   * @param {Number} index 
+   */
   const getWinner = (index) => {
     const winner = list[index]
-    console.log('Winner value: ' + list[index])
-    return
+    console.log(`Winning value: ${winner}`)
+    setResult(`${winner} won!`)
   }
 
   let style = {
     animationName: 'spin',
     animationTimingFunction: 'ease-in-out',
-    animationDuration: `${time}s`,
+    animationDuration: `${TIME}s`,
     animationDelay: '0.0s',
     animationIterationCount: 1,
     animationDirection: 'normal',
-    animationFillMode: 'forwards'
+    animationFillMode: 'forwards',
+    marginBottom: '2rem'
   };
 
+  /**
+   * Function that resets the wheel and values.
+   */
   const reset = () => {
-    setDegreeResult(null)
-    let styleSheet = document.styleSheets[0];
-    // styleSheet.removeRule()
-    styleSheet.deleteRule(2)
-
-    console.log(styleSheet)
+    try {
+      let styleSheet = document.styleSheets[0];
+      styleSheet.deleteRule(2)
+      setIsReset(true)
+      setErrorMessage(undefined)
+      setResult(undefined)
+    } catch (error) {
+      console.log('Stylesheet has already been reset...')
+      setErrorMessage('Stylesheet has already been reset...')
+    }
   }
 
   return (
     
-    <div>
+    <div className="WheelComponent">
+      <span style={{margin: '0px'}}>|</span>
       <div className="wheel" style={style}>
       {list.map((val, index) => {
-        console.log(index)
-        const de = (index * rotateDeg) //- 45
+        const degree = (index * rotateDeg) //- 45
         
         return (
-          <div key={index} style={{transform: `rotate(${de}deg)`, borderRight: `200px solid #${colors[index]}`}} className="arrow"><span>{val}</span></div>
+          <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `200px solid ${colors[index]}`}} className="arrow">
+            <span>{val}</span>
+          </div>
         )
       })}
-    </div>
-    <button onClick={startSpin}>Spin!</button>
-    <button onClick={reset}>Reset!</button>
+      </div>
+      <div className="d-flex">
+        <button onClick={startSpin}>Spin!</button>
+        <button onClick={reset}>Reset!</button>
+      </div>
+      <div>
+        <p>{!errorMessage ? '' : errorMessage}</p>
+        <p>{!result ? '' : result}</p>
+      </div>
     </div>
   )
 }
