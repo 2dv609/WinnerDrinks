@@ -130,7 +130,7 @@ function WheelComponent(props: any) {
     
     <div className="WheelComponent">
       <span style={{margin: '0px'}}>|</span>
-      <div className="wheel" style={style}>
+      <div onClick={startSpin} className="wheel" style={style}>
       {list.map((val, index) => {
         const degree = (index * rotateDeg) //- 45
         
@@ -143,7 +143,6 @@ function WheelComponent(props: any) {
       </div>
       <div className="d-flex">
         <button onClick={startSpin}>Spin!</button>
-        <button onClick={reset}>Reset!</button>
       </div>
       <div>
         <p>{errorMessage}</p>

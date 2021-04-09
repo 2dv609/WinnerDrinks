@@ -4,13 +4,10 @@ import '../../App.css';
 
 function Party(props: any) {
     const gp: GameProps = props.gp;
-    const [task, setTask] = useState('');
     const [players, setPlayers] = useState(gp.getPlayers(2));
+    
 
-    const setNewTask = () => {
-        const rand = Math.floor(Math.random() * tasks.length)
-        setTask(tasks[rand])
-    }
+
     const tasks: string[] = [
         `${players[0]} och ${players[1]} spelar sten-sax-påse, vinnaren tar en shot`,
         `${players[0]} och ${players[1]} dricker 10000 shots`,
@@ -19,6 +16,13 @@ function Party(props: any) {
         `${players[0]} och ${players[1]} inser livets mening eller tar en shot`,
 
     ];
+
+    const [task, setTask] = useState(getNewTask());
+
+    function getNewTask(): string {
+        const rand = Math.floor(Math.random() * tasks.length)
+        return tasks[rand];
+    }
 
     useEffect(() => { 
         return () => { // Return a function for code cleanup. This will set new players 
@@ -29,7 +33,7 @@ function Party(props: any) {
     return (
         <div>
             <div className="task">{task}</div>
-            <button onClick={() => setNewTask()} >Click here to get a task</button>
+            <button onClick={() => setTask(getNewTask())} >Click here to get a task</button>
             <h3>Who won?</h3>
 
             <button onClick={() => {

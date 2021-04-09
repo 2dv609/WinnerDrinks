@@ -6,12 +6,12 @@ import './App.css';
 
 
 function shuffle(array: Player[]) {
-
+//TODO shuffle the array so the players are always random
 }
 
 function Game(props: any) {
     const games = [WheelComponent, Party];
-    const [currentGameIndex, setCurrentGameIndex] = useState(0);
+    const [currentGameIndex, setCurrentGameIndex] = useState(1);
 
     const done = (affected: Player, score: number) => {
         affected.addScore(score);
