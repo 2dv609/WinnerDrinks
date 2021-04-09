@@ -33,7 +33,6 @@ function Party(props: any) {
     return (
         <div>
             <div className="task">{task}</div>
-            <button onClick={() => setTask(getNewTask())} >Click here to get a task</button>
             <h3>Who won?</h3>
 
             <button onClick={() => {

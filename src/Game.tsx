@@ -6,7 +6,14 @@ import './App.css';
 
 
 function shuffle(array: Player[]) {
-//TODO shuffle the array so the players are always random
+    var m = array.length, t, i;
+    while (m) {
+        i = Math.floor(Math.random() * m--);
+        t = array[m];
+        array[m] = array[i];
+        array[i] = t;
+    }
+    return array;
 }
 
 function Game(props: any) {
@@ -24,7 +31,7 @@ function Game(props: any) {
 
     };
 
-    const getPlayers = (amount: number) :Player[] =>  {
+    const getPlayers = (amount: number): Player[] => {
         const result: Player[] = [];
         amount = Math.min(amount, props.players.length)
         shuffle(props.players);
@@ -37,15 +44,15 @@ function Game(props: any) {
 
     const gameProps = { getPlayers: getPlayers, done: done };
     switch (currentGameIndex) {
-        case 1: 
+        case 1:
             return (<div className="Game"><Party gp={gameProps} /></div>);
         case 0:
             return (<div className="Game"><WheelComponent gp={gameProps} /></div>);
-        
+
     }
     return (
         <div className="Game">
-            
+
         </div>
     );
 }
