@@ -1,0 +1,35 @@
+html, #root, body {
+  height: 100%;
+  width: 100%;
+}
+
+.WheelComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+}
+
+.wheel {
+  position: relative;
+  height: 400px;
+  width: 400px;
+  border-radius: 50%;
+  background-color: honeydew;
+  overflow: hidden;
+}
+
+.arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 200px solid transparent;
+  border-bottom: 200px solid transparent;
+  /* border-right: 200px solid green; */
+  border-left: 200px solid transparent;
+}
+
+
+span {
+  margin-left: 160px;
+}
