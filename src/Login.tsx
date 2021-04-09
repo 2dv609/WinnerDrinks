@@ -9,6 +9,7 @@ function Login(props: any) {
         <input type="text" value={input} name="newname" id="newname" onChange={e => setInput((e.target as any ).value)}/>
         <input type="button" onClick={() => {
             props.setter(input);
+            setInput('');
             
         }} value="Add" id="newnamebtn"/>
       </div>
