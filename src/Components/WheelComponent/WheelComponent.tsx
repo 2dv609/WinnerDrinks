@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import GameProps from '../GameProps';
 import './WheelComponent.css'
 
 const DEG = 360
@@ -21,10 +22,10 @@ let style = {
  * @param {Array} users Array of participant names. 
  * @returns {jsx} Component
  */
-function WheelComponent({ users }: {users: any[]}) {
+function WheelComponent(props: any) {
   // Error checking number of users. If < 4 => duplicate one of the users / If > 4 => skip one of the users
-
-  const list = users
+  const gp: GameProps = props.gp;
+  const list = gp.getPlayers(4);
   const rotateDeg = DEG / list.length
   const [isReset, setIsReset] = useState(true)
   const [result, setResult] = useState('')
@@ -97,13 +98,15 @@ function WheelComponent({ users }: {users: any[]}) {
   }
 
   /**
-   * Function that get and set the winner.
+   * Function that gets and sets the winner.
    * @param {Number} index 
    */
   const getWinner = (index: number) => {
     const winner = list[index]
-    console.log(`Winning value: ${winner}`)
-    setResult(`${winner} won!`)
+    gp.done(winner, 1)
+    console.log(`Winning value is: ${winner.toString()}`)
+    setResult(`${winner.toString()} won!`)
+    
   }
 
   /**
@@ -132,7 +135,7 @@ function WheelComponent({ users }: {users: any[]}) {
         
         return (
           <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `200px solid ${colors[index]}`}} className="arrow">
-            <span>{val}</span>
+            <span>{val.toString()}</span>
           </div>
         )
       })}

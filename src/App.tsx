@@ -9,7 +9,6 @@ function App(props: any) {
   const [play, setPlay] = useState(false);
 
   const addUser = (newUserName: string) => {
-    console.log(newUserName)
     const newUser = new Player(newUserName);
     setNames([...names, newUser]);
   };
@@ -23,7 +22,10 @@ function App(props: any) {
             (<li key={item.toString()}>{item.toString()}</li>)
           )}
         </ul>
-        <input type="button" value="Done" onClick={() => setPlay(true)} />
+        <input type="button" value="Done" onClick={() => {
+          if (names.length < 2) return; // must be at least two players. 
+          setPlay(true); 
+        }} />
       </div>
     );
   } else {

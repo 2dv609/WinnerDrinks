@@ -1,48 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import Party from './Components/Party/Party'
 import Player from './Player'
+import WheelComponent from './Components/WheelComponent/WheelComponent'
 import './App.css';
 
 function Game(props: any) {
-    const [player1, setPlayer1] = useState();
-    const [player2, setPlayer2] = useState();
-    const [task, setTask] = useState('');
+    const players: Player[] = props.players;
+    const games = [WheelComponent, Party];
+    const [currentGameIndex, setCurrentGameIndex] = useState(0);
 
-    const setPlayers = () => {
-        let rand1 = Math.floor(Math.random() * props.players.length);
-        let rand2 = rand1;
-        while (rand1 === rand2) {
-            rand2 = Math.floor(Math.random() * props.players.length);
-        }
-        setPlayer1(props.players[rand1]);
-        setPlayer2(props.players[rand2]);
+    const done = (affected: Player, score: number) => {
+        affected.addScore(score);
+        alert(`The winner is ${affected.toString()} with a total score of: ${affected.score}`);
+        setCurrentGameIndex(Math.floor(Math.random() * games.length));
+
     };
 
-    const setTasks = () => {
-        const rand = Math.floor(Math.random() * tasks.length)
-        setTask(tasks[rand])
+    const getPlayers = (amount: number) :Player[] =>  {
+        const result: Player[] = [];
+        for (let i = 0; i < amount; i++) {
+            let rand;
+            do {
+                rand = Math.floor(Math.random() * props.players.length);
+            } while (props.players[rand] !in result )
+            result.push(props.players[rand])
+        }
+        return result;
+    };
+
+
+    const gameProps = { getPlayers: getPlayers, done: done };
+    switch (currentGameIndex) {
+        case 1: 
+            return (<div className="Game"><Party gp={gameProps} /></div>);
+        case 0:
+            return (<div className="Game"><WheelComponent gp={gameProps} /></div>);
+        
     }
-
-    useEffect(() => {
-        setPlayers();
-        setTasks();
-    }, []);
-
-    const tasks: string[] = [
-        `${player1} och ${player2} spelar sten-sax-påse, vinnaren tar en shot`,
-        `${player1} och ${player2} dricker 10000 shots`,
-        `${player1} kittlar ${player2} annars sprängs solen`,
-        `${player1} och ${player2} pratar känslor`,
-        `${player1} och ${player2} inser livets mening eller tar en shot`,
-
-    ];
-
     return (
         <div className="Game">
-
-            <div className="task">{task}</div>
-            <button onClick={() => {
-                setPlayers(); setTasks();
-            }}>Nästa</button>
+            
         </div>
     );
 }
