@@ -39,6 +39,17 @@ class Player {
     addScore(points: number) {
         this.score += points;
     };
+    /**
+     * Returns a string representation of the player. 
+     * @param debug If set to true, it also returns the score and activity of the player. 
+     * @returns Player name or full player stats. 
+     */
+    toString(debug?:boolean): string {
+        if (debug) {
+            return `Name: ${this.name} Score: ${this.score} isActive: ${this.isActive}`;
+        }
+        return this.name;
+    }
 }
 
 export default Player;

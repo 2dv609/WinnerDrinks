@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import Player from './Player'
 import './App.css';
 
 function Game(props: any) {
-    const [player1, setPlayer1] = useState('');
-    const [player2, setPlayer2] = useState('');
+    const [player1, setPlayer1] = useState();
+    const [player2, setPlayer2] = useState();
     const [task, setTask] = useState('');
 
     const setPlayers = () => {
