@@ -1,40 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import GameProps from '../GameProps';
 import '../../App.css';
 
 function Party(props: any) {
     const gp: GameProps = props.gp;
     const [task, setTask] = useState('');
-    const players = gp.getPlayers(2);
-    const player1 = players[0];
-    const player2 = players[1];
+    const [players, setPlayers] = useState(gp.getPlayers(2));
 
-    const setTasks = () => {
+    const setNewTask = () => {
         const rand = Math.floor(Math.random() * tasks.length)
         setTask(tasks[rand])
     }
     const tasks: string[] = [
-        `${player1} och ${player2} spelar sten-sax-påse, vinnaren tar en shot`,
-        `${player1} och ${player2} dricker 10000 shots`,
-        `${player1} kittlar ${player2} annars sprängs solen`,
-        `${player1} och ${player2} pratar känslor`,
-        `${player1} och ${player2} inser livets mening eller tar en shot`,
+        `${players[0]} och ${players[1]} spelar sten-sax-påse, vinnaren tar en shot`,
+        `${players[0]} och ${players[1]} dricker 10000 shots`,
+        `${players[0]} kittlar ${players[1]} annars sprängs solen`,
+        `${players[0]} och ${players[1]} pratar känslor`,
+        `${players[0]} och ${players[1]} inser livets mening eller tar en shot`,
 
     ];
+
+    useEffect(() => { 
+        return () => { // Return a function for code cleanup. This will set new players 
+            setPlayers(gp.getPlayers(2));
+        }
+    }, [gp])
 
     return (
         <div>
             <div className="task">{task}</div>
-            <button onClick={() => setTasks()} >Click here to get a task</button>
+            <button onClick={() => setNewTask()} >Click here to get a task</button>
             <h3>Who won?</h3>
 
             <button onClick={() => {
-                gp.done(player1, 1)
-            }}>{player1.toString()}</button>
+                gp.done(players[0], 1)
+            }}>{players[0].toString()}</button>
 
             <button onClick={() => {
-                gp.done(player2, 1)
-            }}>{player2.toString()}</button>
+                gp.done(players[1], 1)
+            }}>{players[1].toString()}</button>
 
         </div>
     )

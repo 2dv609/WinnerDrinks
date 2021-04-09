@@ -4,26 +4,32 @@ import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import './App.css';
 
+
+function shuffle(array: Player[]) {
+
+}
+
 function Game(props: any) {
-    const players: Player[] = props.players;
     const games = [WheelComponent, Party];
     const [currentGameIndex, setCurrentGameIndex] = useState(0);
 
     const done = (affected: Player, score: number) => {
         affected.addScore(score);
         alert(`The winner is ${affected.toString()} with a total score of: ${affected.score}`);
-        setCurrentGameIndex(Math.floor(Math.random() * games.length));
+        let newIndex = currentGameIndex;
+        while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
+            newIndex = Math.floor(Math.random() * games.length)
+        }
+        setCurrentGameIndex(newIndex);
 
     };
 
     const getPlayers = (amount: number) :Player[] =>  {
         const result: Player[] = [];
+        amount = Math.min(amount, props.players.length)
+        shuffle(props.players);
         for (let i = 0; i < amount; i++) {
-            let rand;
-            do {
-                rand = Math.floor(Math.random() * props.players.length);
-            } while (props.players[rand] !in result )
-            result.push(props.players[rand])
+            result.push(props.players[i])
         }
         return result;
     };

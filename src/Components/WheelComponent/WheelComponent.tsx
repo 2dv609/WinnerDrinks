@@ -103,10 +103,11 @@ function WheelComponent(props: any) {
    */
   const getWinner = (index: number) => {
     const winner = list[index]
-    gp.done(winner, 1)
     console.log(`Winning value is: ${winner.toString()}`)
     setResult(`${winner.toString()} won!`)
-    
+    reset();
+    gp.done(winner, 1)
+
   }
 
   /**

@@ -31,7 +31,7 @@ function App(props: any) {
   } else {
     return (
       <div className="App">
-        <h1>Nu ska vi leka!</h1>
+        <h1>Let's play!</h1>
         <Game players={names} />
       </div>
 
