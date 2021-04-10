@@ -40,10 +40,14 @@ function Trivia(props: any) {
             <h3>Were both correct?</h3>
 
             <button onClick={() => {
-                gp.doneTwoWinners(players[0], players[1], 1)
+                gp.addScore(players[0], 1)
+                gp.addScore(players[1], 1)
+                gp.makeWinnerAlert(players)
+                gp.chooseRandomNewGame()
             }}>{'They were correct!'}</button>
             <button onClick={() => {
-                gp.doneNoWinners()
+                gp.makeWinnerAlert(null)
+                gp.chooseRandomNewGame()
             }}>{'They were wrong!'}</button>
         </div>
     )
