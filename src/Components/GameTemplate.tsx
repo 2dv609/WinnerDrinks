@@ -26,9 +26,17 @@ function MyGame(props: any) {
             {players.map(pl => (<li>{pl.toString()}</li>))} 
             </ul>
             {/* This buttons makes the player first in the list win, and adds 0 to their score. */}
-            <button onClick={() => gp.done(players[0], 0)} >Click here to win.</button>
+            <button onClick={() => 
+                doneReplacementFunction()
+                } >Click here to win.</button>
         </div>
     )
+
+    function doneReplacementFunction() {
+        gp.addScore(players[0], 0)
+        gp.makeWinnerAlert(players[0])
+        gp.chooseRandomNewGame()
+    }
 };
 
 export default MyGame;

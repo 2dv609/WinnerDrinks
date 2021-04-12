@@ -36,11 +36,15 @@ function Party(props: any) {
             <h3>Who won?</h3>
 
             <button onClick={() => {
-                gp.done(players[0], 1)
+                gp.addScore(players[0], 1)
+                gp.makeWinnerAlert(players[0])
+                gp.chooseRandomNewGame()
             }}>{players[0].toString()}</button>
 
             <button onClick={() => {
-                gp.done(players[1], 1)
+                gp.addScore(players[1], 1)
+                gp.makeWinnerAlert(players[1])
+                gp.chooseRandomNewGame()
             }}>{players[1].toString()}</button>
 
         </div>

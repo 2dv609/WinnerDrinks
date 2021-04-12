@@ -106,7 +106,10 @@ function WheelComponent(props: any) {
     console.log(`Winning value is: ${winner.toString()}`)
     setResult(`${winner.toString()} won!`)
     reset();
-    gp.done(winner, 1)
+
+    gp.addScore(winner, 1)
+    gp.makeWinnerAlert(winner)
+    gp.chooseRandomNewGame()
 
   }
 

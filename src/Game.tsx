@@ -3,7 +3,7 @@ import Party from './Components/Party/Party'
 import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import './App.css';
-
+import Trivia from './Components/Trivia/Trivia';
 
 function shuffle(array: Player[]) {
     var m = array.length, t, i;
@@ -17,19 +17,44 @@ function shuffle(array: Player[]) {
 }
 
 function Game(props: any) {
-    const games = [WheelComponent, Party];
+    const games = [WheelComponent, Party, Trivia];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
 
-    const done = (affected: Player, score: number) => {
-        affected.addScore(score);
-        alert(`The winner is ${affected.toString()} with a total score of: ${affected.score}`);
+    const addScore = (p: Player, score: number) => {
+        p.addScore(score)
+    }
+
+    const makeWinnerAlert = (p: any) => {
+        let str: string
+
+        // If p is an array, display an alert for multiple players
+        if (Array.isArray(p)) {
+            str = 'The winners are: \n'
+            p.forEach(element => {
+                str = str + `${element.toString()} with a total score of: ${element.score} \n`
+            });
+
+            // If there is no param, display an alert for no points given
+        } else if (p == null) {
+            str = `No points awarded!`
+
+            //If p is a single player object, display an alert for one winner
+        } else if (p instanceof Player) {
+            str = `The winner is ${p.toString()} with a total score of: ${p.score}`
+        } else {
+            str = ``
+        }
+
+        alert(str);
+    }
+
+    const chooseRandomNewGame = () => {
         let newIndex = currentGameIndex;
         while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
             newIndex = Math.floor(Math.random() * games.length)
         }
         setCurrentGameIndex(newIndex);
-
-    };
+    }
 
     const getPlayers = (amount: number): Player[] => {
         const result: Player[] = [];
@@ -41,9 +66,15 @@ function Game(props: any) {
         return result;
     };
 
-
-    const gameProps = { getPlayers: getPlayers, done: done };
+    const gameProps = { 
+        getPlayers: getPlayers, 
+        addScore: addScore, 
+        makeWinnerAlert: makeWinnerAlert, 
+        chooseRandomNewGame: chooseRandomNewGame
+    };
     switch (currentGameIndex) {
+        case 2:
+            return (<div className="Game"><Trivia gp={gameProps} /></div>);
         case 1:
             return (<div className="Game"><Party gp={gameProps} /></div>);
         case 0:

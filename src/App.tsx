@@ -3,6 +3,7 @@ import Login from './Login';
 import Game from './Game'
 import Player from './Player'
 import './App.css';
+import ResetButton from './ResetButton';
 
 function App(props: any) {
   const [names, setNames] = useState<Player[]>([]);
@@ -33,12 +34,12 @@ function App(props: any) {
       <div className="App">
         <h1>Let's play!</h1>
         <Game players={names} />
+        <ResetButton></ResetButton>
       </div>
 
     )
   }
 
 }
-
 
 export default App;
