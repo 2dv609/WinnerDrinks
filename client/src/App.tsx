@@ -4,10 +4,14 @@ import Game from './Game'
 import Player from './Player'
 import './App.css';
 import ResetButton from './ResetButton';
+import { getTrivia } from './API'
 
-function App(props: any) {
+async function App(props: any) {
   const [names, setNames] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
+  
+  const triviaQuestions = await getTrivia()
+  console.log(triviaQuestions)
 
   const addUser = (newUserName: string) => {
     const newUser = new Player(newUserName);
