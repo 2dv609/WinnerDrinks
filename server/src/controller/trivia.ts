@@ -24,6 +24,25 @@ export class TriviaController {
   }
 
   /**
+   * Get trivia questions.
+   */
+   async getOneRandom (req: Request, res:Response, next:NextFunction) {
+    try {
+
+      const questions: ITrivia[] = await Trivia.find()
+
+      res
+        .status(200)
+        .json({ 
+            message: "Trivia questions", 
+            questions: questions[Math.floor(Math.random() * questions.length)] 
+        })
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  /**
    * Load trivia question to db.
    */
    async loadTrivia (): Promise<void>  {
