@@ -13,6 +13,9 @@ function App(props: any) {
     const newUser = new Player(newUserName);
     setNames([...names, newUser]);
   };
+
+
+
   if (!play) {
     return (
       <div className="App">

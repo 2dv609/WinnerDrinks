@@ -1,0 +1,9 @@
+.questionDiv {
+  border: 2px solid;
+  border-radius: 5px;
+  width: 250px;
+  text-align: center;
+  margin-right: 5px;
+  background-color: #91ccff;
+}
+
