@@ -11,6 +11,7 @@ import { connectDB } from './config/connectDB.js'
 import HttpException from './common/http-exception.js'
 import { PartyController } from './controller/party.js';
 import { TriviaController } from './controller/trivia.js';
+import { NativeTriviaController } from './controller/native-trivia.js';
 import { resolve } from 'path';
  
 /**
@@ -23,13 +24,14 @@ const main = async (): Promise<void> => {
   // Load game modules
   const partyController: PartyController = new PartyController()
   const triviaController: TriviaController = new TriviaController()
+  const nativeTriviaController: NativeTriviaController = new NativeTriviaController()
   const [,, ...gameModules] = process.argv
   console.log('Load game modules: ' + gameModules)
   
   if (gameModules.includes('all')) { // load all game modules
     await triviaController.loadTrivia()
     await partyController.loadParty(resolve('data/party.json'))
-  
+    await nativeTriviaController.loadNativeTrivia(resolve('data/native-trivia.json'))
   }
 
   const app = express()

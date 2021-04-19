@@ -3,7 +3,6 @@ import axios, { AxiosResponse } from "axios"
 const baseUrl: string = "http://localhost:4000/"
 
 export const getTrivia = async(): Promise<AxiosResponse<ApiDataType>> => {
-  
   try{
     const questions : AxiosResponse<ApiDataType> = await axios.get(baseUrl + 'trivia')
 
@@ -14,8 +13,7 @@ export const getTrivia = async(): Promise<AxiosResponse<ApiDataType>> => {
   }    
 }
 
-export const getOneTrivia = async(): Promise<AxiosResponse<ApiDataType>> => {
-  
+export const getOneTrivia = async(): Promise<AxiosResponse<ApiDataType>> => {  
   try{
     const questions : AxiosResponse<ApiDataType> = await axios.get(baseUrl + 'trivia/one')
 
@@ -26,8 +24,18 @@ export const getOneTrivia = async(): Promise<AxiosResponse<ApiDataType>> => {
   }    
 }
 
+export const getOneNativeTrivia = async(): Promise<AxiosResponse<ApiDataType>> => {  
+  try{
+    const questions : AxiosResponse<ApiDataType> = await axios.get(baseUrl + 'native-trivia/one')
+
+    return questions
+  } catch (error)
+  {
+    throw new Error(error)    
+  }    
+}
+
 export const getParty = async(): Promise<AxiosResponse<ApiDataType>> => {
-  
   try{
     const questions : AxiosResponse<ApiDataType> = await axios.get(baseUrl + 'party')
 

@@ -19,7 +19,7 @@ export class TriviaController {
         }
     }
     /**
-     * Get trivia questions.
+     * Get one random trivia questions.
      */
     async getOneRandom(req, res, next) {
         try {
