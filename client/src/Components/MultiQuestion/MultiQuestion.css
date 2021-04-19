@@ -1,0 +1,15 @@
+.answersDiv {
+  display: flex;
+  justify-content: center;
+  flex-flow: wrap;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.playerCardInactive {
+  background-color: rgb(97, 0, 0);
+}
+
+.playerCardActive {
+  background-color: green;
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "question": "{players[0]} och {players[1]} spelar sten-sax-påse, vinnaren tar en shot"
+    },
+    {
+        "question": "{players[0]} och {players[1]} dricker 10000 shots"
+    },
+    {
+        "question": "{players[0]} kittlar {players[1]} annars sprängs solen"
+    },
+    {
+        "question": "{players[0]} och {players[1]} pratar känslor"
+    },
+    {
+        "question": "{players[0]} och {players[1]} inser livets mening eller tar en shot"
+    }
+]
