@@ -13,3 +13,17 @@ export const getTrivia = async(): Promise<AxiosResponse<ApiDataType>> => {
     throw new Error(error)    
   }    
 }
+
+export const getParty = async(): Promise<AxiosResponse<ApiDataType>> => {
+  
+  try{
+    const questions : AxiosResponse<ApiDataType> = await axios.get(baseUrl + 'party')
+
+    console.log(questions)
+
+    return questions
+  } catch (error)
+  {
+    throw new Error(error)    
+  }    
+}

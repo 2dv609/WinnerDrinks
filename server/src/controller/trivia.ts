@@ -1,10 +1,11 @@
 import { Response, Request, NextFunction } from 'express'
 import { ITrivia } from '../types/trivia.js'
 import Trivia from '../model/trivia.js'
+import fetch from 'node-fetch'
 
 export class TriviaController {
   /**
-   * Load party questions.
+   * Get trivia questions.
    */
    async index (req: Request, res:Response, next:NextFunction) {
     try {
@@ -12,13 +13,27 @@ export class TriviaController {
       const questions: ITrivia[] = await Trivia.find()
 
       res
-        .status(201)
+        .status(200)
         .json({ 
             message: "Trivia questions", 
             questions: questions 
         })
     } catch (error) {
       next(error)
+    }
+  }
+
+  /**
+   * Load trivia question to db.
+   */
+   async loadTrivia (): Promise<void>  {
+    const url: string = 'https://opentdb.com/api.php?amount=20'
+ 
+    const response = await fetch(url, {method: 'GET'})
+    const resultJSON = await response.json()
+
+    if ('results' in resultJSON) {
+      Trivia.insertMany(resultJSON.results)
     }
   }
 }  

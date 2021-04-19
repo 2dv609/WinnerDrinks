@@ -1,10 +1,11 @@
 import { Response, Request, NextFunction } from 'express'
 import { IParty } from '../types/party.js'
 import Party from '../model/party.js'
+import fs from 'fs-extra'
 
 export class PartyController {
   /**
-   * Load party questions.
+   * Get party questions.
    */
   async index (req: Request, res:Response, next:NextFunction) {
     try {
@@ -12,7 +13,7 @@ export class PartyController {
       const questions: IParty[] = await Party.find()
 
       res
-        .status(201)
+        .status(200)
         .json({ 
             message: "Party questions", 
             questions: questions 
@@ -20,5 +21,13 @@ export class PartyController {
     } catch (error) {
       next(error)
     }
+  }
+
+  /**
+   * Load party question to db.
+   */
+   async loadParty (dataSource: string): Promise<void> {
+    const data = await fs.readJson(dataSource)
+    Party.insertMany(data)
   }
 }  

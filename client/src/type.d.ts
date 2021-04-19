@@ -1,19 +1,32 @@
-interface IMyQuestion {
+interface ITrivia {
   _id: string
+  category: string
+  type: string
+  difficulty: string
   question: string
-  answer: string
-  status: boolean
+  correct_answer: string
+  incorrect_answers: string[]
   createdAt?: string
   updatedAt?: string
 }
 
-interface QuestionProps {
-  question: IMyQuestion
+interface TriviaProps {
+  trivia: ITrivia
+}
+
+interface IParty {
+  _id: string
+  question: string
+  createdAt?: string
+  updatedAt?: string
+}
+
+interface PartyProps {
+  party: IParty
 }
 
 type ApiDataType = {
   message: string
   status: string
-  questions: IMyQuestion[]
-  question?: IMyQuestion
+  questions: ITrivia[]
 }

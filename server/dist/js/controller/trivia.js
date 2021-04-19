@@ -1,13 +1,14 @@
 import Trivia from '../model/trivia.js';
+import fetch from 'node-fetch';
 export class TriviaController {
     /**
-     * Load party questions.
+     * Get trivia questions.
      */
     async index(req, res, next) {
         try {
             const questions = await Trivia.find();
             res
-                .status(201)
+                .status(200)
                 .json({
                 message: "Trivia questions",
                 questions: questions
@@ -15,6 +16,17 @@ export class TriviaController {
         }
         catch (error) {
             next(error);
+        }
+    }
+    /**
+     * Load trivia question to db.
+     */
+    async loadTrivia() {
+        const url = 'https://opentdb.com/api.php?amount=20';
+        const response = await fetch(url, { method: 'GET' });
+        const resultJSON = await response.json();
+        if ('results' in resultJSON) {
+            Trivia.insertMany(resultJSON.results);
         }
     }
 }

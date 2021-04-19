@@ -9,6 +9,9 @@ import { fileURLToPath } from 'url'
 import { router } from './routes/router.js'
 import { connectDB } from './config/connectDB.js'
 import HttpException from './common/http-exception.js'
+import { PartyController } from './controller/party.js';
+import { TriviaController } from './controller/trivia.js';
+import { resolve } from 'path';
  
 /**
  * The main function of the application.
@@ -16,6 +19,18 @@ import HttpException from './common/http-exception.js'
 const main = async (): Promise<void> => {
 
   await connectDB()
+
+  // Load game modules
+  const partyController: PartyController = new PartyController()
+  const triviaController: TriviaController = new TriviaController()
+  const [,, ...gameModules] = process.argv
+  console.log('Load game modules: ' + gameModules)
+  
+  if (gameModules.includes('all')) { // load all game modules
+    await triviaController.loadTrivia()
+    await partyController.loadParty(resolve('data/party.json'))
+  
+  }
 
   const app = express()
   const directoryFullName = dirname(fileURLToPath(import.meta.url))

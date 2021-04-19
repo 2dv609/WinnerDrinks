@@ -4,6 +4,8 @@ import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import './App.css';
 import Trivia from './Components/Trivia/Trivia';
+import MultiQuestion from './Components/MultiQuestion/MultiQuestion'
+
 
 function shuffle(array: Player[]) {
     var m = array.length, t, i;
@@ -17,8 +19,9 @@ function shuffle(array: Player[]) {
 }
 
 function Game(props: any) {
-    const games = [WheelComponent, Party, Trivia];
+    const games = [WheelComponent, Party, Trivia, MultiQuestion];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
+    
 
     const addScore = (p: Player, score: number) => {
         p.addScore(score)
@@ -73,10 +76,12 @@ function Game(props: any) {
         chooseRandomNewGame: chooseRandomNewGame
     };
     switch (currentGameIndex) {
+        case 3: 
+            return (<div className="Game"><MultiQuestion gp={gameProps} /></div>);
         case 2:
-            return (<div className="Game"><Trivia gp={gameProps} /></div>);
+            return (<div className="Game"><Trivia gp={gameProps}/></div>);
         case 1:
-            return (<div className="Game"><Party gp={gameProps} /></div>);
+            return (<div className="Game"><Party gp={gameProps}/></div>);
         case 0:
             return (<div className="Game"><WheelComponent gp={gameProps} /></div>);
 

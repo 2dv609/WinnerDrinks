@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import GameProps from '../GameProps';
 import '../../App.css';
+import { getParty } from '../../API'
+ 
 
 function Party(props: any) {
     const gp: GameProps = props.gp;
     const [players, setPlayers] = useState(gp.getPlayers(2));
+    const [task, setTask] = useState('');
+
+    useEffect(() => {
+        fetchParty()
+      },[])
     
+    const fetchParty = (): void => {
+      getParty()
+      .then(({ data }: IParty[] | any) => setTask(getNewTask(data.questions)))
+      .catch((err: Error) => console.log(err))
+    }
 
-
-    const tasks: string[] = [
-        `${players[0]} och ${players[1]} spelar sten-sax-påse, vinnaren tar en shot`,
-        `${players[0]} och ${players[1]} dricker 10000 shots`,
-        `${players[0]} kittlar ${players[1]} annars sprängs solen`,
-        `${players[0]} och ${players[1]} pratar känslor`,
-        `${players[0]} och ${players[1]} inser livets mening eller tar en shot`,
-
-    ];
-
-    const [task, setTask] = useState(getNewTask());
-
-    function getNewTask(): string {
-        const rand = Math.floor(Math.random() * tasks.length)
-        return tasks[rand];
+    function getNewTask(party: IParty[]): string {
+        const rand = Math.floor(Math.random() * party.length)
+        const taskRaw = party[rand].question
+        return taskRaw.replace('{players[0]}', `${players[0]}`).replace('{players[1]}', `${players[1]}`)
     }
 
     useEffect(() => { 

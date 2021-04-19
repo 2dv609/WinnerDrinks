@@ -1,13 +1,14 @@
 import Party from '../model/party.js';
+import fs from 'fs-extra';
 export class PartyController {
     /**
-     * Load party questions.
+     * Get party questions.
      */
     async index(req, res, next) {
         try {
             const questions = await Party.find();
             res
-                .status(201)
+                .status(200)
                 .json({
                 message: "Party questions",
                 questions: questions
@@ -16,5 +17,12 @@ export class PartyController {
         catch (error) {
             next(error);
         }
+    }
+    /**
+     * Load party question to db.
+     */
+    async loadParty(dataSource) {
+        const data = await fs.readJson(dataSource);
+        Party.insertMany(data);
     }
 }
