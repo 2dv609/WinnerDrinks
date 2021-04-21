@@ -50,18 +50,6 @@ const main = async (): Promise<void> => {
   
   // Register routes.
   app.use(cors())
-
-  // say hello from serve
-  /* const helloFromServer = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      console.log('hello from server')
-      res.status(200).json({ server: "Hello from server" })
-      next()
-    } catch (error) {
-      next(error)
-    }
-  }
-  app.use(helloFromServer) */
  
   app.use('/', router)
  
