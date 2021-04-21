@@ -7,7 +7,8 @@
 
 2. Create file .env in folder __server__ and initiate values see .env.example. OBS! PORT must be 4000 and username and password must be the same as in step 1.
 
-3. In folder __container__ run. OBS! Maybe need be in docker swarm mode 
+3. Make sure that Docker is running on your system. 
+In folder __container__ run. OBS! Maybe need be in docker swarm mode 
 
 ```
 $ docker-compose up --build -d
@@ -21,7 +22,7 @@ __Start server and intiate database__
 $ npm run start:dev:init
 ```
 
-__Start server without intiate database__
+__Start server without intiating the database__
 
 ```
 $ npm run start:dev
