@@ -2,10 +2,10 @@ import './App.css';
 
 function ComponentGetToKnow() {
     return(        
-    <div>
-        <button onClick={() => {
+    <div >
+        <button className="button is-danger" onClick={() => {
             window.location.reload();
-        }}>Tillbaka</button>
+        }}>Reload page</button>
     </div>);
 }
 

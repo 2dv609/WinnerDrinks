@@ -35,17 +35,17 @@ function Trivia(props: any) {
 
     // Either both win, or both lose. 
     return (
-        <div>
-            <div className="task">{task}</div>
-            <h3>Were both correct?</h3>
+        <div className="box container">
+            <div className="content">{task}</div>
+            <h3 className="title is-6">Were both correct?</h3>
 
-            <button onClick={() => {
+            <button className="button" onClick={() => {
                 gp.addScore(players[0], 1)
                 gp.addScore(players[1], 1)
                 gp.makeWinnerAlert(players)
                 gp.chooseRandomNewGame()
             }}>{'They were correct!'}</button>
-            <button onClick={() => {
+            <button className="button" onClick={() => {
                 gp.makeWinnerAlert(null)
                 gp.chooseRandomNewGame()
             }}>{'They were wrong!'}</button>

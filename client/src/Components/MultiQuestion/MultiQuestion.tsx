@@ -57,7 +57,7 @@ const MultiQuestion = (props: any) => {
       <div id={'gameInfo'}>
         <h4>Turn to answer a question: </h4>
         <ul>
-          <li>{players[0].name}</li>
+          <li className="card" >{players[0].name}</li>
         </ul>
         {/* {players.length > 0 && (
           <ul>
