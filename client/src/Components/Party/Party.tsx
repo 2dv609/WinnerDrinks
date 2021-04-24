@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import GameProps from '../GameProps';
-import '../../App.css';
 import { getParty } from '../../API'
  
 
@@ -32,17 +31,17 @@ function Party(props: any) {
     }, [gp])
 
     return (
-        <div>
-            <div className="task">{task}</div>
+        <div className="box">
+            <div className="content">{task}</div>
             <h3>Who won?</h3>
 
-            <button onClick={() => {
+            <button className="button" onClick={() => {
                 gp.addScore(players[0], 1)
                 gp.makeWinnerAlert(players[0])
                 gp.chooseRandomNewGame()
             }}>{players[0].toString()}</button>
 
-            <button onClick={() => {
+            <button className="button" onClick={() => {
                 gp.addScore(players[1], 1)
                 gp.makeWinnerAlert(players[1])
                 gp.chooseRandomNewGame()

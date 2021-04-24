@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import Login from './Login';
 import Game from './Game'
 import Player from './Player'
+import 'bulma';
 import './App.css';
+import './App.sass';
 import ResetButton from './ResetButton';
 
 function App(props: any) {
@@ -18,24 +20,24 @@ function App(props: any) {
 
   if (!play) {
     return (
-      <div className="App">
+      <div className="App section">
         <Login setter={addUser} />
-        <h2>Players</h2>
-        <ul>
-          {names.map(item =>
-            (<li key={item.toString()}>{item.toString()}</li>)
-          )}
-        </ul>
-        <input type="button" value="Done" onClick={() => {
+        <input className="button" type="button" value="Done" onClick={() => {
           if (names.length < 2) return; // must be at least two players. 
           setPlay(true); 
         }} />
+        <h2 className="title is-5" >Players</h2>
+        <ul className="columns">
+          {names.map(item =>
+            (<li className="column" key={item.toString()}>{item.toString()}</li>)
+          )}
+        </ul>
       </div>
     );
   } else {
     return (
-      <div className="App">
-        <h1>Let's play!</h1>
+      <div className="App section">
+        <h1 className="title is-3">Let's play!</h1>
         <Game players={names} />
         <ResetButton></ResetButton>
       </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { uuid } from 'uuidv4'
-
 import { formatAPIResponseString } from './utils/api-functions'
 import { shuffleArray } from './utils/functions'
 import './MultiQuestion.css';
@@ -54,11 +53,11 @@ const MultiQuestion = (props: any) => {
   }
 
   return (
-    <div>
+    <div className="box">
       <div id={'gameInfo'}>
         <h4>Turn to answer a question: </h4>
         <ul>
-          <li>{players[0].name}</li>
+          <li className="card" >{players[0].name}</li>
         </ul>
         {/* {players.length > 0 && (
           <ul>

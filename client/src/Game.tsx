@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Party from './Components/Party/Party'
 import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
-import './App.css';
 import Trivia from './Components/Trivia/Trivia';
 import MultiQuestion from './Components/MultiQuestion/MultiQuestion'
 
