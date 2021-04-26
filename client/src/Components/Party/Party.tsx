@@ -1,27 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import GameProps from '../GameProps';
-import { getParty } from '../../API'
- 
 
 function Party(props: any) {
     const gp: GameProps = props.gp;
     const [players, setPlayers] = useState(gp.getPlayers(2));
-    const [task, setTask] = useState('');
-
-    useEffect(() => {
-        fetchParty()
-      },[])
     
-    const fetchParty = (): void => {
-      getParty()
-      .then(({ data }: IParty[] | any) => setTask(getNewTask(data.questions)))
-      .catch((err: Error) => console.log(err))
-    }
-
-    function getNewTask(party: IParty[]): string {
-        const rand = Math.floor(Math.random() * party.length)
-        const taskRaw = party[rand].question
-        return taskRaw.replace('{players[0]}', `${players[0]}`).replace('{players[1]}', `${players[1]}`)
+    function addPlayerToGameEvent(): string {
+        const gameEvent:string = props.gameEvent.question
+        return gameEvent.replace('{players[0]}', `${players[0]}`).replace('{players[1]}', `${players[1]}`)
     }
 
     useEffect(() => { 
@@ -32,7 +18,7 @@ function Party(props: any) {
 
     return (
         <div className="box">
-            <div className="content">{task}</div>
+            <div className="content">{addPlayerToGameEvent()}</div>
             <h3>Who won?</h3>
 
             <button className="button" onClick={() => {

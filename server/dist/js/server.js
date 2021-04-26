@@ -9,8 +9,8 @@ import { fileURLToPath } from 'url';
 import { router } from './routes/router.js';
 import { connectDB } from './config/connectDB.js';
 import { PartyController } from './controller/party.js';
+import { MultiQuestionController } from './controller/multi-question.js';
 import { TriviaController } from './controller/trivia.js';
-import { NativeTriviaController } from './controller/native-trivia.js';
 import { resolve } from 'path';
 /**
  * The main function of the application.
@@ -20,24 +20,25 @@ const main = async () => {
     // Load game modules
     const partyController = new PartyController();
     const triviaController = new TriviaController();
-    const nativeTriviaController = new NativeTriviaController();
+    const multiQuestionController = new MultiQuestionController();
     const [, , ...gameModules] = process.argv;
     console.log('Load game modules: ' + gameModules);
     if (gameModules.includes('all')) { // load all game modules
-        await triviaController.loadTrivia();
+        await triviaController.loadTrivia(resolve('data/trivia.json'));
         await partyController.loadParty(resolve('data/party.json'));
-        await nativeTriviaController.loadNativeTrivia(resolve('data/native-trivia.json'));
+        await multiQuestionController.loadMultiQuestion();
     }
     const app = express();
     const directoryFullName = dirname(fileURLToPath(import.meta.url));
     const baseURL = process.env.BASE_URL || '/';
     // Enable body parsing of application/json and populates the request object with a body object (req.body).
     app.use(express.json());
-    // Serve static files.
+    // Serve static files when production.
     // app.use(express.static(join(directoryFullName, '..', 'public')))
-    // Setup and use session middleware (https://github.com/expressjs/session)
-    // Register routes.
+    // Setup and use session middleware (https://github.com/expressjs/session) 
+    // Use cors to allow communication between client and server.
     app.use(cors());
+    // Register routes.
     app.use('/', router);
     // Error handler.
     const errorHandler = (error, request, response, next) => {

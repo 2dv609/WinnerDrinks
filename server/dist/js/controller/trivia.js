@@ -1,5 +1,5 @@
 import Trivia from '../model/trivia.js';
-import fetch from 'node-fetch';
+import fs from 'fs-extra';
 export class TriviaController {
     /**
      * Get trivia questions.
@@ -19,31 +19,10 @@ export class TriviaController {
         }
     }
     /**
-     * Get one random trivia questions.
+     * Load trivia questions to db.
      */
-    async getOneRandom(req, res, next) {
-        try {
-            const questions = await Trivia.find();
-            res
-                .status(200)
-                .json({
-                message: "Trivia questions",
-                questions: questions[Math.floor(Math.random() * questions.length)]
-            });
-        }
-        catch (error) {
-            next(error);
-        }
-    }
-    /**
-     * Load trivia question to db.
-     */
-    async loadTrivia() {
-        const url = 'https://opentdb.com/api.php?amount=20';
-        const response = await fetch(url, { method: 'GET' });
-        const resultJSON = await response.json();
-        if ('results' in resultJSON) {
-            Trivia.insertMany(resultJSON.results);
-        }
+    async loadTrivia(dataSource) {
+        const data = await fs.readJson(dataSource);
+        Trivia.insertMany(data);
     }
 }

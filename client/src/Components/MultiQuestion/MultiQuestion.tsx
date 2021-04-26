@@ -4,19 +4,18 @@ import { formatAPIResponseString } from './utils/api-functions'
 import { shuffleArray } from './utils/functions'
 import './MultiQuestion.css';
 import QuestionCard from './QuestionCard';
-import { Question } from './types/types';
 import GameProps from '../GameProps';
-import { getOneTrivia } from '../../API'
 
 const NUM_OF_PLAYERS = 1;
 
 const MultiQuestion = (props: any) => {
   const gp: GameProps = props.gp;
   const [players, setPlayers] = useState(gp.getPlayers(NUM_OF_PLAYERS));
-  const [loadedQuestions, setLoadedQuestions] = useState<Question[]>([]);
+  const [loadedQuestions, setLoadedQuestions] = useState<IMultiQuestion[]>([]);
   const [questionNumber, setQuestionNumber] = useState<number>(0);
 
   useEffect(() => {
+    console.log(props.event)
     loadNewQuestions()
   }, [])
 
@@ -27,17 +26,13 @@ const MultiQuestion = (props: any) => {
   }, [gp])
 
   const loadNewQuestions = async () => {
-    // let questions: Question[] = await fetchQuestions(1);
-    
-    let { data }: Question[] | any  = await getOneTrivia()
-    console.log(data)
-
+    const gameEvent: IMultiQuestion = props.gameEvent
     let all_answers
-    all_answers = data.questions.incorrect_answers
-    all_answers.push(data.questions.correct_answer)
+    all_answers = gameEvent.incorrect_answers
+    all_answers.push(gameEvent.correct_answer)
     all_answers = shuffleArray(all_answers)
-    data.questions.all_answers = all_answers
-    setLoadedQuestions([data.questions]);
+    gameEvent.all_answers = all_answers
+    setLoadedQuestions([gameEvent]);
   }
 
   const handleAnswer = (e: any) => {

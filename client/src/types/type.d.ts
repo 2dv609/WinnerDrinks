@@ -1,5 +1,5 @@
-// Trivia types
-interface ITrivia {
+// MultiQuestion types
+interface IMultiQuestion {
   _id: string
   category: string
   type: string
@@ -11,19 +11,19 @@ interface ITrivia {
   createdAt?: string
   updatedAt?: string
 }
-interface TriviaProps {
-  trivia: ITrivia
+interface MultiQuestionProps {
+  multiQuestion: IMultiQuestion
 }
 
-// Nativ trivia types
-interface INativeTrivia {
+// Trivia types
+interface ITrivia {
   _id: string
   question: string
   createdAt?: string
   updatedAt?: string
 }
-interface NativeTriviaProps {
-  nativeTrivia: INativeTrivia
+interface TriviaProps {
+  trivia: ITrivia
 }
 
 // Party types
@@ -37,9 +37,9 @@ interface PartyProps {
   party: IParty
 }
 
-// General api type for game events
-type GameEvent = {
+// General type for game events
+type GameEventAPI = {
   message: string
   status: string
-  questions: ITrivia[] | IParty[] | INativeTrivia[]
+  questions: ITrivia[] | IParty[] | IMultiQuestion[]
 }

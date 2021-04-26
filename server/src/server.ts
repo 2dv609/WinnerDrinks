@@ -10,8 +10,8 @@ import { router } from './routes/router.js'
 import { connectDB } from './config/connectDB.js'
 import HttpException from './common/http-exception.js'
 import { PartyController } from './controller/party.js';
+import { MultiQuestionController } from './controller/multi-question.js';
 import { TriviaController } from './controller/trivia.js';
-import { NativeTriviaController } from './controller/native-trivia.js';
 import { resolve } from 'path';
  
 /**
@@ -24,14 +24,14 @@ const main = async (): Promise<void> => {
   // Load game modules
   const partyController: PartyController = new PartyController()
   const triviaController: TriviaController = new TriviaController()
-  const nativeTriviaController: NativeTriviaController = new NativeTriviaController()
+  const multiQuestionController: MultiQuestionController = new MultiQuestionController()
   const [,, ...gameModules] = process.argv
   console.log('Load game modules: ' + gameModules)
   
   if (gameModules.includes('all')) { // load all game modules
-    await triviaController.loadTrivia()
+    await triviaController.loadTrivia(resolve('data/trivia.json'))
     await partyController.loadParty(resolve('data/party.json'))
-    await nativeTriviaController.loadNativeTrivia(resolve('data/native-trivia.json'))
+    await multiQuestionController.loadMultiQuestion()
   }
 
   const app = express()
@@ -41,21 +41,17 @@ const main = async (): Promise<void> => {
   // Enable body parsing of application/json and populates the request object with a body object (req.body).
   app.use(express.json())
 
- 
-  // Serve static files.
+  // Serve static files when production.
   // app.use(express.static(join(directoryFullName, '..', 'public')))
- 
-  // Setup and use session middleware (https://github.com/expressjs/session)
- 
+  // Setup and use session middleware (https://github.com/expressjs/session) 
   
-  // Register routes.
+  // Use cors to allow communication between client and server.
   app.use(cors())
- 
+
+  // Register routes.
   app.use('/', router)
  
   // Error handler.
-
-  
   const errorHandler = (error: HttpException, request: Request, response: Response, next: NextFunction ) => {
       console.log(`${error.message}: ${error.stack}`)
       const status = error.statusCode || error.status || 500;  
@@ -66,9 +62,7 @@ const main = async (): Promise<void> => {
   // Starts the HTTP server listening for connections.
   // Socket.io: Using server instead of express
   const portNr : string | undefined = process.env.PORT
-
   console.log(portNr)
-
   app.listen(portNr, () => {
     console.log(`Server running at http://localhost:${portNr}`)
     console.log('Press Ctrl-C to terminate...')
