@@ -38,17 +38,6 @@ const main = async () => {
     // Setup and use session middleware (https://github.com/expressjs/session)
     // Register routes.
     app.use(cors());
-    // say hello from serve
-    /* const helloFromServer = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-      try {
-        console.log('hello from server')
-        res.status(200).json({ server: "Hello from server" })
-        next()
-      } catch (error) {
-        next(error)
-      }
-    }
-    app.use(helloFromServer) */
     app.use('/', router);
     // Error handler.
     const errorHandler = (error, request, response, next) => {

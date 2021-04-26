@@ -7,6 +7,7 @@ interface ITrivia {
   question: string
   correct_answer: string
   incorrect_answers: string[]
+  all_answers: string[]
   createdAt?: string
   updatedAt?: string
 }
@@ -36,9 +37,9 @@ interface PartyProps {
   party: IParty
 }
 
-// General api type
-type ApiDataType = {
+// General api type for game events
+type GameEvent = {
   message: string
   status: string
-  questions: ITrivia[]
+  questions: ITrivia[] | IParty[] | INativeTrivia[]
 }
