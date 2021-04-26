@@ -15,28 +15,10 @@ function Trivia(props: any) {
         }
     }, [gp])
 
-    // Do some logic here. Use the array players[someNumber] and when you're done,
-    // call the function gp.done() and send in the winning player and some score. 
-
-    const tasks: string[] = [
-        `Vem är bäst på att städa?`,
-        `Vem är bäst på att laga mat?`,
-        `Vem kommer att somna först?`,
-        `Vem festar till solen går upp?`,
-        `Vem har den bästa humorn?`,
-    ];
-
-    const [task, setTask] = useState(getNewTask());
-
-    function getNewTask(): string {
-        const rand = Math.floor(Math.random() * tasks.length)
-        return tasks[rand];
-    }
-
-    // Either both win, or both lose. 
+    // Either both win, or both lose.
     return (
         <div className="box container">
-            <div className="content">{task}</div>
+            <div className="content">{props.gameEvent.question}</div>
             <h3 className="title is-6">Were both correct?</h3>
 
             <button className="button" onClick={() => {
