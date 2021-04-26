@@ -4,7 +4,6 @@ import Game from './Game'
 import Player from './Player'
 import 'bulma';
 import './App.css';
-import './App.sass';
 import ResetButton from './ResetButton';
 
 function App(props: any) {
