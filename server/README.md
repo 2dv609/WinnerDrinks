@@ -60,7 +60,7 @@ npm run start
 
 * run to open container 
 ```
-$ winpty docker exec -it mongodb_wd // windows bash 
+$ winpty docker exec -it mongodb_wd bash // windows bash 
 $ docker exec -it mongodb_wd bash // linux and ubuntu 
 ```
 
