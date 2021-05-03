@@ -17,7 +17,7 @@ Creat file server/.env and initiate values see .env.example. OBS! PORT must be 4
 
 ## 3 Make sure that Docker is running on your system. 
 
-In folder __container__ run. OBS! Maybe need be in docker swarm mode 
+In folder __dist/container__ run. OBS! Maybe need be in docker swarm mode 
 
 ```
 $ docker-compose up --build -d
