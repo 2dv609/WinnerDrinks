@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Party from './Components/Party/Party'
 import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
-import Trivia from './Components/Trivia/Trivia';
-import MultiQuestion from './Components/MultiQuestion/MultiQuestion'
+import BackToBack from './Components/BackToBack/BackToBack';
+import Trivia from './Components/Trivia/Trivia'
 import { AxiosResponse } from "axios"
-import { getMultiQuestion, getTrivia, getParty } from './util/API'
+import { getTrivia, getBackToBack, getParty } from './util/API'
 
 
 function shuffle(array: Player[]) {
@@ -20,22 +20,22 @@ function shuffle(array: Player[]) {
 }
 
 function Game(props: any) {
-    const games = [WheelComponent, Party, Trivia, MultiQuestion];
+    const games = [WheelComponent, Party, BackToBack, Trivia];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
-    const [multiQuestionEvents, setMultiQuestionEvents] = useState<GameEventAPI | undefined>(undefined)
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
+    const [backToBackEvents, setBackToBackEvents] = useState<GameEventAPI | undefined>(undefined)
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     
     // Load data to game events
     useEffect(() => {        
-        const multiQuestionEvents: Promise<AxiosResponse<GameEventAPI>> = getMultiQuestion()
         const triviaEvents: Promise<AxiosResponse<GameEventAPI>> = getTrivia()
+        const backToBackEvents: Promise<AxiosResponse<GameEventAPI>> = getBackToBack()
         const partyEvents: Promise<AxiosResponse<GameEventAPI>> = getParty()
         
         // maybe promise allSettled is better to use then if one promise is rejected you can use some cached events
-        Promise.all([multiQuestionEvents, triviaEvents, partyEvents]).then((response) => {
-            setMultiQuestionEvents(response[0].data)
-            setTriviaEvents(response[1].data)
+        Promise.all([triviaEvents, backToBackEvents, partyEvents]).then((response) => {
+            setTriviaEvents(response[0].data)
+            setBackToBackEvents(response[1].data)
             setPartyEvents(response[2].data)
         })
       }, [])
@@ -86,7 +86,7 @@ function Game(props: any) {
         return result;
     };
 
-    const getRandomGameEvent = (gameEventAPI: GameEventAPI): ITrivia | IParty | IMultiQuestion => {
+    const getRandomGameEvent = (gameEventAPI: GameEventAPI): IBackToBack | IParty | ITrivia => {
         return gameEventAPI.questions[Math.floor(Math.random() * gameEventAPI.questions.length)]
     }
 
@@ -97,15 +97,15 @@ function Game(props: any) {
         chooseRandomNewGame: chooseRandomNewGame
     };
 
-    if (!multiQuestionEvents || !triviaEvents || !partyEvents) {
+    if (!triviaEvents || !backToBackEvents || !partyEvents) {
         return (<div><p>Loading...</p></div>)
     }
 
     switch (currentGameIndex) {
         case 3: 
-            return (<div className="Game"><MultiQuestion gp={gameProps} gameEvent={getRandomGameEvent(multiQuestionEvents)}/></div>);
-        case 2:
             return (<div className="Game"><Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/></div>);
+        case 2:
+            return (<div className="Game"><BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/></div>);
         case 1:
             return (<div className="Game"><Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/></div>);
         case 0:
