@@ -2,7 +2,7 @@
  * Module: server.js
  * The starting point of the application.
  */
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from 'express';
 import { dirname, join } from 'path'
 import cors from 'cors'
 import { fileURLToPath } from 'url'
@@ -26,30 +26,39 @@ const main = async (): Promise<void> => {
   const triviaController: TriviaController = new TriviaController()
   const multiQuestionController: MultiQuestionController = new MultiQuestionController()
   const [,, ...gameModules] = process.argv
-  console.log('Load game modules: ' + gameModules)
-  
-  if (gameModules.includes('all')) { // load all game modules
-    await triviaController.loadTrivia(resolve('data/trivia.json'))
-    await partyController.loadParty(resolve('data/party.json'))
-    await multiQuestionController.loadMultiQuestion()
-  }
 
   const app = express()
+
   const directoryFullName = dirname(fileURLToPath(import.meta.url))
-  const baseURL = process.env.BASE_URL || '/'
+  
+  if (gameModules.includes('all') || app.get('env') === 'production') { // load all game modules
+    console.log('Load game modules...')
+    await triviaController.loadTrivia(join(directoryFullName, 'data/trivia.json'))
+    await partyController.loadParty(join(directoryFullName, 'data/party.json'))
+    await multiQuestionController.loadMultiQuestion(join(directoryFullName, 'data/multi-question.json'))
+  }
+
+  //const baseURL = process.env.BASE_URL || '/'
+
+  app.use((req, res, next) => {
+    console.log(req.originalUrl);
+    next()
+  })
  
   // Enable body parsing of application/json and populates the request object with a body object (req.body).
   app.use(express.json())
 
-  // Serve static files when production.
-  // app.use(express.static(join(directoryFullName, '..', 'public')))
-  // Setup and use session middleware (https://github.com/expressjs/session) 
-  
   // Use cors to allow communication between client and server.
   app.use(cors())
 
+  // Serve static files when production and trust first proxy.
+  if (app.get('env') === 'production') {
+    app.set('trust proxy', 1)
+    app.use(express.static(join(directoryFullName, '../build')))
+  }
+
   // Register routes.
-  app.use('/', router)
+  app.use('/api', router)
  
   // Error handler.
   const errorHandler = (error: HttpException, request: Request, response: Response, next: NextFunction ) => {

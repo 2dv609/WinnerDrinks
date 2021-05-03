@@ -1,7 +1,8 @@
 import { Response, Request, NextFunction } from 'express'
 import { IMultiQuestion } from '../types/multi-question.js'
 import MultiQuestion from '../model/multi-question.js'
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
+import fs from 'fs-extra'
 
 export class MultiQuestionController {
   /**
@@ -26,14 +27,17 @@ export class MultiQuestionController {
   /**
    * Load MultiQuestions question to db.
    */
-   async loadMultiQuestion (): Promise<void>  {
-    const url: string = 'https://opentdb.com/api.php?amount=20'
+   async loadMultiQuestion (dataSource: string): Promise<void>  {
+    /* const url: string = 'https://opentdb.com/api.php?amount=20'
  
     const response = await fetch(url, {method: 'GET'})
     const resultJSON = await response.json()
 
     if ('results' in resultJSON) {
       MultiQuestion.insertMany(resultJSON.results)
-    }
+    } */
+
+    const data: IMultiQuestion[] = await fs.readJson(dataSource)
+    MultiQuestion.insertMany(data)
   }
 }  

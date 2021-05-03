@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
-    "outDir": "dist/js",
+    "outDir": "dist/server",
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,

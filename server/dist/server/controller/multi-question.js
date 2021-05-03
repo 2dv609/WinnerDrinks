@@ -1,5 +1,6 @@
 import MultiQuestion from '../model/multi-question.js';
-import fetch from 'node-fetch';
+// import fetch from 'node-fetch'
+import fs from 'fs-extra';
 export class MultiQuestionController {
     /**
      * Get MultiQuestions questions.
@@ -21,12 +22,16 @@ export class MultiQuestionController {
     /**
      * Load MultiQuestions question to db.
      */
-    async loadMultiQuestion() {
-        const url = 'https://opentdb.com/api.php?amount=20';
-        const response = await fetch(url, { method: 'GET' });
-        const resultJSON = await response.json();
+    async loadMultiQuestion(dataSource) {
+        /* const url: string = 'https://opentdb.com/api.php?amount=20'
+     
+        const response = await fetch(url, {method: 'GET'})
+        const resultJSON = await response.json()
+    
         if ('results' in resultJSON) {
-            MultiQuestion.insertMany(resultJSON.results);
-        }
+          MultiQuestion.insertMany(resultJSON.results)
+        } */
+        const data = await fs.readJson(dataSource);
+        MultiQuestion.insertMany(data);
     }
 }
