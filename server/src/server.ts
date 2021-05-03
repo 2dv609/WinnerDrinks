@@ -10,12 +10,11 @@ import { router } from './routes/router.js'
 import { connectDB } from './config/connectDB.js'
 import HttpException from './common/http-exception.js'
 import { PartyController } from './controller/party.js';
-import { MultiQuestionController } from './controller/multi-question.js';
 import { TriviaController } from './controller/trivia.js';
-import { resolve } from 'path';
- 
+import { BackToBackController } from './controller/back-to-back.js';
+
 /**
- * The main function of the application.
+ * The main function of the server.
  */
 const main = async (): Promise<void> => {
 
@@ -23,8 +22,8 @@ const main = async (): Promise<void> => {
 
   // Load game modules
   const partyController: PartyController = new PartyController()
+  const backToBackController: BackToBackController = new BackToBackController()
   const triviaController: TriviaController = new TriviaController()
-  const multiQuestionController: MultiQuestionController = new MultiQuestionController()
   const [,, ...gameModules] = process.argv
 
   const app = express()
@@ -33,9 +32,9 @@ const main = async (): Promise<void> => {
   
   if (gameModules.includes('all') || app.get('env') === 'production') { // load all game modules
     console.log('Load game modules...')
-    await triviaController.loadTrivia(join(directoryFullName, 'data/trivia.json'))
+    await backToBackController.loadBackToBack(join(directoryFullName, 'data/back-to-back.json'))
     await partyController.loadParty(join(directoryFullName, 'data/party.json'))
-    await multiQuestionController.loadMultiQuestion(join(directoryFullName, 'data/multi-question.json'))
+    await triviaController.loadTrivia(join(directoryFullName, 'data/trivia.json'))
   }
 
   //const baseURL = process.env.BASE_URL || '/'

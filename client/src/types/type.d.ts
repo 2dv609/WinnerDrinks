@@ -1,5 +1,5 @@
-// MultiQuestion types
-interface IMultiQuestion {
+// Trivia type
+interface ITrivia {
   _id: string
   category: string
   type: string
@@ -11,22 +11,22 @@ interface IMultiQuestion {
   createdAt?: string
   updatedAt?: string
 }
-interface MultiQuestionProps {
-  multiQuestion: IMultiQuestion
+interface TriviaProps {
+  triviaQuestion: ITrivia
 }
 
-// Trivia types
-interface ITrivia {
+// BackToBack type
+interface IBackToBack {
   _id: string
   question: string
   createdAt?: string
   updatedAt?: string
 }
-interface TriviaProps {
-  trivia: ITrivia
+interface BackToBackProps {
+  trivia: IBackToBack
 }
 
-// Party types
+// Party type
 interface IParty {
   _id: string
   question: string
@@ -41,5 +41,5 @@ interface PartyProps {
 type GameEventAPI = {
   message: string
   status: string
-  questions: ITrivia[] | IParty[] | IMultiQuestion[]
+  questions: IBackToBack[] | IParty[] | IMultiQuestion[]
 }

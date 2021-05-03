@@ -9,25 +9,25 @@ import { fileURLToPath } from 'url';
 import { router } from './routes/router.js';
 import { connectDB } from './config/connectDB.js';
 import { PartyController } from './controller/party.js';
-import { MultiQuestionController } from './controller/multi-question.js';
 import { TriviaController } from './controller/trivia.js';
+import { BackToBackController } from './controller/back-to-back.js';
 /**
- * The main function of the application.
+ * The main function of the server.
  */
 const main = async () => {
     await connectDB();
     // Load game modules
     const partyController = new PartyController();
+    const backToBackController = new BackToBackController();
     const triviaController = new TriviaController();
-    const multiQuestionController = new MultiQuestionController();
     const [, , ...gameModules] = process.argv;
     const app = express();
     const directoryFullName = dirname(fileURLToPath(import.meta.url));
     if (gameModules.includes('all') || app.get('env') === 'production') { // load all game modules
         console.log('Load game modules...');
-        await triviaController.loadTrivia(join(directoryFullName, 'data/trivia.json'));
+        await backToBackController.loadBackToBack(join(directoryFullName, 'data/back-to-back.json'));
         await partyController.loadParty(join(directoryFullName, 'data/party.json'));
-        await multiQuestionController.loadMultiQuestion(join(directoryFullName, 'data/multi-question.json'));
+        await triviaController.loadTrivia(join(directoryFullName, 'data/trivia.json'));
     }
     //const baseURL = process.env.BASE_URL || '/'
     app.use((req, res, next) => {
