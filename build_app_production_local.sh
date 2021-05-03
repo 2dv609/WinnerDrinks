@@ -32,12 +32,12 @@ if [ ! -f "$F1" ]; then
 fi
 
 
-# Build client for production 
+# Build client for local production 
 D4=server/dist/build
 if [ -d "$D4" ]; then
     rm -Rf $D4 
 fi
-cat client/.env.production > client/.env
+cat client/.env.production.local > client/.env
 npm run build --prefix client
 mv client/build server/dist/
 cat client/.env.development > client/.env
