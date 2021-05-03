@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 
-const baseUrl: string = "http://localhost:4000/"
+const baseUrl: string = `${process.env.REACT_APP_SERVER_URL}/api/`
+console.log(baseUrl)
 
 export const getMultiQuestion = async(): Promise<AxiosResponse<GameEventAPI>> => {
   try {
