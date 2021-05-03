@@ -60,7 +60,8 @@ npm run start
 
 * run to open container 
 ```
-$ docker exec -it mongodb_wd bash 
+$ winpty docker exec -it mongodb_wd // windows bash 
+$ docker exec -it mongodb_wd bash // linux and ubuntu 
 ```
 
 * run to open database (-u admin -p admin is tha default settings)
