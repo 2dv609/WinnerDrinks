@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const triviaSchema = new mongoose.Schema({
+const multiQuestionSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
@@ -25,4 +25,4 @@ const triviaSchema = new mongoose.Schema({
         required: true,
     },
 }, { timestamps: true });
-export default mongoose.model('Trivia', triviaSchema);
+export default mongoose.model('MultiQuestion', multiQuestionSchema);

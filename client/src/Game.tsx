@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Party from './Components/Party/Party'
 import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
-import './App.css';
 import Trivia from './Components/Trivia/Trivia';
 import MultiQuestion from './Components/MultiQuestion/MultiQuestion'
+import { AxiosResponse } from "axios"
+import { getMultiQuestion, getTrivia, getParty } from './util/API'
 
 
 function shuffle(array: Player[]) {
@@ -21,7 +22,23 @@ function shuffle(array: Player[]) {
 function Game(props: any) {
     const games = [WheelComponent, Party, Trivia, MultiQuestion];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
+    const [multiQuestionEvents, setMultiQuestionEvents] = useState<GameEventAPI | undefined>(undefined)
+    const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
+    const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     
+    // Load data to game events
+    useEffect(() => {        
+        const multiQuestionEvents: Promise<AxiosResponse<GameEventAPI>> = getMultiQuestion()
+        const triviaEvents: Promise<AxiosResponse<GameEventAPI>> = getTrivia()
+        const partyEvents: Promise<AxiosResponse<GameEventAPI>> = getParty()
+        
+        // maybe promise allSettled is better to use then if one promise is rejected you can use some cached events
+        Promise.all([multiQuestionEvents, triviaEvents, partyEvents]).then((response) => {
+            setMultiQuestionEvents(response[0].data)
+            setTriviaEvents(response[1].data)
+            setPartyEvents(response[2].data)
+        })
+      }, [])
 
     const addScore = (p: Player, score: number) => {
         p.addScore(score)
@@ -69,19 +86,28 @@ function Game(props: any) {
         return result;
     };
 
+    const getRandomGameEvent = (gameEventAPI: GameEventAPI): ITrivia | IParty | IMultiQuestion => {
+        return gameEventAPI.questions[Math.floor(Math.random() * gameEventAPI.questions.length)]
+    }
+
     const gameProps = { 
         getPlayers: getPlayers, 
         addScore: addScore, 
         makeWinnerAlert: makeWinnerAlert, 
         chooseRandomNewGame: chooseRandomNewGame
     };
+
+    if (!multiQuestionEvents || !triviaEvents || !partyEvents) {
+        return (<div><p>Loading...</p></div>)
+    }
+
     switch (currentGameIndex) {
         case 3: 
-            return (<div className="Game"><MultiQuestion gp={gameProps} /></div>);
+            return (<div className="Game"><MultiQuestion gp={gameProps} gameEvent={getRandomGameEvent(multiQuestionEvents)}/></div>);
         case 2:
-            return (<div className="Game"><Trivia gp={gameProps}/></div>);
+            return (<div className="Game"><Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/></div>);
         case 1:
-            return (<div className="Game"><Party gp={gameProps}/></div>);
+            return (<div className="Game"><Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/></div>);
         case 0:
             return (<div className="Game"><WheelComponent gp={gameProps} /></div>);
 
