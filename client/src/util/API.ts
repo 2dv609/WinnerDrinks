@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios'
 const baseUrl: string = `${process.env.REACT_APP_SERVER_URL}/api/`
 console.log(baseUrl)
 
-export const getMultiQuestion = async(): Promise<AxiosResponse<GameEventAPI>> => {
+export const getTrivia = async(): Promise<AxiosResponse<GameEventAPI>> => {
   try {
     const questions : AxiosResponse<GameEventAPI> = await axios.get(baseUrl + 'trivia')
 
@@ -14,7 +14,7 @@ export const getMultiQuestion = async(): Promise<AxiosResponse<GameEventAPI>> =>
   }    
 }
 
-export const getTrivia = async(): Promise<AxiosResponse<GameEventAPI>> => {  
+export const getBackToBack = async(): Promise<AxiosResponse<GameEventAPI>> => {  
   try {
     const questions : AxiosResponse<GameEventAPI> = await axios.get(baseUrl + 'back-to-back')
 
