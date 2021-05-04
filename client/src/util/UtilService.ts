@@ -1,10 +1,10 @@
 import { API } from './API'
-import { DB } from './DB'
+import { LocalDB } from './LocalDB'
 
 export class UtilService {
 
   private api: API = new API()// API(`${process.env.REACT_APP_SERVER_URL}/api/`) // = `${process.env.REACT_APP_SERVER_URL}/api/`
-  private db: DB = new DB() // DB('WinnerDrinks', 'triviaEvents', 'partyEvents', 'backToBackEvents')  
+  private db: LocalDB = new LocalDB() // DB('WinnerDrinks', 'triviaEvents', 'partyEvents', 'backToBackEvents')  
 
   public async getTrivia(): Promise<GameEventAPI | undefined> {
     if (window.indexedDB && await this.db.getTrivia()) { 

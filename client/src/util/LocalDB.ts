@@ -1,17 +1,18 @@
 import { openDB, IDBPDatabase } from 'idb'
+import { Question } from '../Components/Trivia/types/types';
 import { API } from './API'
 
 
-export class DB {
+export class LocalDB {
 
     private api: API = new API();
     private db: any
-    readonly dbName: string  = 'WinnerDrinks'
-    readonly triviaEvents: string = 'triviaEvents'
-    readonly partyEvents: string = 'partyEvents'
-    readonly backToBackEvents: string = 'backToBackEvents'
+    private readonly dbName: string  = 'WinnerDrinks'
+    private readonly triviaEvents: string = 'triviaEvents'
+    private readonly partyEvents: string = 'partyEvents'
+    private readonly backToBackEvents: string = 'backToBackEvents'
 
-    public async createObjectStore(): Promise<void> {
+    public async createObjectStores(): Promise<void> {
         try {
             const tableNames = [this.triviaEvents, this.partyEvents, this.backToBackEvents]
             this.db = await openDB(this.dbName, 1, {
@@ -38,18 +39,22 @@ export class DB {
         Promise.all([loadTrivia, loadParty, loadBackToBack]).catch(error => console.log('Load DB error:', error))
     }
 
+    private isTriviaQuestion(question: Question) {
+        if((question as ITrivia).type) {
+            return true
+          }
+          return false
+    }
+
     private async loadTrivia(): Promise<void> {
         try {
             const questions: ITrivia[] = []
             const triviaResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/trivia`)
-            const triviaResponseJSON: any = await triviaResponse.json()
         
-            triviaResponseJSON.questions.forEach((question: ITrivia) => {
-                if (questions) {
-                questions.push(question)
-                }
-
-            })
+            if (triviaResponse) {
+                const triviaResponseJSON: any = await triviaResponse.json()
+                triviaResponseJSON.questions.forEach((question: ITrivia) => questions.push(question))    
+            }
 
             this.loadTable(questions, this.triviaEvents)
 
@@ -66,7 +71,7 @@ export class DB {
         
             partyResponseJSON.questions.forEach((question: IParty) => {
                 if (questions) {
-                questions.push(question)
+                    questions.push(question)
                 }
 
             })

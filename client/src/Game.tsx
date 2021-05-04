@@ -4,7 +4,6 @@ import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import BackToBack from './Components/BackToBack/BackToBack';
 import Trivia from './Components/Trivia/Trivia'
-// import { AxiosResponse } from "axios"
 import { UtilService } from './util/UtilService'
 
 

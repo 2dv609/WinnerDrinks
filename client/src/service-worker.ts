@@ -13,9 +13,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { IDBPDatabase, openDB } from 'idb';
-import { DB } from './util/DB'
-import { API } from './util/API'
+import { LocalDB } from './util/LocalDB'
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -91,164 +89,9 @@ self.addEventListener('message', (event) => {
 self.addEventListener('activate', async (event) => {
   if (self.indexedDB) {
       console.log('IndexedDB is supported');
-      const db: DB = new DB()
-      await db.createObjectStore()
-      /* const questions: ITrivia[] = []
-      const triviaResponse: any = await fetch('http://localhost:4000/api/trivia')
-      const triviaEvent: any = await triviaResponse.json()
-      
-      triviaEvent.questions.forEach((question: ITrivia) => {
-        if (questions) {
-          questions.push(question)
-        }
-      }) */
-
+      const db: LocalDB = new LocalDB()
+      await db.createObjectStores()
       await db.loadDB()
-
-      
-      /* const request = self.indexedDB.open('WinnerDrinks', 1);
-      console.log('request:', request);
-      // get database from event
-      // var db: IDBPDatabase; // === request.result
-      
-      request.onsuccess = (event: any) => {
-          console.log('[onsuccess]', request.result);
-
-          // Store triviaEvents
-          fetch('http://localhost:4000/api/trivia')
-          .then((response) => {
-              return response.json()
-          })
-          .then((data) => {
-              const questions: ITrivia[] = []
-              console.log('Response data:', data)
-
-              console.log('event.target')
-              console.log(event.target)
-
-              data.questions.forEach((question: ITrivia) => {
-                  if (questions) {
-                    questions.push(question)
-                  }
-              })
-
-              // get database from event             
-              const db = event.target.result 
-              
-                
-              // create transaction from database
-              const transaction: any = db.transaction('triviaEvents', 'readwrite');
-              
-              // add success event handleer for transaction
-              // you should also add onerror, onabort event handlers
-              transaction.onsuccess = (event : Event) => {
-                  console.log('[Transaction] ALL DONE!');
-              };
-              
-              // get store from transaction
-              // returns IDBObjectStore instance
-              const questionsStore = transaction.objectStore('triviaEvents');// put products data in productsStore
-              
-              questions.forEach((question) => {
-                  questionsStore.add(question); // IDBRequest
-              });
-
-          })
-          .catch((error) => {
-              console.error('ERROR from event activate read stream: ' + error);
-          })
-
-          // Store partyEvents
-          fetch('http://localhost:4000/api/party')
-          .then((response) => {
-              return response.json()
-          })
-          .then((data) => {
-              const questions: IParty[] = [];
-              console.log('Response data:', data)
-
-              data.questions.forEach((question: IParty) => {
-                  questions.push(question)
-              })
-
-              // get database from event
-              const db = event.target.result; // === request.result
-
-              // create transaction from database
-              const transaction = db.transaction('partyEvents', 'readwrite');
-              
-              // add success event handleer for transaction
-              // you should also add onerror, onabort event handlers
-              transaction.onsuccess = (event: Event) => {
-                  console.log('[Transaction] ALL DONE!');
-              };
-              
-              // get store from transaction
-              // returns IDBObjectStore instance
-              const questionsStore = transaction.objectStore('partyEvents');// put products data in productsStore
-              questions.forEach(function(question) {
-                  questionsStore.add(question); // IDBRequest
-              });
-
-          })
-          .catch((error) => {
-              console.error('ERROR from event activate read stream: ' + error);
-          })
-
-          // Store backToBackEvents
-          fetch('http://localhost:4000/api/back-to-back')
-          .then((response) => {
-              return response.json()
-          })
-          .then((data) => {
-              const questions: IBackToBack[] = [];
-              console.log('Response data:', data)
-
-              data.questions.forEach((question: IBackToBack) => {
-                  questions.push(question)
-              })
-
-              // get database from event
-              const db = event.target.result; // === request.result
-
-              // create transaction from database
-              const transaction = db.transaction('backToBackEvents', 'readwrite');
-              
-              // add success event handleer for transaction
-              // you should also add onerror, onabort event handlers
-              transaction.onsuccess = (event: Event) => {
-                  console.log('[Transaction] ALL DONE!');
-              };
-              
-              // get store from transaction
-              // returns IDBObjectStore instance
-              const questionsStore = transaction.objectStore('backToBackEvents');// put products data in productsStore
-              questions.forEach(function(question) {
-                  questionsStore.add(question); // IDBRequest
-              });
-
-          })
-          .catch((error) => {
-              console.error('ERROR from event activate read stream: ' + error);
-          })
-      };
-      
-      request.onerror = (event) => {
-          console.log('[onerror]', request.error);
-      };
-
-      request.onupgradeneeded = (event: any) => {
-          const db = event.target.result;
-          const triviaStore = db.createObjectStore('triviaEvents', {keyPath: '_id'});
-          triviaStore.createIndex('trivia_events_id_unqiue', '_id', {unique: true});
-
-          const partyStore = db.createObjectStore('partyEvents', {keyPath: '_id'});
-          partyStore.createIndex('party_events_id_unqiue', '_id', {unique: true});
-
-          const backToBackStore = db.createObjectStore('backToBackEvents', {keyPath: '_id'});
-          backToBackStore.createIndex('back_to_back_events_id_unqiue', '_id', {unique: true});
-
-      }; */
 
   } else {
       console.log('IndexedDB is NOT supported');
