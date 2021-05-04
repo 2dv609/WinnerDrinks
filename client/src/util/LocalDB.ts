@@ -27,7 +27,7 @@ export class LocalDB {
             })
 
         } catch (error) {
-            console.log('createOnjectStore error:', error)
+            console.log('createObjectStores error:', error)
         }
     }
 
@@ -50,7 +50,7 @@ export class LocalDB {
         try {
             const questions: ITrivia[] = []
             const triviaResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/trivia`)
-        
+            
             if (triviaResponse) {
                 const triviaResponseJSON: any = await triviaResponse.json()
                 triviaResponseJSON.questions.forEach((question: ITrivia) => questions.push(question))    
@@ -59,7 +59,7 @@ export class LocalDB {
             this.loadTable(questions, this.triviaEvents)
 
         }  catch (error) {
-            console.log('Load table error:', error)
+            console.log('Load trivia error:', error)
         }
     }
 
@@ -67,19 +67,16 @@ export class LocalDB {
         try {
             const questions: IParty[] = []
             const partyResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/party`)
-            const partyResponseJSON: any = await partyResponse.json()
-        
-            partyResponseJSON.questions.forEach((question: IParty) => {
-                if (questions) {
-                    questions.push(question)
-                }
-
-            })
+            
+            if (partyResponse) {
+                const partyResponseJSON: any = await partyResponse.json()
+                partyResponseJSON.questions.forEach((question: IParty) => questions.push(question))    
+            }
 
             this.loadTable(questions, this.partyEvents)
 
         }  catch (error) {
-            console.log('Load table error:', error)
+            console.log('Load party error:', error)
         }
     }
 
@@ -87,19 +84,16 @@ export class LocalDB {
         try {
             const questions: IBackToBack[] = []
             const backToBackResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/back-to-back`)
-            const backToBackResponseJSON: any = await backToBackResponse.json()
-        
-            backToBackResponseJSON.questions.forEach((question: IBackToBack) => {
-                if (questions) {
-                    questions.push(question)
-                }
-
-            })
+            
+            if (backToBackResponse) {
+                const backToBackResponseJSON: any = await backToBackResponse.json()
+                backToBackResponseJSON.questions.forEach((question: IBackToBack) => questions.push(question))    
+            }
 
             this.loadTable(questions, this.backToBackEvents)
 
         }  catch (error) {
-            console.log('Load table error:', error)
+            console.log('Load back-to-back error:', error)
         }
     }
 

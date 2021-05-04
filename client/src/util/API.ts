@@ -6,7 +6,7 @@ export class API {
 
   public async getTrivia(): Promise<GameEventAPI | undefined> {
     try {
-      const questions : AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'trivia')
+      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'trivia')
 
       return questions.data
     
@@ -18,7 +18,7 @@ export class API {
 
   public async getBackToBack(): Promise<GameEventAPI | undefined> {  
     try {
-      const questions : AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'back-to-back')
+      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'back-to-back')
 
       return questions.data
     
@@ -30,7 +30,7 @@ export class API {
 
   public async getParty(): Promise<GameEventAPI | undefined> {
     try{
-      const questions : AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'party')
+      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'party')
 
       return questions.data
     
