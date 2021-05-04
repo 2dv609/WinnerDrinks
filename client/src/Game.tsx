@@ -4,8 +4,8 @@ import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import BackToBack from './Components/BackToBack/BackToBack';
 import Trivia from './Components/Trivia/Trivia'
-import { AxiosResponse } from "axios"
-import { getTrivia, getBackToBack, getParty } from './util/API'
+// import { AxiosResponse } from "axios"
+import { UtilService } from './util/UtilService'
 
 
 function shuffle(array: Player[]) {
@@ -27,16 +27,21 @@ function Game(props: any) {
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     
     // Load data to game events
-    useEffect(() => {        
-        const triviaEvents: Promise<AxiosResponse<GameEventAPI>> = getTrivia()
-        const backToBackEvents: Promise<AxiosResponse<GameEventAPI>> = getBackToBack()
-        const partyEvents: Promise<AxiosResponse<GameEventAPI>> = getParty()
-        
+    useEffect(() => {
+        const utilService: UtilService = new UtilService()
+        let triviaEvents: Promise<GameEventAPI | undefined> = utilService.getTrivia()
+        let backToBackEvents: Promise<GameEventAPI | undefined> = utilService.getBackToBack()
+        let partyEvents: Promise<GameEventAPI | undefined> = utilService.getParty()
+
         // maybe promise allSettled is better to use then if one promise is rejected you can use some cached events
         Promise.all([triviaEvents, backToBackEvents, partyEvents]).then((response) => {
-            setTriviaEvents(response[0].data)
-            setBackToBackEvents(response[1].data)
-            setPartyEvents(response[2].data)
+            setTriviaEvents(response[0])
+            setBackToBackEvents(response[1])
+            setPartyEvents(response[2])
+
+            console.log('response[0]', response[0])
+            console.log('response[1]', response[1])
+            console.log('response[2]', response[2])
         })
       }, [])
 

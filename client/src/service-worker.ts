@@ -14,6 +14,8 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 import { IDBPDatabase, openDB } from 'idb';
+import { DB } from './util/DB'
+import { API } from './util/API'
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -27,6 +29,8 @@ clientsClaim();
 // eslint-disable-next-line no-restricted-globals
 // Your custom service worker code goes here.
 precacheAndRoute(self.__WB_MANIFEST);
+
+console.log('self.__WB_MANIFEST:', self.__WB_MANIFEST)
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -84,10 +88,26 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 
 // Load IndexedDB 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', async (event) => {
   if (self.indexedDB) {
       console.log('IndexedDB is supported');
-      const request = self.indexedDB.open('WinnerDrinks', 1);
+      const db: DB = new DB()
+      await db.createObjectStore()
+      /* const questions: ITrivia[] = []
+      const triviaResponse: any = await fetch('http://localhost:4000/api/trivia')
+      const triviaEvent: any = await triviaResponse.json()
+      
+      triviaEvent.questions.forEach((question: ITrivia) => {
+        if (questions) {
+          questions.push(question)
+        }
+      }) */
+
+      await db.loadDB()
+
+      
+      /* const request = self.indexedDB.open('WinnerDrinks', 1);
+      console.log('request:', request);
       // get database from event
       // var db: IDBPDatabase; // === request.result
       
@@ -213,7 +233,7 @@ self.addEventListener('activate', (event) => {
           })
       };
       
-      request.onerror = function(event) {
+      request.onerror = (event) => {
           console.log('[onerror]', request.error);
       };
 
@@ -228,7 +248,7 @@ self.addEventListener('activate', (event) => {
           const backToBackStore = db.createObjectStore('backToBackEvents', {keyPath: '_id'});
           backToBackStore.createIndex('back_to_back_events_id_unqiue', '_id', {unique: true});
 
-      };
+      }; */
 
   } else {
       console.log('IndexedDB is NOT supported');

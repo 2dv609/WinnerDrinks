@@ -20,8 +20,6 @@ function App(props: any) {
   if (!play) {
     return (
       <div className="App section">
-        {console.log('PUBLIC_URL')}
-        {console.log(process.env.PUBLIC_URL)}
         <Login setter={addUser} />
         <input className="button" type="button" value="Done" onClick={() => {
           if (names.length < 2) return; // must be at least two players. 
