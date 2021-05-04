@@ -4,10 +4,6 @@ export class API {
 
   private readonly baseUrl: string  = `${process.env.REACT_APP_SERVER_URL}/api/`
 
-  /* constructor(baseUrl: string) {
-    this.baseUrl = baseUrl;
-  } */
-
   public async getTrivia(): Promise<GameEventAPI | undefined> {
     try {
       const questions : AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'trivia')

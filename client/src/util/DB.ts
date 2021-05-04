@@ -10,18 +10,6 @@ export class DB {
     readonly triviaEvents: string = 'triviaEvents'
     readonly partyEvents: string = 'partyEvents'
     readonly backToBackEvents: string = 'backToBackEvents'
-    /* private db: any
-    private readonly dbName: string  // = 'WinnerDrinks'
-    private readonly triviaEvents: string  // = 'triviaEvents'
-    private readonly partyEvents: string // = 'partyEvents'
-    private readonly backToBackEvents: string // = 'backToBackEvents'
-
-    constructor(dbName: string, triviaEvents: string, partyEvents: string, backToBackEvents: string) {
-        this.dbName = dbName
-        this.triviaEvents = triviaEvents;
-        this.partyEvents = partyEvents;
-        this.backToBackEvents = backToBackEvents;
-    } */
 
     public async createObjectStore(): Promise<void> {
         try {
