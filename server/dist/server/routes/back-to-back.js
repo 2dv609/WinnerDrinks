@@ -1,6 +1,6 @@
-import { Router } from "express";
+import { Router } from 'express';
 import { BackToBackController } from '../controller/back-to-back.js';
 const controller = new BackToBackController();
 const router = Router();
-router.get("/", controller.index);
+router.get('/', controller.index);
 export { router };

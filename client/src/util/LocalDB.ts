@@ -1,11 +1,8 @@
 import { openDB, IDBPDatabase } from 'idb'
-import { Question } from '../Components/Trivia/types/types';
-import { API } from './API'
+import IUtilService from './IUtilService'
 
+export default class LocalDB implements IUtilService {
 
-export class LocalDB {
-
-    private api: API = new API();
     private db: any
     readonly dbName: string  = 'WinnerDrinks'
     readonly triviaEvents: string = 'triviaEvents'
@@ -37,13 +34,6 @@ export class LocalDB {
         const loadBackToBack = this.loadBackToBack()
 
         Promise.all([loadTrivia, loadParty, loadBackToBack]).catch(error => console.log('Load DB error:', error))
-    }
-
-    private isTriviaQuestion(question: Question) {
-        if((question as ITrivia).type) {
-            return true
-          }
-          return false
     }
 
     private async loadTrivia(): Promise<void> {
@@ -119,12 +109,10 @@ export class LocalDB {
             const transaction = this.db.transaction(this.triviaEvents, 'readonly')
             const store = transaction.objectStore(this.triviaEvents)
             const questions = await store.getAll()
-            // console.log('Get All Data', JSON.stringify(questions));
             return { questions: questions }
         
         } catch (error) {
             console.log('error:', error)
-            // throw new Error(error)
         }
     }
 
@@ -134,12 +122,10 @@ export class LocalDB {
             const transaction = this.db.transaction(this.backToBackEvents, 'readonly')
             const store = transaction.objectStore(this.backToBackEvents)
             const questions = await store.getAll()
-            // console.log('Get All Data', JSON.stringify(questions));
             return { questions: questions }
         
         } catch (error) {
             console.log('error:', error)
-            // throw new Error(error)
         }
     }
 
@@ -149,12 +135,10 @@ export class LocalDB {
             const transaction = this.db.transaction(this.partyEvents, 'readonly')
             const store = transaction.objectStore(this.partyEvents)
             const questions = await store.getAll()
-            // console.log('Get All Data', JSON.stringify(questions));
             return { questions: questions }
         
         } catch (error) {
             console.log('error:', error)
-            // throw new Error(error)
         }
     }
 

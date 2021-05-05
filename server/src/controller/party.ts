@@ -7,7 +7,7 @@ export class PartyController {
   /**
    * Get party questions.
    */
-  async index (req: Request, res:Response, next:NextFunction) {
+  async index (req: Request, res: Response, next: NextFunction) {
     try {
 
       const questions: IParty[] = await Party.find()
@@ -15,7 +15,7 @@ export class PartyController {
       res
         .status(200)
         .json({ 
-            message: "Party questions", 
+            message: 'Party questions', 
             questions: questions 
         })
     } catch (error) {

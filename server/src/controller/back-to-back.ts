@@ -15,7 +15,7 @@ export class BackToBackController {
       res
         .status(200)
         .json({ 
-            message: "Back to back questions", 
+            message: 'Back to back questions', 
             questions: questions 
         })
     } catch (error) {

@@ -4,7 +4,8 @@ import Player from './Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import BackToBack from './Components/BackToBack/BackToBack';
 import Trivia from './Components/Trivia/Trivia'
-import { UtilService } from './util/UtilService'
+import getUtilService from './util/UtilServiceFactory'
+import IUtilService from './util/IUtilService'
 
 
 function shuffle(array: Player[]) {
@@ -27,22 +28,20 @@ function Game(props: any) {
     
     // Load data to game events
     useEffect(() => {
-        const utilService: UtilService = new UtilService()
-        let triviaEvents: Promise<GameEventAPI | undefined> = utilService.getTrivia()
-        let backToBackEvents: Promise<GameEventAPI | undefined> = utilService.getBackToBack()
-        let partyEvents: Promise<GameEventAPI | undefined> = utilService.getParty()
+        getUtilService()
+            .then((s: IUtilService) => {
+                // maybe promise allSettled is better to use then if one promise is rejected you can use some cached events
+                Promise.all([s.getTrivia(), s.getBackToBack(), s.getParty()]).then((response) => {
+                    setTriviaEvents(response[0])
+                    setBackToBackEvents(response[1])
+                    setPartyEvents(response[2])
 
-        // maybe promise allSettled is better to use then if one promise is rejected you can use some cached events
-        Promise.all([triviaEvents, backToBackEvents, partyEvents]).then((response) => {
-            setTriviaEvents(response[0])
-            setBackToBackEvents(response[1])
-            setPartyEvents(response[2])
-
-            console.log('response[0]', response[0])
-            console.log('response[1]', response[1])
-            console.log('response[2]', response[2])
-        })
-      }, [])
+                    console.log('response[0]', response[0])
+                    console.log('response[1]', response[1])
+                    console.log('response[2]', response[2])
+                })
+            })
+    }, [])
 
     const addScore = (p: Player, score: number) => {
         p.addScore(score)

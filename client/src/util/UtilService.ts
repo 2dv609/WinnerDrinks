@@ -1,10 +1,8 @@
-import { API } from './API'
-import { LocalDB } from './LocalDB'
+import API from './API'
+import LocalDB from './LocalDB'
+import IUtilService from './IUtilService'
 
-/**
- * @todo: Use try/catch/finally instead of if else
- */
-export class UtilService {
+export default class UtilService implements IUtilService {
 
   private api: API = new API()
   private db: LocalDB = new LocalDB()  

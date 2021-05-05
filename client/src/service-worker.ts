@@ -13,7 +13,7 @@ import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
-import { LocalDB } from './util/LocalDB'
+import LocalDB from './util/LocalDB'
 
 declare const self: ServiceWorkerGlobalScope;
 

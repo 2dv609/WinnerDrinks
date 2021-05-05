@@ -16,7 +16,7 @@ export class TriviaController {
       res
         .status(200)
         .json({ 
-            message: "Trivia questions", 
+            message: 'Trivia questions', 
             questions: questions 
         })
     } catch (error) {
