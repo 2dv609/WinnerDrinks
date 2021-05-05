@@ -6,7 +6,7 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server/server.js all",
+    "start": "node dist/server/server.js",
     "start:dev": "concurrently \"tsc -w\" \"nodemon -r dotenv/config dist/server/server.js\"",
     "start:dev:init": "concurrently \"tsc -w\" \"nodemon -r dotenv/config dist/server/server.js all\""
   },

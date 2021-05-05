@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Build application for production
+# Build application for local production
+# Use this script if you want to test service workers and indexedDB on local machine.
 
 # Install npm packages on server for production
 D1=server/node_modules
@@ -29,22 +30,16 @@ F1=client/.env
 if [ ! -f "$F1" ]; then
     echo "File client/.env is missing"
     exit 1
-else
-    echo "REACT_APP_SERVER_URL=https://winner-drinks.xyz
-PUBLIC_URL=https://winner-drinks.xyz" > $F1    
-
 fi
 
 
-# Build client for production 
+# Build client for local production 
 D4=server/dist/build
 if [ -d "$D4" ]; then
     rm -Rf $D4 
 fi
 npm run build --prefix client
 mv client/build server/dist/
-echo "REACT_APP_SERVER_URL=http://localhost:4000 
-PUBLIC_URL=http://localhost:4000" > $F1
 
 
 # Copy server/package.json to server/dist

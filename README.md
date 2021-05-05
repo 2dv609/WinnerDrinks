@@ -7,6 +7,21 @@ You'll find the client side code built in React and TypeScript in the directory 
 and the server side code in the directory *server*. 
 
 
+### Build app for production
+```
+$ ./build_app_production.sh
+```
+
+### Build production for local testing of serviceworkers and IndexedDB
+```
+$ ./build_app_production_local.sh
+```
+
+### Build production folder
+```
+server/dist
+```
+
 ### Git
 
 1. Clone the dev branch

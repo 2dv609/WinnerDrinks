@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# Load database and start application in production
+# Load database and start application in local production
+# Use this script if yo want to run production on local machine
 
 # Server
 export PORT=4000
@@ -14,5 +15,4 @@ export NODE_ENV=production
 npm ci --production
 docker-compose -f container/docker-compose.yaml down
 docker-compose -f container/docker-compose.yaml up --build -d
-pm2 delete WinnerDrinks:4000
-pm2 start server/server.js --name WinnerDrinks:4000
+node server/server.js

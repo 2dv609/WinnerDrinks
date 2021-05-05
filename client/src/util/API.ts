@@ -1,37 +1,39 @@
 import axios, { AxiosResponse } from 'axios'
 
-const baseUrl: string = `${process.env.REACT_APP_SERVER_URL}/api/`
-console.log(baseUrl)
+export class API {
 
-export const getTrivia = async(): Promise<AxiosResponse<GameEventAPI>> => {
-  try {
-    const questions : AxiosResponse<GameEventAPI> = await axios.get(baseUrl + 'trivia')
+  private readonly baseUrl: string = `${process.env.REACT_APP_SERVER_URL}/api/`
 
-    return questions
-  } catch (error)
-  {
-    throw new Error(error)    
-  }    
-}
+  public async getTrivia(): Promise<GameEventAPI | undefined> {
+    try {
+      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'trivia')
 
-export const getBackToBack = async(): Promise<AxiosResponse<GameEventAPI>> => {  
-  try {
-    const questions : AxiosResponse<GameEventAPI> = await axios.get(baseUrl + 'back-to-back')
+      return questions.data
 
-    return questions
-  } catch (error)
-  {
-    throw new Error(error)    
-  }    
-}
+    } catch (error) {
+      console.log('error:', error)
+    }
+  }
 
-export const getParty = async(): Promise<AxiosResponse<GameEventAPI>> => {
-  try{
-    const questions : AxiosResponse<GameEventAPI> = await axios.get(baseUrl + 'party')
+  public async getBackToBack(): Promise<GameEventAPI | undefined> {
+    try {
+      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'back-to-back')
 
-    return questions
-  } catch (error)
-  {
-    throw new Error(error)    
-  }    
+      return questions.data
+
+    } catch (error) {
+      console.log('error:', error)
+    }
+  }
+
+  public async getParty(): Promise<GameEventAPI | undefined> {
+    try {
+      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'party')
+
+      return questions.data
+
+    } catch (error) {
+      console.log('error:', error)
+    }
+  }
 }

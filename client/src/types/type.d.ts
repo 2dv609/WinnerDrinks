@@ -37,9 +37,11 @@ interface PartyProps {
   party: IParty
 }
 
+type Question = (IBackToBack | IParty | ITrivia) 
+
 // General type for game events
 type GameEventAPI = {
-  message: string
-  status: string
-  questions: IBackToBack[] | IParty[] | IMultiQuestion[]
+  message?: string
+  status?: string
+  questions: IBackToBack[] | IParty[] | ITrivia[]
 }
