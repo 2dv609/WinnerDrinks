@@ -35,7 +35,7 @@
   },
   "scripts": {
     "start": "react-scripts start -r dotenv/config",
-    "build": "react-scripts build",
+    "build": "react-scripts build -r dotenv/config dotenv_config_path=/env/.env",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -59,6 +59,6 @@
   },
   "devDependencies": {
     "@types/node-fetch": "^2.5.10",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.5.1"
   }
 }

@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Build application for production
-
+# Build application for local production
 
 # Install npm packages on server for production
 D1=server/node_modules
@@ -25,10 +24,11 @@ fi
 npm run build --prefix server
 
 
-# Create client/dotenv if not exist
+# Check if client/.env exists
 F1=client/.env
 if [ ! -f "$F1" ]; then
-    touch $F1
+    echo "File client/.env is missing"
+    exit 1
 fi
 
 
@@ -37,10 +37,8 @@ D4=server/dist/build
 if [ -d "$D4" ]; then
     rm -Rf $D4 
 fi
-cat client/.env.production.local > client/.env
 npm run build --prefix client
 mv client/build server/dist/
-cat client/.env.development > client/.env
 
 
 # Copy server/package.json to server/dist

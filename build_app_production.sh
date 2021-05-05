@@ -2,7 +2,6 @@
 
 # Build application for production
 
-
 # Install npm packages on server for production
 D1=server/node_modules
 if [ ! -d "$D1" ]; then
@@ -25,10 +24,15 @@ fi
 npm run build --prefix server
 
 
-# Create client/dotenv if not exist
+# Check if client/.env exists
 F1=client/.env
 if [ ! -f "$F1" ]; then
-    touch $F1
+    echo "File client/.env is missing"
+    exit 1
+else
+    echo "REACT_APP_SERVER_URL=\"https://winner-drinks.xyz\"
+PUBLIC_URL=\"https://winner-drinks.xyz\"" > $F1    
+
 fi
 
 
@@ -37,10 +41,10 @@ D4=server/dist/build
 if [ -d "$D4" ]; then
     rm -Rf $D4 
 fi
-cat client/.env.production > client/.env
 npm run build --prefix client
 mv client/build server/dist/
-cat client/.env.development > client/.env
+echo "REACT_APP_SERVER_URL=\"http://localhost:4000\" 
+PUBLIC_URL=\"http://localhost:4000\"" > $F1
 
 
 # Copy server/package.json to server/dist
