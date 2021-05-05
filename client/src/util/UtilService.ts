@@ -15,13 +15,13 @@ export default class UtilService implements IUtilService {
 
   public async getBackToBack(): Promise<GameEventAPI | undefined> {
     
-    return await this.db.getTrivia() || await this.api.getTrivia() 
+    return await this.db.getBackToBack() || await this.api.getBackToBack() 
         
   }
 
   public async getParty(): Promise<GameEventAPI | undefined> {
 
-    return await this.db.getTrivia() || await this.api.getTrivia() 
+    return await this.db.getParty() || await this.api.getParty() 
         
   }
 }

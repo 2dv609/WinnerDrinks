@@ -9,7 +9,6 @@ export default async function getUtilService(): Promise<IUtilService> {
 
     if (window.indexedDB) {
         if (await api.checkStatus()) {
-            console.log('hej')
             return new UtilService()
             
         } else {
