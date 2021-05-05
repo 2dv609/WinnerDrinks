@@ -30,8 +30,8 @@ if [ ! -f "$F1" ]; then
     echo "File client/.env is missing"
     exit 1
 else
-    echo "REACT_APP_SERVER_URL=\"https://winner-drinks.xyz\"
-PUBLIC_URL=\"https://winner-drinks.xyz\"" > $F1    
+    echo "REACT_APP_SERVER_URL=https://winner-drinks.xyz
+PUBLIC_URL=https://winner-drinks.xyz" > $F1    
 
 fi
 
@@ -43,8 +43,8 @@ if [ -d "$D4" ]; then
 fi
 npm run build --prefix client
 mv client/build server/dist/
-echo "REACT_APP_SERVER_URL=\"http://localhost:4000\" 
-PUBLIC_URL=\"http://localhost:4000\"" > $F1
+echo "REACT_APP_SERVER_URL=http://localhost:4000 
+PUBLIC_URL=http://localhost:4000" > $F1
 
 
 # Copy server/package.json to server/dist

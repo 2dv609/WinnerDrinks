@@ -7,15 +7,15 @@ export class LocalDB {
 
     private api: API = new API();
     private db: any
-    private readonly dbName: string  = 'WinnerDrinks'
-    private readonly triviaEvents: string = 'triviaEvents'
-    private readonly partyEvents: string = 'partyEvents'
-    private readonly backToBackEvents: string = 'backToBackEvents'
+    readonly dbName: string  = 'WinnerDrinks'
+    readonly triviaEvents: string = 'triviaEvents'
+    readonly partyEvents: string = 'partyEvents'
+    readonly backToBackEvents: string = 'backToBackEvents'
 
     public async createObjectStores(): Promise<void> {
         try {
             const tableNames = [this.triviaEvents, this.partyEvents, this.backToBackEvents]
-            this.db = await openDB(this.dbName, 1, {
+            this.db = await openDB(this.dbName, 1, { // use undefined for current version https://github.com/jakearchibald/idb#opendb 
                 upgrade(db: IDBPDatabase) {
                     for (const tableName of tableNames) {
                         if (db.objectStoreNames.contains(tableName)) {

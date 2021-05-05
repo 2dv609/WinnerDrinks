@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Build application for local production
+# Use this script if you want to test service workers and indexedDB on local machine.
 
 # Install npm packages on server for production
 D1=server/node_modules

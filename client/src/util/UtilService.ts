@@ -1,35 +1,29 @@
 import { API } from './API'
 import { LocalDB } from './LocalDB'
 
+/**
+ * @todo: Use try/catch/finally instead of if else
+ */
 export class UtilService {
 
-  private api: API = new API()// API(`${process.env.REACT_APP_SERVER_URL}/api/`) // = `${process.env.REACT_APP_SERVER_URL}/api/`
-  private db: LocalDB = new LocalDB() // DB('WinnerDrinks', 'triviaEvents', 'partyEvents', 'backToBackEvents')  
+  private api: API = new API()
+  private db: LocalDB = new LocalDB()  
 
   public async getTrivia(): Promise<GameEventAPI | undefined> {
-    if (window.indexedDB && await this.db.getTrivia()) { 
-        return this.db.getTrivia()
+
+    return await this.db.getTrivia() || await this.api.getTrivia() 
     
-    } else if (await this.api.getTrivia()) {
-        return this.api.getTrivia()  
-    }
   }
 
-  public async getBackToBack(): Promise<GameEventAPI | undefined> {  
-    if (window.indexedDB && await this.db.getBackToBack()) { 
-        return this.db.getBackToBack()
+  public async getBackToBack(): Promise<GameEventAPI | undefined> {
     
-    } else if (await this.api.getBackToBack()) {
-        return this.api.getBackToBack()  
-    }    
+    return await this.db.getTrivia() || await this.api.getTrivia() 
+        
   }
 
   public async getParty(): Promise<GameEventAPI | undefined> {
-    if (window.indexedDB && await this.db.getParty()) { 
-        return this.db.getParty()
-    
-    } else if (await this.api.getParty()) {
-        return this.api.getParty()  
-    }    
+
+    return await this.db.getTrivia() || await this.api.getTrivia() 
+        
   }
 }

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Load database and start application in local production
+# Use this script if yo want to run production on local machine
 
 # Server
 export PORT=4000
