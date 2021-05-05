@@ -37,11 +37,14 @@ interface PartyProps {
   party: IParty
 }
 
-type Question = (IBackToBack | IParty | ITrivia) 
-
 // General type for game events
 type GameEventAPI = {
   message?: string
   status?: string
   questions: IBackToBack[] | IParty[] | ITrivia[]
+}
+
+// Type for checking API status
+type connectionAPI = {
+  connectionAPI: number
 }

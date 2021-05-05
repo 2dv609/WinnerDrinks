@@ -1,14 +1,27 @@
 import axios, { AxiosResponse } from 'axios'
+import IUtilService from './IUtilService'
 
-export class API {
+export default class API implements IUtilService {
 
   private readonly baseUrl: string = `${process.env.REACT_APP_SERVER_URL}/api/`
 
+  public async checkStatus(): Promise<any> {
+    try {
+      const response: AxiosResponse<connectionAPI> = await axios.get(this.baseUrl + 'status')
+
+      return response.data.connectionAPI === 1
+
+    } catch (error) {
+      console.log('error:', error)
+      return false
+    }
+  }
+
   public async getTrivia(): Promise<GameEventAPI | undefined> {
     try {
-      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'trivia')
+      const response: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'trivia')
 
-      return questions.data
+      return response.data
 
     } catch (error) {
       console.log('error:', error)
@@ -17,9 +30,9 @@ export class API {
 
   public async getBackToBack(): Promise<GameEventAPI | undefined> {
     try {
-      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'back-to-back')
+      const response: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'back-to-back')
 
-      return questions.data
+      return response.data
 
     } catch (error) {
       console.log('error:', error)
@@ -28,9 +41,9 @@ export class API {
 
   public async getParty(): Promise<GameEventAPI | undefined> {
     try {
-      const questions: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'party')
+      const response: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + 'party')
 
-      return questions.data
+      return response.data
 
     } catch (error) {
       console.log('error:', error)

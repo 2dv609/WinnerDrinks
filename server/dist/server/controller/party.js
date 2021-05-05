@@ -10,7 +10,7 @@ export class PartyController {
             res
                 .status(200)
                 .json({
-                message: "Party questions",
+                message: 'Party questions',
                 questions: questions
             });
         }

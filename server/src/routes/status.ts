@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { BackToBackController } from '../controller/back-to-back.js'
+import { StatusController } from '../controller/status.js'
 
-const controller = new BackToBackController()
+const controller = new StatusController()
 
 const router: Router = Router()
 
