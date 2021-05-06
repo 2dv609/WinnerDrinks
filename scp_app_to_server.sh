@@ -11,7 +11,10 @@ fi
 # Copy app to production server
 if [ "$1" = "" ]; then
 	echo "Set parameter \$1 to ssh key path"
+
+elif [ "$2" = "" ]; then
+	echo "Set parameter \$2 to <user>@<server_public_IP>"	
 else
-	scp -r -i $1 server/dist/* ubuntu@194.47.177.14:/var/www/winner-drinks
+	scp -r -i $1 server/dist/* $2:/var/www/winner-drinks
 fi
 
