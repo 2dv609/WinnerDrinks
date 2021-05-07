@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "test/Components/BackToBack.test.tsx"  ]
 }

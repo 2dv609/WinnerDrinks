@@ -18,7 +18,7 @@ function BackToBack(props: any) {
     // Either both win, or both lose.
     return (
         <div className="box container">
-            <div className="content">{props.gameEvent.question}</div>
+            <div data-testid="game-event" className="content">{props.gameEvent.question}</div>
             <h3 className="title is-6">Were both correct?</h3>
 
             <button className="button" onClick={() => {

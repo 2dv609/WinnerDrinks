@@ -6,7 +6,7 @@ function Party(props: any) {
     const [players, setPlayers] = useState(gp.getPlayers(2));
     
     function addPlayerToGameEvent(): string {
-        const gameEvent:string = props.gameEvent.question
+        const gameEvent: string = props.gameEvent.question
         return gameEvent.replace('{players[0]}', `${players[0]}`).replace('{players[1]}', `${players[1]}`)
     }
 
@@ -18,7 +18,7 @@ function Party(props: any) {
 
     return (
         <div className="box">
-            <div className="content">{addPlayerToGameEvent()}</div>
+            <div data-testid="game-event" className="content">{addPlayerToGameEvent()}</div>
             <h3>Who won?</h3>
 
             <button className="button" onClick={() => {

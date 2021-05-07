@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Game module should match snapshot 1`] = `
+<div
+  className="box container"
+>
+  <div
+    className="content"
+    data-testid="game-event"
+  >
+    This is a mock question
+  </div>
+  <h3
+    className="title is-6"
+  >
+    Were both correct?
+  </h3>
+  <button
+    className="button"
+    onClick={[Function]}
+  >
+    They were correct!
+  </button>
+  <button
+    className="button"
+    onClick={[Function]}
+  >
+    They were wrong!
+  </button>
+</div>
+`;
