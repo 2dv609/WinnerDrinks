@@ -22,7 +22,7 @@ $ ./build_app_production_local.sh
 server/dist
 ```
 
-### Git
+### Git Workflow
 
 1. Clone the dev branch
  ```
