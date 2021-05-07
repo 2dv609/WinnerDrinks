@@ -43,7 +43,7 @@ $ git comm -m <commit>
 $ git push -u origin <new_branch>
 ```
 
-4. Merge <new_branch> to <dev> on github. 
+4. Merge <new_branch> to __dev branch__ on github. 
   
   * Make sure you merge <new_branch> branch to the dev branch. 
   
