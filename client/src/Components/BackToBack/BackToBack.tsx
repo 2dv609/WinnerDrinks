@@ -18,6 +18,7 @@ function BackToBack(props: any) {
     // Either both win, or both lose.
     return (
         <div className="box container">
+            <div>{players[0].toString()} and {players[1].toString()}, count to 3 and make your guess.</div>
             <div className="content">{props.gameEvent.question}</div>
             <h3 className="title is-6">Were both correct?</h3>
 
