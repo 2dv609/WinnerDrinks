@@ -10,7 +10,7 @@
  function SkipGame(props: any) {
     return (
         <button className="button is-danger" onClick={() => {
-            props.gp.makeWinnerAlert(null);
+            props.gp.makeWinnerAlert(null, "Skipped.");
             props.gp.chooseRandomNewGame();
         }} >Skip</button>
     )
