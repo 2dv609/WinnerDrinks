@@ -43,7 +43,7 @@ const Trivia = (props: any) => {
     } else {
       setQuestionNumber(questionNumber + 1);
       gp.chooseRandomNewGame()
-      gp.makeWinnerAlert(null)
+      gp.makeWinnerAlert(null, "Wrong answer!")
     }
   }
 

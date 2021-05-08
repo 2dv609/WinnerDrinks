@@ -27,6 +27,7 @@ function Game(props: any) {
     const [backToBackEvents, setBackToBackEvents] = useState<GameEventAPI | undefined>(undefined)
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     const [winners, setWinners] = useState<Player[] | null>([]);
+    const [flash, setFlash] = useState<string | null>();
     
     // Load data to game events
     useEffect(() => {
@@ -54,7 +55,7 @@ function Game(props: any) {
      * 
      * @param p The winner(s). Null means no points awarded. 
      */
-    const makeWinnerAlert = (p: Player | Player[] | null) => {
+    const makeWinnerAlert = (p: Player | Player[] | null, message?: string) => {
         if (Array.isArray(p)) { // If there are several winners
             setWinners(p); // This is the new array
         } else if (p === null) { // null == no points awarded, lost game
@@ -63,6 +64,11 @@ function Game(props: any) {
             setWinners([p]); // Send an array with only that player. 
         } else {
             throw new Error("You need to pass an array of Players, a Player or null.");
+        }
+        if (message) {
+            setFlash(message);
+        } else {
+            setFlash(null)
         }
     }
 
@@ -116,7 +122,7 @@ function Game(props: any) {
     }
     return (
         <div className="box">
-            <WinnerAlert winners={winners} />
+            <WinnerAlert winners={winners} message={flash} />
             {currentGame}
             <SkipGame gp={gameProps} />
         </div>
