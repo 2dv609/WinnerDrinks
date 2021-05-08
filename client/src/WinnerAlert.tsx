@@ -21,8 +21,9 @@ function WinnerAlert(props: any) {
     } else if (props.winners.length > 1) { // If there are several winners, display them all. 
         return (
             <div className="box">
-                Points to: {props.winners.map((item: Player) =>
-            (<span>{item.toString()}</span>)
+                <div>Points to:</div>
+                 {props.winners.map((item: Player) =>
+            (<span className="tag">{item.toString()}</span>)
           )}
             </div>
         );
