@@ -47,14 +47,19 @@ function Game(props: any) {
     const addScore = (p: Player, score: number) => {
         p.addScore(score)
     }
-
-    const makeWinnerAlert = (p: any) => {
-        if (Array.isArray(p)) {
-            setWinners(p);
-        } else if (p === null) {
+    /**
+     * This function is sent to game modules as a prop. 
+     * If any winner is declared, they are passed as parameters to this function
+     * 
+     * @param p The winner(s). Null means no points awarded. 
+     */
+    const makeWinnerAlert = (p: Player | Player[] | null) => {
+        if (Array.isArray(p)) { // If there are several winners
+            setWinners(p); // This is the new array
+        } else if (p === null) { // null == no points awarded, lost game
             setWinners(null);
-         } else if (p instanceof Player) {
-            setWinners([p]);
+         } else if (p instanceof Player) { // Just one player?
+            setWinners([p]); // Send an array with only that player. 
         } else {
             throw new Error("You need to pass an array of Players, a Player or null.");
         }
