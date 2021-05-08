@@ -38,7 +38,7 @@ function App(props: any) {
       <div className="App section">
         <h1 className="title is-3">Let's play!</h1>
         <Game players={names} />
-        <ResetButton></ResetButton>
+        <ResetButton />
       </div>
 
     )

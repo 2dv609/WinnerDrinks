@@ -6,7 +6,7 @@ import BackToBack from './Components/BackToBack/BackToBack';
 import Trivia from './Components/Trivia/Trivia'
 import getUtilService from './util/UtilServiceFactory'
 import IUtilService from './util/IUtilService'
-
+import WinnerAlert from './WinnerAlert'
 
 function shuffle(array: Player[]) {
     var m = array.length, t, i;
@@ -25,6 +25,7 @@ function Game(props: any) {
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
     const [backToBackEvents, setBackToBackEvents] = useState<GameEventAPI | undefined>(undefined)
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
+    const [winners, setWinners] = useState<Player[] | null>([]);
     
     // Load data to game events
     useEffect(() => {
@@ -46,29 +47,22 @@ function Game(props: any) {
     const addScore = (p: Player, score: number) => {
         p.addScore(score)
     }
-
-    const makeWinnerAlert = (p: any) => {
-        let str: string
-
-        // If p is an array, display an alert for multiple players
-        if (Array.isArray(p)) {
-            str = 'The winners are: \n'
-            p.forEach(element => {
-                str = str + `${element.toString()} with a total score of: ${element.score} \n`
-            });
-
-            // If there is no param, display an alert for no points given
-        } else if (p == null) {
-            str = `No points awarded!`
-
-            //If p is a single player object, display an alert for one winner
-        } else if (p instanceof Player) {
-            str = `The winner is ${p.toString()} with a total score of: ${p.score}`
+    /**
+     * This function is sent to game modules as a prop. 
+     * If any winner is declared, they are passed as parameters to this function
+     * 
+     * @param p The winner(s). Null means no points awarded. 
+     */
+    const makeWinnerAlert = (p: Player | Player[] | null) => {
+        if (Array.isArray(p)) { // If there are several winners
+            setWinners(p); // This is the new array
+        } else if (p === null) { // null == no points awarded, lost game
+            setWinners(null);
+         } else if (p instanceof Player) { // Just one player?
+            setWinners([p]); // Send an array with only that player. 
         } else {
-            str = ``
+            throw new Error("You need to pass an array of Players, a Player or null.");
         }
-
-        alert(str);
     }
 
     const chooseRandomNewGame = () => {
@@ -103,21 +97,26 @@ function Game(props: any) {
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
         return (<div><p>Loading...</p></div>)
     }
-
+    let currentGame;
     switch (currentGameIndex) {
         case 3: 
-            return (<div className="Game"><Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/></div>);
+        currentGame = <Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/>;
+        break;
         case 2:
-            return (<div className="Game"><BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/></div>);
+            currentGame = <BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/>;
+            break;
         case 1:
-            return (<div className="Game"><Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/></div>);
+            currentGame = <Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/>;
+            break;
         case 0:
-            return (<div className="Game"><WheelComponent gp={gameProps} /></div>);
+            currentGame = <WheelComponent gp={gameProps} />;
+            break;
 
     }
     return (
-        <div className="Game">
-
+        <div>
+            <WinnerAlert winners={winners} />
+            {currentGame}
         </div>
     );
 }
