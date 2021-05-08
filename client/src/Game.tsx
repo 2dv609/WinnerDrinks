@@ -7,6 +7,7 @@ import Trivia from './Components/Trivia/Trivia'
 import getUtilService from './util/UtilServiceFactory'
 import IUtilService from './util/IUtilService'
 import WinnerAlert from './WinnerAlert'
+import SkipGame from './Components/SkipGame';
 
 function shuffle(array: Player[]) {
     var m = array.length, t, i;
@@ -114,9 +115,10 @@ function Game(props: any) {
 
     }
     return (
-        <div>
+        <div className="box">
             <WinnerAlert winners={winners} />
             {currentGame}
+            <SkipGame gp={gameProps} />
         </div>
     );
 }
