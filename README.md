@@ -7,6 +7,14 @@ You'll find the client side code built in React and TypeScript in the directory 
 and the server side code in the directory *server*. 
 
 
+### Notes on running the app locally for development
+Make sure Docker is running on your computer.  
+Run `npm install` in both the server and client directory.  
+Then run the script build_app_production.sh in the root directory.  
+Then in server/dist, run the script run_app_production_local.sh.  
+Open localhost:4000 on your computer. 
+
+
 ### Build app for production
 ```
 $ ./build_app_production.sh
