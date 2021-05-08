@@ -25,6 +25,7 @@ function Game(props: any) {
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
     const [backToBackEvents, setBackToBackEvents] = useState<GameEventAPI | undefined>(undefined)
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
+    const [winners, setWinners] = useState<Player[] | null>([]);
     
     // Load data to game events
     useEffect(() => {
@@ -48,27 +49,15 @@ function Game(props: any) {
     }
 
     const makeWinnerAlert = (p: any) => {
-        let str: string
-
-        // If p is an array, display an alert for multiple players
         if (Array.isArray(p)) {
-            str = 'The winners are: \n'
-            p.forEach(element => {
-                str = str + `${element.toString()} with a total score of: ${element.score} \n`
-            });
-
-            // If there is no param, display an alert for no points given
-        } else if (p == null) {
-            str = `No points awarded!`
-
-            //If p is a single player object, display an alert for one winner
-        } else if (p instanceof Player) {
-            str = `The winner is ${p.toString()} with a total score of: ${p.score}`
+            setWinners(p);
+        } else if (p === null) {
+            setWinners(null);
+         } else if (p instanceof Player) {
+            setWinners([p]);
         } else {
-            str = ``
+            throw new Error("You need to pass an array of Players, a Player or null.");
         }
-
-        alert(str);
     }
 
     const chooseRandomNewGame = () => {
@@ -120,7 +109,10 @@ function Game(props: any) {
 
     }
     return (
-        <div>{currentGame}</div>
+        <div>
+            <WinnerAlert winners={winners} />
+            {currentGame}
+        </div>
     );
 }
 
