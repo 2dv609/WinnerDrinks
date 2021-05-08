@@ -23,6 +23,7 @@ export class BackToBackController {
      */
     async loadBackToBack(dataSource) {
         const data = await fs.readJson(dataSource);
-        BackToBack.insertMany(data);
+        await BackToBack.deleteMany({});
+        await BackToBack.insertMany(data);
     }
 }

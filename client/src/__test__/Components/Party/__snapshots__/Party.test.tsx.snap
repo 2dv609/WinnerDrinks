@@ -8,7 +8,7 @@ exports[`Game module should match snapshot 1`] = `
     className="content"
     data-testid="game-event"
   >
-    This is a mock question
+    This is a party mock question Mats Tom
   </div>
   <h3>
     Who won?

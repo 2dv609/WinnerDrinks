@@ -32,6 +32,7 @@ export class TriviaController {
           MultiQuestion.insertMany(resultJSON.results)
         } */
         const data = await fs.readJson(dataSource);
-        Trivia.insertMany(data);
+        await Trivia.deleteMany({});
+        await Trivia.insertMany(data);
     }
 }

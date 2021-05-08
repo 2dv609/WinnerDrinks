@@ -1,4 +1,4 @@
-import { openDB, IDBPDatabase } from 'idb'
+import { openDB, IDBPDatabase, deleteDB } from 'idb'
 import IUtilService from './IUtilService'
 
 export default class LocalDB implements IUtilService {
@@ -151,5 +151,9 @@ export default class LocalDB implements IUtilService {
             console.log('error:', error)
             return false
         }
+    }
+
+    public async deleteLocalDB(): Promise<void> {
+        await deleteDB(this.dbName)
     }
 }
