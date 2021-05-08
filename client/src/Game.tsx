@@ -6,7 +6,7 @@ import BackToBack from './Components/BackToBack/BackToBack';
 import Trivia from './Components/Trivia/Trivia'
 import getUtilService from './util/UtilServiceFactory'
 import IUtilService from './util/IUtilService'
-
+import WinnerAlert from './WinnerAlert'
 
 function shuffle(array: Player[]) {
     var m = array.length, t, i;
@@ -103,22 +103,24 @@ function Game(props: any) {
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
         return (<div><p>Loading...</p></div>)
     }
-
+    let currentGame;
     switch (currentGameIndex) {
         case 3: 
-            return (<div className="Game"><Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/></div>);
+        currentGame = <Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/>;
+        break;
         case 2:
-            return (<div className="Game"><BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/></div>);
+            currentGame = <BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/>;
+            break;
         case 1:
-            return (<div className="Game"><Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/></div>);
+            currentGame = <Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/>;
+            break;
         case 0:
-            return (<div className="Game"><WheelComponent gp={gameProps} /></div>);
+            currentGame = <WheelComponent gp={gameProps} />;
+            break;
 
     }
     return (
-        <div className="Game">
-
-        </div>
+        <div>{currentGame}</div>
     );
 }
 
