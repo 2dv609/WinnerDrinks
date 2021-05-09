@@ -123,8 +123,8 @@ function Game(props: any) {
     }
     return (
         <div className="box">
-            <Scoreboard players={props.players}></Scoreboard>
             <WinnerAlert winners={winners} message={flash} />
+            <Scoreboard players={props.players}></Scoreboard>
             {currentGame}
             <SkipGame gp={gameProps} />
         </div>
