@@ -1,4 +1,4 @@
-import Player from '../../../Player'
+import Player from '../../../model/Player'
 
 
 // Mock GameProps

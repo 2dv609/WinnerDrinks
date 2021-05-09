@@ -1,4 +1,4 @@
-import Player from '../Player';
+import Player from '../model/Player';
 
 interface GameProps {
     getPlayers: (amount: number) => Player[]; // Let the component decide how many players it needs. 

@@ -5,7 +5,7 @@ import { gamePropsMock } from '../mock/mock'
 import { render, cleanup } from '@testing-library/react' 
 import '@testing-library/jest-dom/extend-expect'
 import renderer from 'react-test-renderer'
-import Player from '../../../Player'
+import Player from '../../../model/Player'
 
 /* --------------------------------- */
 /* ----- Test cases setup ---------- */

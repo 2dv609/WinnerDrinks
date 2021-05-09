@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Party from './Components/Party/Party'
-import Player from './Player'
+import Player from './model/Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import BackToBack from './Components/BackToBack/BackToBack';
 import Trivia from './Components/Trivia/Trivia'
-import getUtilService from './util/UtilServiceFactory'
-import IUtilService from './util/IUtilService'
+// import IUtilService from './util/IUtilService'
+import IGameModuleService from './model/IGameModuleService'
+import GameService from './model/GameService'
 
 
 function shuffle(array: Player[]) {
@@ -19,7 +20,13 @@ function shuffle(array: Player[]) {
     return array;
 }
 
-function Game(props: any) {
+type Props = {
+    gameModuleSerivce: IGameModuleService,
+    players: Player[],
+    gameService: GameService
+}
+
+const Game: React.FC<Props> =({ players, gameModuleSerivce, gameService }) => {
     const games = [WheelComponent, Party, BackToBack, Trivia];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
@@ -28,20 +35,15 @@ function Game(props: any) {
     
     // Load data to game events
     useEffect(() => {
-        getUtilService()
-            .then((s: IUtilService) => {
-                // maybe promise allSettled is better to use then if one promise is rejected you can use some cached events
-                Promise.all([s.getTrivia(), s.getBackToBack(), s.getParty()]).then((response) => {
-                    setTriviaEvents(response[0])
-                    setBackToBackEvents(response[1])
-                    setPartyEvents(response[2])
-
-                    console.log('response[0]', response[0])
-                    console.log('response[1]', response[1])
-                    console.log('response[2]', response[2])
-                })
-            })
-    }, [])
+        
+        setTriviaEvents(gameModuleSerivce.getTriviaEvents())
+        setBackToBackEvents(gameModuleSerivce.getBackToBackEvents())
+        setPartyEvents(gameModuleSerivce.getPartyEvents())
+        
+        console.log('response[0]', gameModuleSerivce.getTriviaEvents())
+        console.log('response[1]', gameModuleSerivce.getBackToBackEvents())
+        console.log('response[2]', gameModuleSerivce.getPartyEvents())
+    }, [gameModuleSerivce])
 
     const addScore = (p: Player, score: number) => {
         p.addScore(score)
@@ -81,10 +83,10 @@ function Game(props: any) {
 
     const getPlayers = (amount: number): Player[] => {
         const result: Player[] = [];
-        amount = Math.min(amount, props.players.length)
-        shuffle(props.players);
+        amount = Math.min(amount, players.length)
+        shuffle(players);
         for (let i = 0; i < amount; i++) {
-            result.push(props.players[i])
+            result.push(players[i])
         }
         return result;
     };

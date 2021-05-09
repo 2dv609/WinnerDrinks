@@ -1,7 +1,7 @@
-import IUtilService from "./IUtilService"
-import UtilService from "./UtilService"
-import API from './API'
-import LocalDB from "./LocalDB"
+import IUtilService from "../util/IUtilService"
+import UtilService from "../util/UtilService"
+import API from '../util/API'
+import LocalDB from "../util/LocalDB"
 
 export default async function getUtilService(): Promise<IUtilService> {    
 

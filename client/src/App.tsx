@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './Login';
 import Game from './Game'
-import Player from './Player'
+import Player from './model/Player'
 import 'bulma';
 import './App.css';
 import ResetButton from './ResetButton';
+import getGameModuleService from './model/GameModuleFactory'
+import IGameModuleService from './model/IGameModuleService'
+import GameService from './model/GameService'
+
 
 function App(props: any) {
+  // const [utilService, setUtilService] = useState<IUtilService | undefined>(undefined)
+  const [gameModuleSerivce, setGameModuleSerivce] = useState<IGameModuleService | undefined>(undefined)
   const [names, setNames] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
+  const gameService = new GameService();
 
   const addUser = (newUserName: string) => {
     const newUser = new Player(newUserName);
     setNames([...names, newUser]);
   };
 
-
+  useEffect(() => {
+    getGameModuleService().then((gms: IGameModuleService) => {setGameModuleSerivce(gms)})
+  }, [])
 
   if (!play) {
     return (
@@ -33,11 +42,17 @@ function App(props: any) {
         </ul>
       </div>
     );
+  } else if (!gameModuleSerivce) {
+    return (
+      <div className="App section">
+        <h1 className="title is-3">Error utilservice not defined</h1>
+      </div>
+    )
   } else {
     return (
       <div className="App section">
         <h1 className="title is-3">Let's play!</h1>
-        <Game players={names} />
+        <Game gameService={gameService} players={names} gameModuleSerivce={gameModuleSerivce}/>
         <ResetButton></ResetButton>
       </div>
 
