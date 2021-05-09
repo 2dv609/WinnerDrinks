@@ -13,8 +13,12 @@ function App(props: any) {
   const [nameerror, setError] = useState(false);
 
   const addUser = (newUserName: string) => {
-    const newUser = new Player(newUserName);
-    setNames([...names, newUser]);
+    try {
+      const newUser = new Player(newUserName);
+      setNames([...names, newUser]);
+    } catch (error) {
+      window.alert(error) //For now.
+    }
   };
 
   if (!play) {
