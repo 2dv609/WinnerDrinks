@@ -26,10 +26,12 @@ function BackToBack(props: any) {
                 gp.addScore(players[0], 1)
                 gp.addScore(players[1], 1)
                 gp.makeWinnerAlert(players)
+                gp.updateScoreboard()
                 gp.chooseRandomNewGame()
             }}>{'They were correct!'}</button>
             <button className="button" onClick={() => {
                 gp.makeWinnerAlert(null)
+                gp.updateScoreboard()
                 gp.chooseRandomNewGame()
             }}>{'They were wrong!'}</button>
         </div>

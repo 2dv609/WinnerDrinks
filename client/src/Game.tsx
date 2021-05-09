@@ -8,6 +8,7 @@ import getUtilService from './util/UtilServiceFactory'
 import IUtilService from './util/IUtilService'
 import WinnerAlert from './WinnerAlert'
 import SkipGame from './Components/SkipGame';
+import Scoreboard from './Scoreboard';
 
 function shuffle(array: Player[]) {
     var m = array.length, t, i;
@@ -72,6 +73,11 @@ function Game(props: any) {
         }
     }
 
+    const updateScoreboard = () => {
+        console.log("updating scoreboard")
+        
+    }
+
     const chooseRandomNewGame = () => {
         let newIndex = currentGameIndex;
         while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
@@ -98,7 +104,8 @@ function Game(props: any) {
         getPlayers: getPlayers, 
         addScore: addScore, 
         makeWinnerAlert: makeWinnerAlert, 
-        chooseRandomNewGame: chooseRandomNewGame
+        chooseRandomNewGame: chooseRandomNewGame,
+        updateScoreboard: updateScoreboard
     };
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
@@ -122,6 +129,7 @@ function Game(props: any) {
     }
     return (
         <div className="box">
+            <Scoreboard></Scoreboard>
             <WinnerAlert winners={winners} message={flash} />
             {currentGame}
             <SkipGame gp={gameProps} />
