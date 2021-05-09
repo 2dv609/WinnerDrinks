@@ -8,25 +8,30 @@ import Player from './Player'
 
 function Scoreboard(props: any) {
 
-    if (props.getPlayers == null) {
+    if (props == null) {
         return (
-            <div className="box">{props.message || "No scores"}</div>
+            <div className="box">{"No scores yet!"}</div>
         )
-    } else if (props.getPlayers) {
+    } else if (props) {
         return (
-            <div className="box">
-                <div>{"Scores"}</div>
-                 
-          )
+            <div className="box scoreboard">
+                <div>{"Scores so far:"}</div>
+                <table className="table is-fullwidth">
+                    <tbody>
+                    {props.players.map((item: Player) => (
+                        <tr>
+                            <th>{item.toString()}:</th><td>{item.score}</td>
+                        </tr>
+                    ))}
+                   </tbody>
+                </table> 
             </div>
         );
     } else {
-    
-    return (
-        <span style={{display: "none"}}></span>
-      );
-  }
-  
+        return (
+            <span style={{display: "none"}}></span>
+        );
+    }
 }
 
 export default Scoreboard;

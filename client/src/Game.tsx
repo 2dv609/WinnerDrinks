@@ -73,11 +73,6 @@ function Game(props: any) {
         }
     }
 
-    const updateScoreboard = () => {
-        console.log("updating scoreboard")
-        
-    }
-
     const chooseRandomNewGame = () => {
         let newIndex = currentGameIndex;
         while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
@@ -104,8 +99,7 @@ function Game(props: any) {
         getPlayers: getPlayers, 
         addScore: addScore, 
         makeWinnerAlert: makeWinnerAlert, 
-        chooseRandomNewGame: chooseRandomNewGame,
-        updateScoreboard: updateScoreboard
+        chooseRandomNewGame: chooseRandomNewGame
     };
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
@@ -129,7 +123,7 @@ function Game(props: any) {
     }
     return (
         <div className="box">
-            <Scoreboard></Scoreboard>
+            <Scoreboard players={props.players}></Scoreboard>
             <WinnerAlert winners={winners} message={flash} />
             {currentGame}
             <SkipGame gp={gameProps} />

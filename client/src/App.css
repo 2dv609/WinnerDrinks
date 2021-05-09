@@ -58,3 +58,7 @@ ul li {
     transform: rotate(360deg);
   }
 }
+
+.scoreboard {
+  text-align: left;
+}
