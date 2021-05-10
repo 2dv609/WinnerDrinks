@@ -14,7 +14,6 @@ function App(props: any) {
   const [play, setPlay] = useState(false);
   const [nameerror, setError] = useState(false);
 
-  /* Navbar open/close */
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModules, setGameModules] = useState([
     { name: 'Wheel', active: true, index: 0 },
@@ -23,21 +22,21 @@ function App(props: any) {
     { name: 'Trivia', active: true, index: 3 }, 
   ])
 
-    /**
+  /**
    * Function that deletes an added player by name.
    * @param userName Name of Player to be deleted from state.
    */
-     const deleteUser = (userName: string) => {
-      const copiedNames = [...names]
-      const index = copiedNames.findIndex((user) => user.name === userName)
-      if(index >= 0) {
-        copiedNames.splice(index, 1)
-        setNames(copiedNames);
-      }
+  const deleteUser = (userName: string) => {
+    const copiedNames = [...names]
+    const index = copiedNames.findIndex((user) => user.name === userName)
+    if(index >= 0) {
+      copiedNames.splice(index, 1)
+      setNames(copiedNames);
     }
+  }
 
   /**
-   * Function updating if the player is active/paused.
+   * Function updating the state of the player. If (s)he is active or paused.
    */
   const updatePlayerActive = (playerName: string) => {
     const namesCopy = [...names]

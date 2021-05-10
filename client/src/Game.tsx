@@ -99,6 +99,9 @@ function Game(props: any) {
       setEventCurrentQuestion(newIndex)
     }
 
+    /**
+     * Function that get question from current game-module and save it in state.
+     */
     const setEventCurrentQuestion = (currentGameIndex: number) => {
       let currentGame: any;
       switch (currentGameIndex) {
