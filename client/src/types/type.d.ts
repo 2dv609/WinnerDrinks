@@ -48,3 +48,19 @@ type GameEventAPI = {
 type connectionAPI = {
   connectionAPI: number
 }
+
+// GameModule parops
+interface IGameModuleProps {
+  players: Player[],
+  getPlayers: (amount: number, players: Player[]) => Player[]; // Let the component decide how many players it needs. 
+  addScore: (p: Player, score: number) => void; // Adds a score to a player
+  makeWinnerAlert: (p: any) => void; // makes an Alert that corresponds to if there are one, multiple, or no winners
+  chooseRandomNewGame: (currentGameIndex?: number, gameModules?: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]) => void; // chooses a random new game
+}
+type TextGameModuleProps = {
+  gameService: IGameModuleProps,
+  gameEvent: IBackToBack | IParty | ITrivia
+}
+type AnimationGameModuleProps = {
+  gameService: IGameModuleProps
+}

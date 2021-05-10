@@ -30,7 +30,7 @@ export default class GameService {
         alert(str);
     }
 
-    public getNewGameModule = (currentGameIndex: number, gameModules: any[]): number => {
+    public chooseRandomNewGame = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]): number => {
         let newIndex = currentGameIndex
         while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
             newIndex = Math.floor(Math.random() * gameModules.length)
@@ -38,14 +38,16 @@ export default class GameService {
         return newIndex
     }
 
-    public getPlayers = (amount: number, players: Player[]): Player[] => {
-        const result: Player[] = [];
-        amount = Math.min(amount, players.length)
-        this.shuffle(players);
-        for (let i = 0; i < amount; i++) {
-            result.push(players[i])
+    public getPlayers = (nrOfPlayers: number, players: Player[]): Player[] => {
+        const activePlayers: Player[] = [];
+        
+        for (let i = 0; i < players.length; i++) {
+            activePlayers.push(players[i])
         }
-        return result;
+
+        this.shuffle(activePlayers);
+        
+        return activePlayers.slice(0, nrOfPlayers);
     }
 
     private shuffle(array: Player[]) {
