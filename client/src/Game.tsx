@@ -28,7 +28,8 @@ function Game(props: any) {
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     const [winners, setWinners] = useState<Player[] | null>([]);
     const [flash, setFlash] = useState<string | null>();
-    const [currentGameIndex, setCurrentGameIndex] = useState(1);
+    const [currentGameIndex, setCurrentGameIndex] = useState<number>(0);
+    const [currentQuestion, setCurrentQuestion] = useState(-1)
 
     // Load data to game events
     useEffect(() => {
@@ -39,10 +40,6 @@ function Game(props: any) {
                     setTriviaEvents(response[0])
                     setBackToBackEvents(response[1])
                     setPartyEvents(response[2])
-
-                    console.log('response[0]', response[0])
-                    console.log('response[1]', response[1])
-                    console.log('response[2]', response[2])
                 })
             })
     }, [])
@@ -94,11 +91,31 @@ function Game(props: any) {
 
       let newIndex = currentGameIndex;
       // Check if previos game is played again or game is disabled - continue random
-      while (newIndex === currentGameIndex || !props.activeModules.indexOf(newIndex).active) { // Don't allow the same game twice in a row. 
+      while (newIndex === currentGameIndex || !props.activeModules[newIndex].active) { // Don't allow the same game twice in a row. 
         newIndex = Math.floor(Math.random() * games.length)
       }
 
       setCurrentGameIndex(newIndex);
+      setEventCurrentQuestion(newIndex)
+    }
+
+    const setEventCurrentQuestion = (currentGameIndex: number) => {
+      let currentGame: any;
+      switch (currentGameIndex) {
+        case 3:
+          if(!triviaEvents) return
+          currentGame = getRandomGameEvent(triviaEvents);
+          break;
+        case 2:
+          if(!backToBackEvents) return
+          currentGame = getRandomGameEvent(backToBackEvents);
+          break;
+        case 1:
+          if(!partyEvents) return
+          currentGame = getRandomGameEvent(partyEvents)
+          break;
+      }
+      setCurrentQuestion(currentGame)
     }
 
     const getPlayers = (amount: number): Player[] => {
@@ -124,20 +141,21 @@ function Game(props: any) {
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
       return (<div><p>Loading...</p></div>)
+    } else if(currentQuestion < 0) {
+      chooseRandomNewGame()
     }
+
     let currentGame;
-    
+
     switch (currentGameIndex) {
       case 3: 
-      currentGame = <Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/>;
-      break;
+        currentGame = <Trivia gp={gameProps} gameEvent={currentQuestion}/>;
+        break;
       case 2:
-        const question = getRandomGameEvent(backToBackEvents)
-        /* props.setCurrentQuestion(question) */
-        currentGame = <BackToBack gp={gameProps} gameEvent={question}/>;
+        currentGame = <BackToBack gp={gameProps} gameEvent={currentQuestion}/>;
         break;
       case 1:
-        currentGame = <Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/>;
+        currentGame = <Party gp={gameProps} gameEvent={currentQuestion}/>;
         break;
       case 0:
         currentGame = <WheelComponent gp={gameProps} />;

@@ -6,9 +6,9 @@ function Party(props: any) {
     const [players, setPlayers] = useState(gp.getPlayers(2));
 
     function addPlayerToGameEvent(): string {
-        const gameEvent:string = props.gameEvent.question
-        const formatEvent = gameEvent.replace('{players[0]}', `${players[0]}`).replace('{players[1]}', `${players[1]}`)
-        return formatEvent
+      const gameEvent:string = props.gameEvent.question
+      const formatEvent = gameEvent.replace('{players[0]}', `${players[0]}`).replace('{players[1]}', `${players[1]}`)
+      return formatEvent
     }
 
     useEffect(() => { 

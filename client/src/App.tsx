@@ -13,8 +13,6 @@ function App(props: any) {
   const [names, setNames] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
   const [nameerror, setError] = useState(false);
-  const [currentQuestion, setCurrentQuestion] = useState('')
-  const [currentGameIndex, setCurrentGameIndex] = useState(1);
 
   /* Navbar open/close */
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -123,13 +121,7 @@ function App(props: any) {
     
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <h1 className="title is-3">Let's play!</h1>
-        <Game 
-          setCurrentGameIndex={setCurrentGameIndex} 
-          currentGameIndex={currentGameIndex} 
-          players={names} 
-          activeModules={gameModules} 
-          setCurrentQuestion={setCurrentQuestion} 
-          currentQuestion={currentQuestion} />
+        <Game players={names} activeModules={gameModules} />
         <ResetButton />
       </div>
       </div>
