@@ -48,7 +48,7 @@ function Game(props: any) {
     }, [])
 
     const addScore = (p: Player, score: number) => {
-        p.addScore(score)
+      p.addScore(score)
     }
     /**
      * This function is sent to game modules as a prop. 
@@ -73,12 +73,31 @@ function Game(props: any) {
         }
     }
 
+    /**
+     * Function that returns the number of active players.
+     */
+    const getNumActivePlayers = (): number => {
+      let numOfActivePlayers = 0
+      for(let i = 0; i < props.players.length; i++) {
+        if(props.players[i].isActive) numOfActivePlayers++
+      }
+      return numOfActivePlayers
+    }
+
     const chooseRandomNewGame = () => {
-        let newIndex = currentGameIndex;
-        while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
-            newIndex = Math.floor(Math.random() * games.length)
-        }
-        setCurrentGameIndex(newIndex);
+      // Not enough players active
+      const activePlayers = getNumActivePlayers()
+      if(activePlayers < 2) {
+        console.log('Too many players are paused!') // TODO: display to user
+        return
+      }
+
+      let newIndex = currentGameIndex;
+      // Check if previos game is played again or game is disabled - continue random
+      while (newIndex === currentGameIndex || !props.activeModules.indexOf(newIndex).active) { // Don't allow the same game twice in a row. 
+        newIndex = Math.floor(Math.random() * games.length)
+      }
+      setCurrentGameIndex(newIndex);
     }
 
     const getPlayers = (amount: number): Player[] => {
@@ -86,13 +105,13 @@ function Game(props: any) {
         amount = Math.min(amount, props.players.length)
         shuffle(props.players);
         for (let i = 0; i < amount; i++) {
-            result.push(props.players[i])
+          result.push(props.players[i])
         }
         return result;
     };
 
     const getRandomGameEvent = (gameEventAPI: GameEventAPI): IBackToBack | IParty | ITrivia => {
-        return gameEventAPI.questions[Math.floor(Math.random() * gameEventAPI.questions.length)]
+      return gameEventAPI.questions[Math.floor(Math.random() * gameEventAPI.questions.length)]
     }
 
     const gameProps = { 
@@ -103,31 +122,37 @@ function Game(props: any) {
     };
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
-        return (<div><p>Loading...</p></div>)
+      return (<div><p>Loading...</p></div>)
     }
     let currentGame;
+    
     switch (currentGameIndex) {
-        case 3: 
-        currentGame = <Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/>;
+      case 3: 
+      currentGame = <Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/>;
+      break;
+      case 2:
+        currentGame = <BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/>;
         break;
-        case 2:
-            currentGame = <BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/>;
-            break;
-        case 1:
-            currentGame = <Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/>;
-            break;
-        case 0:
-            currentGame = <WheelComponent gp={gameProps} />;
-            break;
-
+      case 1:
+        currentGame = <Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/>;
+        break;
+      case 0:
+        currentGame = <WheelComponent gp={gameProps} />;
+        break;
     }
+    
+    // If to many paused players
+    if(getNumActivePlayers() < 2) {
+      return <h1>Too many players are paused. Please wait for them and start their session again!</h1>
+    }
+
     return (
-        <div className="box">
-            <WinnerAlert winners={winners} message={flash} />
-            <Scoreboard players={props.players}></Scoreboard>
-            {currentGame}
-            <SkipGame gp={gameProps} />
-        </div>
+      <div className="box">
+        <WinnerAlert winners={winners} message={flash} />
+        <Scoreboard players={props.players}></Scoreboard>
+        {currentGame}
+        <SkipGame gp={gameProps} />
+      </div>
     );
 }
 
