@@ -10,12 +10,12 @@ type NavbarProps = {
   names: Player[],
   updatePlayerActive: any,
   gameModules: any,
-  setGameModules: any,
+  onGameModuleSettingUpdate: any,
   deleteUser: any,
   addUser: any
 }
 
-function Navbar({ addUser, navbarOpen, names, updatePlayerActive, gameModules, setGameModules, deleteUser }: NavbarProps) {
+const Navbar: React.FC<NavbarProps> = ({ addUser, navbarOpen, names, updatePlayerActive, gameModules, onGameModuleSettingUpdate, deleteUser }) => {
   const [inputName, setInputName] = useState('')
 
   /**
@@ -46,7 +46,7 @@ function Navbar({ addUser, navbarOpen, names, updatePlayerActive, gameModules, s
         break;
       }
     }
-    setGameModules(copiedArray)    
+    onGameModuleSettingUpdate(copiedArray)    
   }
 
   /**

@@ -6,12 +6,9 @@
 
 import Player from './model/Player'
 
-
-
 type ScoreBoardProps = {
     players: Player[]
-}
-  
+}  
   
 const Scoreboard: React.FC<ScoreBoardProps> = ({ players }) => {
 
