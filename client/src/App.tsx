@@ -12,6 +12,7 @@ import IGameModuleService from './model/IGameModuleService'
 import getGameModuleService from './model/GameModuleFactory'
 import GameService from './model/GameService'
 import { IGameModuleSetting } from './Components/Menu/Navbar'
+import { NavbarProps } from './Components/Menu/Navbar'
 
 
 function App(props: any) {
@@ -41,7 +42,7 @@ function App(props: any) {
     const index = copyPlayers.findIndex((player: Player) => player.name === playerName)
     if (index >= 0) {
       copyPlayers.splice(index, 1)
-      setPlayers(players);
+      setPlayers(copyPlayers);
     }
   }
 
@@ -75,6 +76,16 @@ function App(props: any) {
     )
   }
 
+  const navbarProps: NavbarProps = {
+    navbarOpen: navbarOpen,
+    players: players,  
+    gameModuleSettings: gameModuleSettings, 
+    addUser: addUser, 
+    deleteUser: deleteUser, 
+    onGameModuleSettingUpdate: gameModuleSettingUpdate, 
+    updatePlayerActive: updatePlayerActive
+  }
+
   if (!play) {
     if (!nameerror) {
       return (
@@ -82,7 +93,7 @@ function App(props: any) {
 
         {/* Navbar */}
         <Icon setNavbarOpen={setNavbarOpen} />
-        <Navbar
+        <Navbar 
           navbarOpen={navbarOpen}
           players={players}  
           gameModuleSettings={gameModuleSettings} 

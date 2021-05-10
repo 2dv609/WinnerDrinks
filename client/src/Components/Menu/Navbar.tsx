@@ -10,7 +10,7 @@ export interface IGameModuleSetting {
   index: number
 }
 
-type NavbarProps = {
+export type NavbarProps = {
   navbarOpen: boolean,
   players: Player[],
   gameModuleSettings: IGameModuleSetting[],
@@ -61,7 +61,7 @@ const Navbar: React.FC<NavbarProps> = ({
    * Function that calls delete-player function in parent-component after error-checking.
    */
   const deletePlayer = (playerName: string) => {
-    if(players.length <= 2) {
+    if (players.length <= 2) {
       // Cannot delete player, just one player left
       // Error checking
       return
