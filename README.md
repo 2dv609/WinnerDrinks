@@ -46,7 +46,7 @@ $ git add .
 $ git commit -m 'your commit message'
 ```
 
-### 3. If wrong last commit
+#### 3. If wrong last commit
 ```
 $ git reset --soft HEAD~1
 ```
