@@ -29,8 +29,8 @@ const WinnerAlert: React.FC<WinnerAlertProps> = ({ winners, message }) => {
         return (
             <div className="box">
                 <div>{message || "A sip each to:  "}</div>
-                 {winners.map((item: Player) =>
-            (<span className="tag">{item.toString()}</span>)
+                 {winners.map((item: Player, index: number) =>
+            (<span key={index} className="tag">{item.toString()}</span>)
           )}
             </div>
         );

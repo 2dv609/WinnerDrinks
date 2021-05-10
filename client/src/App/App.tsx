@@ -14,7 +14,7 @@ import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../Components/Menu/Navbar'
 
 
-function App(props: any) {
+function App() {
   const gameService: GameService = new GameService();
   const [players, setPlayers] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
@@ -93,7 +93,7 @@ function App(props: any) {
 
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
 
-          <Login setter={addUser} />
+          <Login addUser={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
             if (players.length < 2) {
@@ -127,7 +127,7 @@ function App(props: any) {
           updatePlayerActive={updatePlayerActive} />
         
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
-          <Login setter={addUser} />
+          <Login addUser={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
             if (players.length < 2) {

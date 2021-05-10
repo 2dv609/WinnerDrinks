@@ -83,7 +83,7 @@ const Navbar: React.FC<NavbarProps> = ({
               return (
               <li key={index}>
                 <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
-                  <label className="checkbox"><input type="checkbox" checked={module.active} style={{marginRight: '8px'}}/>{module.name} Module</label>
+                  <label className="checkbox"><input type="checkbox" onChange={() => (module.active)} checked={module.active} style={{marginRight: '8px'}}/>{module.name} Module</label>
                 </a>
               </li>)
             })}

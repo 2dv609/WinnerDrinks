@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { uuid } from 'uuidv4'
+import { v1 as uuidv1 } from 'uuid'
 import { formatAPIResponseString } from './utils/api-functions'
 import { shuffleArray } from './utils/functions'
 import './Trivia.css';
@@ -73,7 +73,7 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent}) => {
       <div className={'answersDiv'}>
         <br />
         {modefiedGameEvent.all_answers.map((answer: string) => {
-          return <QuestionCard answer={formatAPIResponseString(answer)} handleAnswer={handleAnswer} key={uuid()} />
+          return <QuestionCard answer={formatAPIResponseString(answer)} handleAnswer={handleAnswer} key={uuidv1()} />
         })}
       </div>
 

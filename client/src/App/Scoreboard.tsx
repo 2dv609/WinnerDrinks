@@ -22,8 +22,8 @@ const Scoreboard: React.FC<ScoreBoardProps> = ({ players }) => {
                 <div className="">Current score:</div>
                     <table className="table is-fullwidth is-striped scoreboard">
                         <tbody>
-                            {players.map((item: Player) => (
-                                <tr>
+                            {players.map((item: Player, index: number) => (
+                                <tr key={index}>
                                     <th>{item.toString()}:</th><td>{item.score}</td>
                                 </tr>
                             ))}

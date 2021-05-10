@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 
-function Login(props: any) {
+
+type LoginProps = {
+  addUser: (newPlayerName: string) => void
+}
+
+const Login: React.FC<LoginProps> = ({ addUser }) => {
   const [input, setInput] = useState('');
   return (
     <div className="Login box">
@@ -10,7 +15,7 @@ function Login(props: any) {
         setInput((e.target as any).value);
       }} />
       <input className="button" type="button" onClick={() => {
-        props.setter(input);
+        addUser(input);
         setInput('');
 
       }} value="Add" id="newnamebtn" />
