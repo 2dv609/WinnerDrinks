@@ -32,32 +32,65 @@ server/dist
 
 ### Git Workflow
 
-1. Clone the dev branch
+#### 1. Clone the dev branch and checkout your new branch
  ```
-$ git clone --single-branch --branch=dev <git_repository>
+$ git clone --single-branch --branch=dev yourgitrepourl
   
-$ git checkout -b <new_branch>
+$ git checkout -b yourbranchname
 ```
 
-2. Work on the new branch
+#### 2. Work on the new branch locally
 ```
 $ git add .
 
-$ git comm -m <commit>
+$ git commit -m 'your commit message'
 ```
 
-3. Push branch to git repository
+#### 3. Push your new branch to remote git repository
+
 ```
-$ git push -u origin <new_branch>
+$ git push
+```
+If pushing branch for the first time:
+```
+$ git push --set-upstream origin yourbranchname
 ```
 
-4. Merge <new_branch> to __dev branch__ on github. 
-  
-  * Make sure you merge <new_branch> branch to the dev branch. 
+#### 4. (Optional) Merge new changes from dev INTO your branch __(dev --> yourbranch)__
+Commit your changes in your branch. Then:
+```
+$ git checkout dev
+
+$ git pull
+
+$ git checkout yourbranchname
+
+$ git merge dev
+```
+
+#### 5. Merge your branch INTO dev __(yourbranch --> dev)__
+Commit your changes in your branch. Then:
+```
+$ git checkout dev
+
+$ git pull
+
+$ git merge yourbranchname
+
+$ git push
+```
+
+#### 6. Delete your branch locally
+```
+$ git checkout anyotherbranch
+
+$ git branch -d yourbranchname
+```
+#### 7. Delete your branch in remote repo
+```
+$ git checkout anyotherbranch
+
+$ git push origin --delete yourbranchname
+```
   
   * If merge conflicts try to solve it or ask for help.  
-  
-  * Delete branch <new_branch> 
-
-
-  
