@@ -46,7 +46,12 @@ $ git add .
 $ git commit -m 'your commit message'
 ```
 
-#### 3. Push your new branch to remote git repository
+### 3. If wrong last commit
+```
+$ git reset --soft HEAD~1
+```
+
+#### 4. Push your new branch to remote git repository
 
 ```
 $ git push
@@ -56,7 +61,7 @@ If pushing branch for the first time:
 $ git push --set-upstream origin yourbranchname
 ```
 
-#### 4. (Optional) Merge new changes from dev INTO your branch __(dev --> yourbranch)__
+#### 5. (Optional) Merge new changes from dev INTO your branch __(dev --> yourbranch)__
 Commit your changes in your branch. Then:
 ```
 $ git checkout dev
@@ -68,7 +73,7 @@ $ git checkout yourbranchname
 $ git merge dev
 ```
 
-#### 5. Merge your branch INTO dev __(yourbranch --> dev)__
+#### 6. Merge your branch INTO dev __(yourbranch --> dev)__
 Commit your changes in your branch. Then:
 ```
 $ git checkout dev
@@ -80,13 +85,13 @@ $ git merge yourbranchname
 $ git push
 ```
 
-#### 6. Delete your branch locally
+#### 7. Delete your branch locally
 ```
 $ git checkout anyotherbranch
 
 $ git branch -d yourbranchname
 ```
-#### 7. Delete your branch in remote repo
+#### 8. Delete your branch in remote repo
 ```
 $ git checkout anyotherbranch
 
