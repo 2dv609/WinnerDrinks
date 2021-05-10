@@ -7,7 +7,7 @@ export default class GameService {
         p.addScore(score)
     }
 
-    public makeWinnerAlert = (p: any) => {
+    /* public makeWinnerAlert = (p: any) => {
         let str: string
 
         // If p is an array, display an alert for multiple players
@@ -29,7 +29,8 @@ export default class GameService {
         }
 
         alert(str);
-    }
+    } */
+
 
     public chooseRandomNewGame = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]): number => {
         let newIndex = currentGameIndex
