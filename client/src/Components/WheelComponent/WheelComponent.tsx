@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './WheelComponent.css'
+import { AnimationGameModuleProps } from '../GameModueProps'
 
 const DEG = 360
 const colors = ['#9ede73', '#f7ea00', '#e48900', '#be0000']

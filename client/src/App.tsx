@@ -10,12 +10,12 @@ import IGameModuleService from './model/IGameModuleService'
 import GameService from './model/GameService'
 
 
-function App(props: any) {
+function App() {
   // const [utilService, setUtilService] = useState<IUtilService | undefined>(undefined)
   const [gameModuleSerivce, setGameModuleSerivce] = useState<IGameModuleService | undefined>(undefined)
   const [names, setNames] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
-  const gameService = new GameService();
+  const gameService: GameService = new GameService();
 
   const addUser = (newUserName: string) => {
     const newUser = new Player(newUserName);

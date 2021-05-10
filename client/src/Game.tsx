@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Party from './Components/Party/Party'
-import Player from './model/Player'
 import WheelComponent from './Components/WheelComponent/WheelComponent'
 import BackToBack from './Components/BackToBack/BackToBack';
 import Trivia from './Components/Trivia/Trivia'
+import Player from './model/Player'
 import IGameModuleService from './model/IGameModuleService'
 import GameService from './model/GameService'
 
 type GameProps = {
-    gameModuleSerivce: IGameModuleService,
-    players: Player[],
-    gameService: GameService
-  }
+  gameModuleSerivce: IGameModuleService,
+  players: Player[],
+  gameService: GameService
+}
 
 const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) => {
     const gameModules = [WheelComponent, Party, BackToBack, Trivia];
@@ -32,17 +32,9 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
         console.log('response[2]', gameModuleSerivce.getPartyEvents())
     }, [gameModuleSerivce])
 
-    /* const addScore = gameService.addScore
-
-    const makeWinnerAlert = gameService.makeWinnerAlert */
-
     const chooseRandomNewGame = () => {
         setCurrentGameIndex(gameService.chooseRandomNewGame(currentGameIndex, gameModules));
     }
-
-    /* const getPlayers = (amount: number): Player[] => {
-        return gameService.getPlayers(amount, players)
-    }; */
 
     const getRandomGameEvent = gameService.getRandomGameEvent
 

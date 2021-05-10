@@ -4,6 +4,7 @@ import { formatAPIResponseString } from './utils/api-functions'
 import { shuffleArray } from './utils/functions'
 import './Trivia.css';
 import QuestionCard from './QuestionCard';
+import { TextGameModuleProps } from '../GameModueProps';
 
 const NUM_OF_PLAYERS = 1;
 

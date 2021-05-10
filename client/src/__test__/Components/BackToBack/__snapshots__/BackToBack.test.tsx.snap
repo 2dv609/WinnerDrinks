@@ -7,9 +7,7 @@ exports[`Game module should match snapshot 1`] = `
   <div
     className="content"
     data-testid="game-event"
-  >
-    This is a mock question
-  </div>
+  />
   <h3
     className="title is-6"
   >

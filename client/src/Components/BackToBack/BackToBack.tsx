@@ -1,6 +1,7 @@
-import { useState, useEffect, Props } from 'react';
-// import GameProps from '../GameProps';
+import { useState, useEffect } from 'react';
+import { TextGameModuleProps } from '../GameModueProps';
 import '../../App.css';
+
 
 const NUM_OF_PLAYERS = 2; // How many players do you need?
 

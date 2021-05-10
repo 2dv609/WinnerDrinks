@@ -1,5 +1,5 @@
 import IUtilService from '../util/IUtilService'
-import getUtilService from './UtilServiceFactory'
+import getUtilService from '../util/UtilServiceFactory'
 import IGameModuleService from './IGameModuleService'
 
 export default class GameModuleService implements IGameModuleService {

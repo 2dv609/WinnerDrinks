@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-//import GameProps from '../GameProps';
+import { TextGameModuleProps } from '../GameModueProps';
+
 
 const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {
     // const gp: GameProps = props.gp;
