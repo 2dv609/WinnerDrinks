@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Party from './Components/Party/Party'
-import WheelComponent from './Components/WheelComponent/WheelComponent'
-import BackToBack from './Components/BackToBack/BackToBack';
-import Trivia from './Components/Trivia/Trivia'
-import Player from './model/Player'
-import IGameModuleService from './model/IGameModuleService'
-import GameService from './model/GameService'
+import Party from '../Components/Party/Party'
+import WheelComponent from '../Components/WheelComponent/WheelComponent'
+import BackToBack from '../Components/BackToBack/BackToBack';
+import Trivia from '../Components/Trivia/Trivia'
+import Player from '../model/Player'
+import IGameModuleService from '../model/IGameModuleService'
+import GameService from '../model/GameService'
 import WinnerAlert from './WinnerAlert'
 import Scoreboard from './Scoreboard';
+import SkipGame from './SkipGame';
 
 type GameProps = {
   gameModuleSerivce: IGameModuleService,
@@ -30,10 +31,6 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
         setTriviaEvents(gameModuleSerivce.getTriviaEvents())
         setBackToBackEvents(gameModuleSerivce.getBackToBackEvents())
         setPartyEvents(gameModuleSerivce.getPartyEvents())
-        
-        console.log('response[0]', gameModuleSerivce.getTriviaEvents())
-        console.log('response[1]', gameModuleSerivce.getBackToBackEvents())
-        console.log('response[2]', gameModuleSerivce.getPartyEvents())
     }, [gameModuleSerivce])
 
     /**
@@ -42,7 +39,7 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
      * 
      * @param p The winner(s). Null means no points awarded. 
      */
-     const makeWinnerAlert = (p: Player | Player[] | null, message?: string) => {
+     const makeWinnerAlert = (p: Player | Player[] | null, message?: string): void => {
         if (Array.isArray(p)) { // If there are several winners
             setWinners(p); // This is the new array
         } else if (p === null) { // null == no points awarded, lost game
@@ -59,7 +56,7 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
         }
     }
 
-    const chooseRandomNewGame = () => {
+    const chooseRandomNewGame = (): void => {
         setCurrentGameIndex(gameService.chooseRandomNewGame(currentGameIndex, gameModules));
     }
 
@@ -82,29 +79,33 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
             return (
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players}></Scoreboard>
-                <Trivia gameService={gameModuleProps} gameEvent={getRandomGameEvent(triviaEvents)}/>
+                <Scoreboard players={players} />
+                <Trivia gameService={gameModuleProps} gameEvent={getRandomGameEvent(triviaEvents)} />
+                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 2:
             return (
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players}></Scoreboard>
-                <BackToBack gameService={gameModuleProps} gameEvent={getRandomGameEvent(backToBackEvents)}/>
+                <Scoreboard players={players} />
+                <BackToBack gameService={gameModuleProps} gameEvent={getRandomGameEvent(backToBackEvents)} />
+                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 1:
             return (
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players}></Scoreboard>
+                <Scoreboard players={players} />
                 <Party gameService={gameModuleProps} gameEvent={getRandomGameEvent(partyEvents)}/>
+                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 0:
             return (
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players}></Scoreboard>
+                <Scoreboard players={players} />
                 <WheelComponent gameService={gameModuleProps} />
+                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
 
     }

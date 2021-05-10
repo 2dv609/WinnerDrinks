@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import Player from './model/Player'
+import Player from '../model/Player'
 
 type WinnerAlertProps = {
     winners: Player[] | null,

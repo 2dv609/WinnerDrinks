@@ -4,7 +4,7 @@
  * @author Susanna Persson
  */
 
-import Player from './model/Player'
+import Player from '../model/Player'
 
 type ScoreBoardProps = {
     players: Player[]

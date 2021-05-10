@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import Login from './Login';
+import React, { useState, useEffect } from 'react'
+import Login from './Login'
 import Game from './Game'
-import Player from './model/Player'
-import 'bulma';
-import './App.css';
-import ResetButton from './ResetButton';
-import ErrorMsg from './ErrorMsg';
-import Navbar from './Components/Menu/Navbar';
-import Icon from './Components/Menu/Icon';
-import IGameModuleService from './model/IGameModuleService'
-import getGameModuleService from './model/GameModuleFactory'
-import GameService from './model/GameService'
-import { IGameModuleSetting } from './Components/Menu/Navbar'
-import { NavbarProps } from './Components/Menu/Navbar'
+import Player from '../model/Player'
+import 'bulma'
+import './App.css'
+import ResetButton from './ResetButton'
+import ErrorMsg from './ErrorMsg'
+import Navbar from '../Components/Menu/Navbar'
+import Icon from '../Components/Menu/Icon'
+import IGameModuleService from '../model/IGameModuleService'
+import getGameModuleService from '../model/GameModuleFactory'
+import GameService from '../model/GameService'
+import { IGameModuleSetting } from '../Components/Menu/Navbar'
 
 
 function App(props: any) {
@@ -74,16 +73,6 @@ function App(props: any) {
         <p>Error</p>
       </div>
     )
-  }
-
-  const navbarProps: NavbarProps = {
-    navbarOpen: navbarOpen,
-    players: players,  
-    gameModuleSettings: gameModuleSettings, 
-    addUser: addUser, 
-    deleteUser: deleteUser, 
-    onGameModuleSettingUpdate: gameModuleSettingUpdate, 
-    updatePlayerActive: updatePlayerActive
   }
 
   if (!play) {
