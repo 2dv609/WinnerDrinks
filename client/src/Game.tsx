@@ -23,13 +23,13 @@ function shuffle(array: Player[]) {
 
 function Game(props: any) {
     const games = [WheelComponent, Party, BackToBack, Trivia];
-    const [currentGameIndex, setCurrentGameIndex] = useState(1);
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
     const [backToBackEvents, setBackToBackEvents] = useState<GameEventAPI | undefined>(undefined)
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     const [winners, setWinners] = useState<Player[] | null>([]);
     const [flash, setFlash] = useState<string | null>();
-    
+    const [currentGameIndex, setCurrentGameIndex] = useState(1);
+
     // Load data to game events
     useEffect(() => {
         getUtilService()
@@ -97,6 +97,7 @@ function Game(props: any) {
       while (newIndex === currentGameIndex || !props.activeModules.indexOf(newIndex).active) { // Don't allow the same game twice in a row. 
         newIndex = Math.floor(Math.random() * games.length)
       }
+
       setCurrentGameIndex(newIndex);
     }
 
@@ -131,7 +132,9 @@ function Game(props: any) {
       currentGame = <Trivia gp={gameProps} gameEvent={getRandomGameEvent(triviaEvents)}/>;
       break;
       case 2:
-        currentGame = <BackToBack gp={gameProps} gameEvent={getRandomGameEvent(backToBackEvents)}/>;
+        const question = getRandomGameEvent(backToBackEvents)
+        /* props.setCurrentQuestion(question) */
+        currentGame = <BackToBack gp={gameProps} gameEvent={question}/>;
         break;
       case 1:
         currentGame = <Party gp={gameProps} gameEvent={getRandomGameEvent(partyEvents)}/>;

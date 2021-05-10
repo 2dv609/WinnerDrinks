@@ -13,6 +13,8 @@ function App(props: any) {
   const [names, setNames] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
   const [nameerror, setError] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState('')
+  const [currentGameIndex, setCurrentGameIndex] = useState(1);
 
   /* Navbar open/close */
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -36,7 +38,7 @@ function App(props: any) {
       }
     }
 
-      /**
+  /**
    * Function updating if the player is active/paused.
    */
   const updatePlayerActive = (playerName: string) => {
@@ -59,8 +61,8 @@ function App(props: any) {
       return (
         <div>
 
-          {/* Navbar */}
-          <Icon setNavbarOpen={setNavbarOpen} />
+        {/* Navbar */}
+        <Icon setNavbarOpen={setNavbarOpen} />
         <Navbar addUser={addUser} deleteUser={deleteUser} gameModules={gameModules} setGameModules={setGameModules} names={names} navbarOpen={navbarOpen} updatePlayerActive={updatePlayerActive} />
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
 
@@ -119,9 +121,15 @@ function App(props: any) {
       <Icon setNavbarOpen={setNavbarOpen} />
       <Navbar addUser={addUser} deleteUser={deleteUser} gameModules={gameModules} setGameModules={setGameModules} names={names} navbarOpen={navbarOpen} updatePlayerActive={updatePlayerActive} />
     
-      <div className="App section">
+      <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <h1 className="title is-3">Let's play!</h1>
-        <Game players={names} />
+        <Game 
+          setCurrentGameIndex={setCurrentGameIndex} 
+          currentGameIndex={currentGameIndex} 
+          players={names} 
+          activeModules={gameModules} 
+          setCurrentQuestion={setCurrentQuestion} 
+          currentQuestion={currentQuestion} />
         <ResetButton />
       </div>
       </div>
