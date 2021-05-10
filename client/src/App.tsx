@@ -11,6 +11,8 @@ import Icon from './Components/Menu/Icon';
 import IGameModuleService from './model/IGameModuleService'
 import getGameModuleService from './model/GameModuleFactory'
 import GameService from './model/GameService'
+import { IGameModuleSetting } from './Components/Menu/Navbar'
+
 
 function App(props: any) {
   const [names, setNames] = useState<Player[]>([]);
@@ -19,7 +21,7 @@ function App(props: any) {
   const [gameModuleSerivce, setGameModuleSerivce] = useState<IGameModuleService | undefined>(undefined)
   const gameService: GameService = new GameService();
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [gameModuleSettings, setGameModuleSettings] = useState([
+  const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
     { name: 'Wheel', active: true, index: 0 },
     { name: 'Party', active: true, index: 1 }, 
     { name: 'BackToBack', active: true, index: 2 }, 
@@ -43,20 +45,20 @@ function App(props: any) {
     }
   }
 
-  const gameModuleSettingUpdate = (temp: any[]) => {
+  const gameModuleSettingUpdate = (temp: any[]): void => {
     setGameModuleSettings(temp)
   }
 
   /**
    * Function updating the state of the player. If (s)he is active or paused.
    */
-  const updatePlayerActive = (playerName: string) => {
+  const updatePlayerActive = (playerName: string): void => {
     const namesCopy = [...names]
     namesCopy.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
     setNames(namesCopy)
   }
 
-  const addUser = (newUserName: string) => {
+  const addUser = (newUserName: string): void => {
     try {
       const newUser = new Player(newUserName);
       setNames([...names, newUser]);
@@ -80,7 +82,15 @@ function App(props: any) {
 
         {/* Navbar */}
         <Icon setNavbarOpen={setNavbarOpen} />
-        <Navbar addUser={addUser} deleteUser={deleteUser} gameModules={gameModuleSettings} onGameModuleSettingUpdate={gameModuleSettingUpdate} names={names} navbarOpen={navbarOpen} updatePlayerActive={updatePlayerActive} />
+        <Navbar
+          navbarOpen={navbarOpen}
+          names={names}  
+          gameModuleSettings={gameModuleSettings} 
+          addUser={addUser} 
+          deleteUser={deleteUser} 
+          onGameModuleSettingUpdate={gameModuleSettingUpdate} 
+          updatePlayerActive={updatePlayerActive} />
+
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
 
           <Login setter={addUser} />
@@ -107,7 +117,14 @@ function App(props: any) {
 
         {/* Navbar */}
         <Icon setNavbarOpen={setNavbarOpen} />
-        <Navbar addUser={addUser} deleteUser={deleteUser} gameModules={gameModuleSettings} onGameModuleSettingUpdate={gameModuleSettingUpdate} names={names} navbarOpen={navbarOpen} updatePlayerActive={updatePlayerActive} />
+        <Navbar
+          navbarOpen={navbarOpen}
+          names={names}  
+          gameModuleSettings={gameModuleSettings} 
+          addUser={addUser} 
+          deleteUser={deleteUser} 
+          onGameModuleSettingUpdate={gameModuleSettingUpdate} 
+          updatePlayerActive={updatePlayerActive} />
         
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
           <Login setter={addUser} />
@@ -136,7 +153,14 @@ function App(props: any) {
       <div>
       {/* Navbar */}
       <Icon setNavbarOpen={setNavbarOpen} />
-      <Navbar addUser={addUser} deleteUser={deleteUser} gameModules={gameModuleSettings} onGameModuleSettingUpdate={gameModuleSettingUpdate} names={names} navbarOpen={navbarOpen} updatePlayerActive={updatePlayerActive} />
+      <Navbar
+        navbarOpen={navbarOpen}
+        names={names}  
+        gameModuleSettings={gameModuleSettings} 
+        addUser={addUser} 
+        deleteUser={deleteUser} 
+        onGameModuleSettingUpdate={gameModuleSettingUpdate} 
+        updatePlayerActive={updatePlayerActive} />
     
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <h1 className="title is-3">Let's play!</h1>

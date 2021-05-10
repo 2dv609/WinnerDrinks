@@ -2,20 +2,28 @@ import React, { useState } from 'react';
 import './Navbar.css'
 import Player from '../../model/Player'
 // import 'bulma/css/bulma.css'
-
 import PlayerSettingBox from './PlayerSettingBox';
+
+export interface IGameModuleSetting {
+  name: string,
+  active: boolean,
+  index: number
+}
 
 type NavbarProps = {
   navbarOpen: boolean,
   names: Player[],
-  updatePlayerActive: any,
-  gameModules: any,
-  onGameModuleSettingUpdate: any,
-  deleteUser: any,
-  addUser: any
+  gameModuleSettings: IGameModuleSetting[],
+  updatePlayerActive: (playerName: string) => void,
+  onGameModuleSettingUpdate: (temp: any[]) => void,
+  deleteUser: (userName: string) => void,
+  addUser: (newUserName: string) => void
 }
 
-const Navbar: React.FC<NavbarProps> = ({ addUser, navbarOpen, names, updatePlayerActive, gameModules, onGameModuleSettingUpdate, deleteUser }) => {
+const Navbar: React.FC<NavbarProps> = ({ 
+  navbarOpen, names, gameModuleSettings, 
+  updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
+
   const [inputName, setInputName] = useState('')
 
   /**
@@ -26,11 +34,11 @@ const Navbar: React.FC<NavbarProps> = ({ addUser, navbarOpen, names, updatePlaye
 
     let activeModules = 0
 
-    for(let i = 0; i < gameModules.length; i++) {
-      if(gameModules[i].active) activeModules++
+    for(let i = 0; i < gameModuleSettings.length; i++) {
+      if(gameModuleSettings[i].active) activeModules++
     }
 
-    const copiedArray = [...gameModules]
+    const copiedArray = [...gameModuleSettings]
     // Error checking, cannot disable if every module is disabled
     for(let i = 0; i < copiedArray.length; i++) {
       if(copiedArray[i].name === moduleName) {
@@ -71,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = ({ addUser, navbarOpen, names, updatePlaye
           {/* Game module settings */}
           <p className="menu-label">Game Modules</p>
           <ul className="menu-list">
-            {gameModules.map((module: any, index: number) => {
+            {gameModuleSettings.map((module: any, index: number) => {
               return (
               <li key={index}>
                 <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
