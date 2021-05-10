@@ -12,7 +12,7 @@ export interface IGameModuleSetting {
 
 type NavbarProps = {
   navbarOpen: boolean,
-  names: Player[],
+  players: Player[],
   gameModuleSettings: IGameModuleSetting[],
   updatePlayerActive: (playerName: string) => void,
   onGameModuleSettingUpdate: (temp: any[]) => void,
@@ -21,7 +21,7 @@ type NavbarProps = {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ 
-  navbarOpen, names, gameModuleSettings, 
+  navbarOpen, players, gameModuleSettings, 
   updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
 
   const [inputName, setInputName] = useState('')
@@ -61,7 +61,7 @@ const Navbar: React.FC<NavbarProps> = ({
    * Function that calls delete-player function in parent-component after error-checking.
    */
   const deletePlayer = (playerName: string) => {
-    if(names.length <= 2) {
+    if(players.length <= 2) {
       // Cannot delete player, just one player left
       // Error checking
       return
@@ -102,7 +102,7 @@ const Navbar: React.FC<NavbarProps> = ({
           {/* Names */}
           <p className="menu-label">Players</p>
           <ul className="menu-list" style={{overflowY: 'scroll'}}>
-            {names.map((player: Player, index: number) => {
+            {players.map((player: Player, index: number) => {
               return <PlayerSettingBox deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive}/>
             })}
           </ul>

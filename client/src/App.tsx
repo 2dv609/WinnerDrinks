@@ -15,11 +15,11 @@ import { IGameModuleSetting } from './Components/Menu/Navbar'
 
 
 function App(props: any) {
-  const [names, setNames] = useState<Player[]>([]);
+  const gameService: GameService = new GameService();
+  const [players, setPlayers] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
   const [nameerror, setError] = useState(false);
   const [gameModuleSerivce, setGameModuleSerivce] = useState<IGameModuleService | undefined>(undefined)
-  const gameService: GameService = new GameService();
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
     { name: 'Wheel', active: true, index: 0 },
@@ -34,14 +34,14 @@ function App(props: any) {
 
   /**
    * Function that deletes an added player by name.
-   * @param userName Name of Player to be deleted from state.
+   * @param palyerName Name of Player to be deleted from state.
    */
-  const deleteUser = (userName: string) => {
-    const copiedNames = [...names]
-    const index = copiedNames.findIndex((user) => user.name === userName)
-    if(index >= 0) {
-      copiedNames.splice(index, 1)
-      setNames(copiedNames);
+  const deleteUser = (playerName: string): void => {
+    const copyPlayers: Player[] = [...players]
+    const index = copyPlayers.findIndex((player: Player) => player.name === playerName)
+    if (index >= 0) {
+      copyPlayers.splice(index, 1)
+      setPlayers(players);
     }
   }
 
@@ -53,15 +53,15 @@ function App(props: any) {
    * Function updating the state of the player. If (s)he is active or paused.
    */
   const updatePlayerActive = (playerName: string): void => {
-    const namesCopy = [...names]
-    namesCopy.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
-    setNames(namesCopy)
+    const copyPlayers: Player[] = [...players]
+    copyPlayers.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
+    setPlayers(copyPlayers)
   }
 
-  const addUser = (newUserName: string): void => {
+  const addUser = (newPlayerName: string): void => {
     try {
-      const newUser = new Player(newUserName);
-      setNames([...names, newUser]);
+      const newPlayer = new Player(newPlayerName);
+      setPlayers([...players, newPlayer]);
     } catch (error) {
       window.alert(error) //For now.
     }
@@ -84,7 +84,7 @@ function App(props: any) {
         <Icon setNavbarOpen={setNavbarOpen} />
         <Navbar
           navbarOpen={navbarOpen}
-          names={names}  
+          players={players}  
           gameModuleSettings={gameModuleSettings} 
           addUser={addUser} 
           deleteUser={deleteUser} 
@@ -96,7 +96,7 @@ function App(props: any) {
           <Login setter={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
-            if (names.length < 2) {
+            if (players.length < 2) {
               setError(true);
             } else {
               setPlay(true); 
@@ -104,8 +104,8 @@ function App(props: any) {
             }} />
           <h2 className="title is-5" >Players</h2>
           <ul className="columns">
-            {names.map(item =>
-              (<li className="column" key={item.toString()}>{item.toString()}</li>)
+            {players.map(player =>
+              (<li className="column" key={player.toString()}>{player.toString()}</li>)
             )}
           </ul>
         </div>
@@ -119,7 +119,7 @@ function App(props: any) {
         <Icon setNavbarOpen={setNavbarOpen} />
         <Navbar
           navbarOpen={navbarOpen}
-          names={names}  
+          players={players}  
           gameModuleSettings={gameModuleSettings} 
           addUser={addUser} 
           deleteUser={deleteUser} 
@@ -130,7 +130,7 @@ function App(props: any) {
           <Login setter={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
-            if (names.length < 2) {
+            if (players.length < 2) {
               setError(true);
             } else {
               setPlay(true); 
@@ -139,8 +139,8 @@ function App(props: any) {
           <ErrorMsg message='There needs to be at least two players to start the game!'></ErrorMsg>
           <h2 className="title is-5" >Players</h2>
           <ul className="columns">
-            {names.map(item =>
-              (<li className="column" key={item.toString()}>{item.toString()}</li>)
+            {players.map(player =>
+              (<li className="column" key={player.toString()}>{player.toString()}</li>)
             )}
           </ul>
         </div>
@@ -155,7 +155,7 @@ function App(props: any) {
       <Icon setNavbarOpen={setNavbarOpen} />
       <Navbar
         navbarOpen={navbarOpen}
-        names={names}  
+        players={players}  
         gameModuleSettings={gameModuleSettings} 
         addUser={addUser} 
         deleteUser={deleteUser} 
@@ -164,7 +164,7 @@ function App(props: any) {
     
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <h1 className="title is-3">Let's play!</h1>
-        <Game gameService={gameService} players={names} gameModuleSerivce={gameModuleSerivce}/>
+        <Game gameService={gameService} players={players} gameModuleSerivce={gameModuleSerivce}/>
         <ResetButton />
       </div>
       </div>
