@@ -7,6 +7,14 @@ You'll find the client side code built in React and TypeScript in the directory 
 and the server side code in the directory *server*. 
 
 
+### Notes on running the app locally for development
+Make sure Docker is running on your computer.  
+Run `npm install` in both the server and client directory.  
+Then run the script build_app_production.sh in the root directory.  
+Then in server/dist, run the script run_app_production_local.sh.  
+Open localhost:4000 on your computer. 
+
+
 ### Build app for production
 ```
 $ ./build_app_production.sh
@@ -22,34 +30,72 @@ $ ./build_app_production_local.sh
 server/dist
 ```
 
-### Git
+### Git Workflow
 
-1. Clone the dev branch
+#### 1. Clone the dev branch and checkout your new branch
  ```
-$ git clone --single-branch --branch=dev <git_repository>
+$ git clone --single-branch --branch=dev yourgitrepourl
   
-$ git checkout -b <new_branch>
+$ git checkout -b yourbranchname
 ```
 
-2. Work on the new branch
+#### 2. Work on the new branch locally
 ```
 $ git add .
 
-$ git comm -m <commit>
+$ git commit -m 'your commit message'
 ```
 
-3. Push branch to git repository
+#### 3. If wrong last commit
 ```
-$ git push -u origin <new_branch>
+$ git reset --soft HEAD~1
 ```
 
-4. Merge <new_branch> to <dev> on github. 
-  
-  * Make sure you merge <new_branch> branch to the dev branch. 
+#### 4. Push your new branch to remote git repository
+
+```
+$ git push
+```
+If pushing branch for the first time:
+```
+$ git push --set-upstream origin yourbranchname
+```
+
+#### 5. (Optional) Merge new changes from dev INTO your branch __(dev --> yourbranch)__
+Commit your changes in your branch. Then:
+```
+$ git checkout dev
+
+$ git pull
+
+$ git checkout yourbranchname
+
+$ git merge dev
+```
+
+#### 6. Merge your branch INTO dev __(yourbranch --> dev)__
+Commit your changes in your branch. Then:
+```
+$ git checkout dev
+
+$ git pull
+
+$ git merge yourbranchname
+
+$ git push
+```
+
+#### 7. Delete your branch locally
+```
+$ git checkout anyotherbranch
+
+$ git branch -d yourbranchname
+```
+#### 8. Delete your branch in remote repo
+```
+$ git checkout anyotherbranch
+
+$ git push origin --delete yourbranchname
+```
   
   * If merge conflicts try to solve it or ask for help.  
-  
-  * Delete branch <new_branch> 
-
-
-  
