@@ -4,7 +4,7 @@
  * @author Susanna Persson
  */
 
-import Player from './Player'
+import Player from './model/Player'
 
 function Scoreboard(props: any) {
 

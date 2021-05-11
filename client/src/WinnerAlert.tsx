@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import Player from './Player'
+import Player from './model/Player'
 
 function WinnerAlert(props: any) {
 
