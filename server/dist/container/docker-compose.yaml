@@ -6,6 +6,10 @@ services:
     container_name: mongodb_wd
     build:    
       context: ./mongodb
+      labels: 
+        - mongodb_wd
+    volumes:
+     - winner-drinks-data:/data/db
     ports:
       - "27017:27017"
     environment:
@@ -20,3 +24,9 @@ secrets:
     file: ./secrets/mongodb_pw
   mongodb_password:
     file: ./secrets/mongodb_un
+
+
+volumes:
+  winner-drinks-data:
+    external: true
+

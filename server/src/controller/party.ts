@@ -28,6 +28,7 @@ export class PartyController {
    */
    async loadParty (dataSource: string): Promise<void> {
     const data = await fs.readJson(dataSource)
-    Party.insertMany(data)
+    await Party.deleteMany({})
+    await Party.insertMany(data)
   }
 }  

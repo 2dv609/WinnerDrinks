@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 import './Navbar.css'
-import Player from '../../Player'
+import Player from '../../model/Player'
 // import 'bulma/css/bulma.css'
-
 import PlayerSettingBox from './PlayerSettingBox';
 
-type NavbarProps = {
-  navbarOpen: boolean,
-  names: Player[],
-  updatePlayerActive: any,
-  gameModules: any,
-  setGameModules: any,
-  deleteUser: any,
-  addUser: any
+export interface IGameModuleSetting {
+  name: string,
+  active: boolean,
+  index: number
 }
 
-function Navbar({ addUser, navbarOpen, names, updatePlayerActive, gameModules, setGameModules, deleteUser }: NavbarProps) {
+export type NavbarProps = {
+  navbarOpen: boolean,
+  players: Player[],
+  gameModuleSettings: IGameModuleSetting[],
+  updatePlayerActive: (playerName: string) => void,
+  onGameModuleSettingUpdate: (gameModuleSettings: IGameModuleSetting[]) => void,
+  deleteUser: (userName: string) => void,
+  addUser: (newUserName: string) => void
+}
+
+const Navbar: React.FC<NavbarProps> = ({ 
+  navbarOpen, players, gameModuleSettings, 
+  updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
+
   const [inputName, setInputName] = useState('')
 
   /**
@@ -26,11 +34,11 @@ function Navbar({ addUser, navbarOpen, names, updatePlayerActive, gameModules, s
 
     let activeModules = 0
 
-    for(let i = 0; i < gameModules.length; i++) {
-      if(gameModules[i].active) activeModules++
+    for(let i = 0; i < gameModuleSettings.length; i++) {
+      if(gameModuleSettings[i].active) activeModules++
     }
 
-    const copiedArray = [...gameModules]
+    const copiedArray = [...gameModuleSettings]
     // Error checking, cannot disable if every module is disabled
     for(let i = 0; i < copiedArray.length; i++) {
       if(copiedArray[i].name === moduleName) {
@@ -46,14 +54,14 @@ function Navbar({ addUser, navbarOpen, names, updatePlayerActive, gameModules, s
         break;
       }
     }
-    setGameModules(copiedArray)    
+    onGameModuleSettingUpdate(copiedArray)    
   }
 
   /**
    * Function that calls delete-player function in parent-component after error-checking.
    */
   const deletePlayer = (playerName: string) => {
-    if(names.length <= 2) {
+    if (players.length <= 2) {
       // Cannot delete player, just one player left
       // Error checking
       return
@@ -71,11 +79,11 @@ function Navbar({ addUser, navbarOpen, names, updatePlayerActive, gameModules, s
           {/* Game module settings */}
           <p className="menu-label">Game Modules</p>
           <ul className="menu-list">
-            {gameModules.map((module: any, index: number) => {
+            {gameModuleSettings.map((module: IGameModuleSetting, index: number) => {
               return (
               <li key={index}>
                 <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
-                  <label className="checkbox"><input type="checkbox" checked={module.active} style={{marginRight: '8px'}}/>{module.name} Module</label>
+                  <label className="checkbox"><input type="checkbox" onChange={() => (module.active)} checked={module.active} style={{marginRight: '8px'}}/>{module.name} Module</label>
                 </a>
               </li>)
             })}
@@ -94,7 +102,7 @@ function Navbar({ addUser, navbarOpen, names, updatePlayerActive, gameModules, s
           {/* Names */}
           <p className="menu-label">Players</p>
           <ul className="menu-list" style={{overflowY: 'scroll'}}>
-            {names.map((player: Player, index: number) => {
+            {players.map((player: Player, index: number) => {
               return <PlayerSettingBox deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive}/>
             })}
           </ul>

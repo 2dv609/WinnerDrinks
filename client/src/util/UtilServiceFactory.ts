@@ -18,4 +18,3 @@ export default async function getUtilService(): Promise<IUtilService> {
         return new API()
     }
 }
- 

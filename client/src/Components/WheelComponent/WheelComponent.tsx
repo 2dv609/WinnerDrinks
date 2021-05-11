@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import GameProps from '../GameProps';
 import './WheelComponent.css'
+import { AnimationGameModuleProps } from '../GameModueProps'
 
 const DEG = 360
 const colors = ['#9ede73', '#f7ea00', '#e48900', '#be0000']
@@ -22,10 +22,10 @@ let style = {
  * @param {Array} users Array of participant names. 
  * @returns {jsx} Component
  */
-function WheelComponent(props: any) {
+const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) =>  {
   // Error checking number of users. If < 4 => duplicate one of the users / If > 4 => skip one of the users
-  const gp: GameProps = props.gp;
-  const list = gp.getPlayers(4);
+  // const gp: GameProps = props.gp;
+  const list = gameService.getPlayers(4, gameService.players)
   const rotateDeg = DEG / list.length
   const [isReset, setIsReset] = useState(true)
   const [result, setResult] = useState('')
@@ -107,9 +107,9 @@ function WheelComponent(props: any) {
     setResult(`${winner.toString()} won!`)
     reset();
 
-    gp.addScore(winner, 1)
-    gp.makeWinnerAlert(winner)
-    gp.chooseRandomNewGame()
+    gameService.addScore(winner, 1)
+    gameService.makeWinnerAlert(winner)
+    gameService.chooseRandomNewGame()
 
   }
 

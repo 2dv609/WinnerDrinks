@@ -14,5 +14,6 @@ export NODE_ENV=production
 
 npm ci --production
 docker-compose -f container/docker-compose.yaml down
-docker-compose -f container/docker-compose.yaml up --build -d
+docker volume create winner-drinks-data
+docker-compose -f container/docker-compose.yaml up -d
 node server/server.js
