@@ -13,10 +13,11 @@ import SkipGame from './SkipGame';
 type GameProps = {
   gameModuleSerivce: IGameModuleService,
   players: Player[],
-  gameService: GameService
+  gameService: GameService,
+  activeGames: any[]
 }
 
-const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) => {
+const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gameService }) => {
     const gameModules = [WheelComponent, Party, BackToBack, Trivia];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
@@ -59,7 +60,7 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
     }
 
     const chooseRandomNewGame = (): void => {
-        const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules)
+        const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
         setCurrentGameIndex(newGameIndex);
         // setEventCurrentQuestion(newGameIndex)
     }

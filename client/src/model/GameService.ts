@@ -2,14 +2,15 @@ import Player from './Player'
 import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/GameModueProps'
 
 export default class GameService {
+
     
     public addScore = (p: Player, score: number) => {
         p.addScore(score)
     }
 
-    public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]): number => {
+    public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[], activeGames: any[]): number => {
         let newIndex = currentGameIndex
-        while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
+        while (newIndex === currentGameIndex || !activeGames[newIndex].active) { // Don't allow the same game twice in a row. 
             newIndex = Math.floor(Math.random() * gameModules.length)
         }
         return newIndex
