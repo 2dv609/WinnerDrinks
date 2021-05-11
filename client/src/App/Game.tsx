@@ -25,7 +25,7 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     const [winners, setWinners] = useState<Player[] | null>([]);
     const [flash, setFlash] = useState<string | undefined>();
-    const [currentQuestion, setCurrentQuestion] = useState(undefined)
+    const [currentQuestion, setCurrentQuestion] = useState<object | number>(-1)
 
     
     // Load data to game events
@@ -106,8 +106,12 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
         return (<div><p>Loading...</p></div>)
     }
 
-    /* let currentGame;
+    // If to many paused players
+    if (gameService.getNumActivePlayers(players) < 2) {
+      return <h1>Too many players are paused. Please wait for them and start their session again!</h1>
+    }
 
+    let currentGame;
     switch (currentGameIndex) {
       case 3: 
         currentGame = <Trivia gameService={gameServiceProps} gameEvent={currentQuestion}/>;
@@ -121,65 +125,22 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
       case 0:
         currentGame = <WheelComponent gameService={gameServiceProps} />;
         break;
-    } */
-
-    // If to many paused players
-    if (gameService.getNumActivePlayers(players) < 2) {
-        return <h1>Too many players are paused. Please wait for them and start their session again!</h1>
     }
 
-    /* return (
-        <div className="box">
+    if (!triviaEvents || !backToBackEvents || !partyEvents) {
+      return (<div><p>Loading...</p></div>)
+    } else if(currentQuestion < 0) {
+      chooseRandomNewGame()
+      return (<h1>Hej</h1>)
+    }
+
+    return (
+      <div className="Game">
           <WinnerAlert winners={winners} message={flash} />
-          <Scoreboard players={players}></Scoreboard>
+          <Scoreboard players={players} />
           {currentGame}
           <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
-        </div>
-      ); */
-
-    if(currentQuestion === undefined) {
-      chooseRandomNewGame()
-    }
-
-    switch (currentGameIndex) {
-        case 3: 
-            return (
-            <div className="Game">
-                <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players} />
-                <Trivia gameService={gameServiceProps} gameEvent={currentQuestion} />
-                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
-            </div>);
-        case 2:
-            return (
-            <div className="Game">
-                <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players} />
-                <BackToBack gameService={gameServiceProps} gameEvent={currentQuestion} />
-                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
-            </div>);
-        case 1:
-            return (
-            <div className="Game">
-                <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players} />
-                <Party gameService={gameServiceProps} gameEvent={currentQuestion} />
-                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
-            </div>);
-        case 0:
-            return (
-            <div className="Game">
-                <WinnerAlert winners={winners} message={flash} />
-                <Scoreboard players={players} />
-                <WheelComponent gameService={gameServiceProps} />
-                <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
-            </div>);
-
-    }
-    return (
-        <div className="Game">
-
-        </div>
+      </div>
     );
 }
 

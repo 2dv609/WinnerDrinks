@@ -18,6 +18,7 @@ const BackToBack: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) =
     }, [gameService, players])
 
     // Either both win, or both lose.
+
     return (
         <div className="box container">
             <div data-testid="game-event" className="content">{gameEvent.question}</div>
