@@ -25,7 +25,7 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     const [winners, setWinners] = useState<Player[] | null>([]);
     const [flash, setFlash] = useState<string | undefined>();
-    // const [currentQuestion, setCurrentQuestion] = useState(-1)
+    const [currentQuestion, setCurrentQuestion] = useState(undefined)
 
     
     // Load data to game events
@@ -62,7 +62,29 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     const chooseRandomNewGame = (): void => {
         const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
         setCurrentGameIndex(newGameIndex);
-        // setEventCurrentQuestion(newGameIndex)
+        setEventCurrentQuestion(newGameIndex)
+    }
+
+    /**
+     * Function that get question from current game-module and save it in state.
+     */
+     const setEventCurrentQuestion = (currentGameIndex: number) => {
+      let currentGame: any;
+      switch (currentGameIndex) {
+        case 3:
+          if(!triviaEvents) return
+          currentGame = gameService.getRandomGameEvent(triviaEvents);
+          break;
+        case 2:
+          if(!backToBackEvents) return
+          currentGame = gameService.getRandomGameEvent(backToBackEvents);
+          break;
+        case 1:
+          if(!partyEvents) return
+          currentGame = gameService.getRandomGameEvent(partyEvents)
+          break;
+      }
+      setCurrentQuestion(currentGame)
     }
 
     const removeGameEvent = (gameEventId: string, gameEvents: GameEventAPI): void => {
@@ -88,16 +110,16 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
 
     switch (currentGameIndex) {
       case 3: 
-        currentGame = <Trivia gameService={gameModuleProps} gameEvent={currentQuestion}/>;
+        currentGame = <Trivia gameService={gameServiceProps} gameEvent={currentQuestion}/>;
         break;
       case 2:
-        currentGame = <BackToBack gameService={gameModuleProps} gameEvent={currentQuestion}/>;
+        currentGame = <BackToBack gameService={gameServiceProps} gameEvent={currentQuestion}/>;
         break;
       case 1:
-        currentGame = <Party gameService={gameModuleProps} gameEvent={currentQuestion}/>;
+        currentGame = <Party gameService={gameServiceProps} gameEvent={currentQuestion}/>;
         break;
       case 0:
-        currentGame = <WheelComponent gameService={gameModuleProps} />;
+        currentGame = <WheelComponent gameService={gameServiceProps} />;
         break;
     } */
 
@@ -115,13 +137,17 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
         </div>
       ); */
 
+    if(currentQuestion === undefined) {
+      chooseRandomNewGame()
+    }
+
     switch (currentGameIndex) {
         case 3: 
             return (
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
                 <Scoreboard players={players} />
-                <Trivia gameService={gameServiceProps} gameEvent={gameService.getRandomGameEvent(triviaEvents)} />
+                <Trivia gameService={gameServiceProps} gameEvent={currentQuestion} />
                 <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 2:
@@ -129,7 +155,7 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
                 <Scoreboard players={players} />
-                <BackToBack gameService={gameServiceProps} gameEvent={gameService.getRandomGameEvent(backToBackEvents)} />
+                <BackToBack gameService={gameServiceProps} gameEvent={currentQuestion} />
                 <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 1:
@@ -137,7 +163,7 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
                 <Scoreboard players={players} />
-                <Party gameService={gameServiceProps} gameEvent={gameService.getRandomGameEvent(partyEvents)} />
+                <Party gameService={gameServiceProps} gameEvent={currentQuestion} />
                 <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 0:

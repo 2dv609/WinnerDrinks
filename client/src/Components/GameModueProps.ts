@@ -11,7 +11,7 @@ interface GameModuleProps {
 
 export type TextGameModuleProps = {
     gameService: GameModuleProps,
-    gameEvent: IBackToBack | IParty | ITrivia
+    gameEvent: undefined | object | string | IBackToBack | IParty | ITrivia
 }
 
 export type AnimationGameModuleProps = {

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { TextGameModuleProps } from '../GameModueProps';
 import '../../App/App.css';
 
+// Infinity loop when open navbar (only in this component)
 
 const NUM_OF_PLAYERS = 2; // How many players do you need?
 
