@@ -37,25 +37,25 @@ function App() {
    * @param palyerName Name of Player to be deleted from state.
    */
   const deleteUser = (playerName: string): void => {
-    const copyPlayers: Player[] = [...players]
-    const index = copyPlayers.findIndex((player: Player) => player.name === playerName)
+    const updatedPlayers: Player[] = [...players]
+    const index = updatedPlayers.findIndex((player: Player) => player.name === playerName)
     if (index >= 0) {
-      copyPlayers.splice(index, 1)
-      setPlayers(copyPlayers);
+      updatedPlayers.splice(index, 1)
+      setPlayers(updatedPlayers);
     }
   }
 
-  const gameModuleSettingUpdate = (temp: any[]): void => {
-    setGameModuleSettings(temp)
+  const gameModuleSettingUpdate = (gameModuleSettings: IGameModuleSetting[]): void => {
+    setGameModuleSettings(gameModuleSettings)
   }
 
   /**
    * Function updating the state of the player. If (s)he is active or paused.
    */
   const updatePlayerActive = (playerName: string): void => {
-    const copyPlayers: Player[] = [...players]
-    copyPlayers.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
-    setPlayers(copyPlayers)
+    const updatedPlayers: Player[] = [...players]
+    updatedPlayers.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
+    setPlayers(updatedPlayers)
   }
 
   const addUser = (newPlayerName: string): void => {
@@ -69,9 +69,7 @@ function App() {
 
   if (!gameModuleSerivce) {
     return (
-      <div>
-        <p>Error</p>
-      </div>
+      <div></div>
     )
   }
 

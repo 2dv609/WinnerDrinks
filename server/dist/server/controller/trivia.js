@@ -1,5 +1,4 @@
 import Trivia from '../model/trivia.js';
-// import fetch from 'node-fetch'
 import fs from 'fs-extra';
 export class TriviaController {
     /**
@@ -23,14 +22,6 @@ export class TriviaController {
      * Load trivia question to db.
      */
     async loadTrivia(dataSource) {
-        /* const url: string = 'https://opentdb.com/api.php?amount=20'
-     
-        const response = await fetch(url, {method: 'GET'})
-        const resultJSON = await response.json()
-    
-        if ('results' in resultJSON) {
-          MultiQuestion.insertMany(resultJSON.results)
-        } */
         const data = await fs.readJson(dataSource);
         await Trivia.deleteMany({});
         await Trivia.insertMany(data);

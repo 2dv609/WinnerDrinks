@@ -7,32 +7,7 @@ export default class GameService {
         p.addScore(score)
     }
 
-    /* public makeWinnerAlert = (p: any) => {
-        let str: string
-
-        // If p is an array, display an alert for multiple players
-        if (Array.isArray(p)) {
-            str = 'The winners are: \n'
-            p.forEach(element => {
-                str = str + `${element.toString()} with a total score of: ${element.score} \n`
-            });
-
-            // If there is no param, display an alert for no points given
-        } else if (p == null) {
-            str = `No points awarded!`
-
-            //If p is a single player object, display an alert for one winner
-        } else if (p instanceof Player) {
-            str = `The winner is ${p.toString()} with a total score of: ${p.score}`
-        } else {
-            str = ``
-        }
-
-        alert(str);
-    } */
-
-
-    public chooseRandomNewGame = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]): number => {
+    public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]): number => {
         let newIndex = currentGameIndex
         while (newIndex === currentGameIndex) { // Don't allow the same game twice in a row. 
             newIndex = Math.floor(Math.random() * gameModules.length)
@@ -66,4 +41,14 @@ export default class GameService {
     public getRandomGameEvent = (gameEventAPI: GameEventAPI): IBackToBack | IParty | ITrivia => {
         return gameEventAPI.questions[Math.floor(Math.random() * gameEventAPI.questions.length)]
     }
+
+    public getNumActivePlayers = (players: Player[]): number => {
+        let numOfActivePlayers = 0
+
+        players.forEach(player => {
+            if(player.isActive) numOfActivePlayers++  
+        })
+
+        return numOfActivePlayers
+      }
 }

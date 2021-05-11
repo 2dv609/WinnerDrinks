@@ -3,7 +3,7 @@ import './QuestionCard.css';
 
 type Props = {
   answer: string;
-  handleAnswer: any;
+  handleAnswer: (e: any) => void;
 }
 
 const QuestionCard: React.FC<Props> = ({ answer, handleAnswer }) => {

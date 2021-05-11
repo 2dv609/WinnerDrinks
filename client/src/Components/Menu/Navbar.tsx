@@ -15,7 +15,7 @@ export type NavbarProps = {
   players: Player[],
   gameModuleSettings: IGameModuleSetting[],
   updatePlayerActive: (playerName: string) => void,
-  onGameModuleSettingUpdate: (temp: any[]) => void,
+  onGameModuleSettingUpdate: (gameModuleSettings: IGameModuleSetting[]) => void,
   deleteUser: (userName: string) => void,
   addUser: (newUserName: string) => void
 }
@@ -79,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = ({
           {/* Game module settings */}
           <p className="menu-label">Game Modules</p>
           <ul className="menu-list">
-            {gameModuleSettings.map((module: any, index: number) => {
+            {gameModuleSettings.map((module: IGameModuleSetting, index: number) => {
               return (
               <li key={index}>
                 <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>

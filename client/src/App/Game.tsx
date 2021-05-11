@@ -24,6 +24,8 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
     const [partyEvents, setPartyEvents] = useState<GameEventAPI | undefined>(undefined)
     const [winners, setWinners] = useState<Player[] | null>([]);
     const [flash, setFlash] = useState<string | undefined>();
+    // const [currentQuestion, setCurrentQuestion] = useState(-1)
+
     
     // Load data to game events
     useEffect(() => {
@@ -57,22 +59,60 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
     }
 
     const chooseRandomNewGame = (): void => {
-        setCurrentGameIndex(gameService.chooseRandomNewGame(currentGameIndex, gameModules));
+        const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules)
+        setCurrentGameIndex(newGameIndex);
+        // setEventCurrentQuestion(newGameIndex)
     }
 
-    const getRandomGameEvent = gameService.getRandomGameEvent
+    const removeGameEvent = (gameEventId: string, gameEvents: GameEventAPI): void => {
+        gameEvents.questions.filter((question: ITrivia | IParty | IBackToBack) => {
+            return question._id !== gameEventId        
+        })
+    }
 
-    const gameModuleProps = {
+    const gameServiceProps = {
         players: players,
         getPlayers: gameService.getPlayers, 
         addScore: gameService.addScore, 
         makeWinnerAlert: makeWinnerAlert, 
-        chooseRandomNewGame: chooseRandomNewGame
+        chooseRandomNewGame: chooseRandomNewGame,
+        removeGameEvent: removeGameEvent
     };
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
         return (<div><p>Loading...</p></div>)
     }
+
+    /* let currentGame;
+
+    switch (currentGameIndex) {
+      case 3: 
+        currentGame = <Trivia gameService={gameModuleProps} gameEvent={currentQuestion}/>;
+        break;
+      case 2:
+        currentGame = <BackToBack gameService={gameModuleProps} gameEvent={currentQuestion}/>;
+        break;
+      case 1:
+        currentGame = <Party gameService={gameModuleProps} gameEvent={currentQuestion}/>;
+        break;
+      case 0:
+        currentGame = <WheelComponent gameService={gameModuleProps} />;
+        break;
+    } */
+
+    // If to many paused players
+    if (gameService.getNumActivePlayers(players) < 2) {
+        return <h1>Too many players are paused. Please wait for them and start their session again!</h1>
+    }
+
+    /* return (
+        <div className="box">
+          <WinnerAlert winners={winners} message={flash} />
+          <Scoreboard players={players}></Scoreboard>
+          {currentGame}
+          <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
+        </div>
+      ); */
 
     switch (currentGameIndex) {
         case 3: 
@@ -80,7 +120,7 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
                 <Scoreboard players={players} />
-                <Trivia gameService={gameModuleProps} gameEvent={getRandomGameEvent(triviaEvents)} />
+                <Trivia gameService={gameServiceProps} gameEvent={gameService.getRandomGameEvent(triviaEvents)} />
                 <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 2:
@@ -88,7 +128,7 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
                 <Scoreboard players={players} />
-                <BackToBack gameService={gameModuleProps} gameEvent={getRandomGameEvent(backToBackEvents)} />
+                <BackToBack gameService={gameServiceProps} gameEvent={gameService.getRandomGameEvent(backToBackEvents)} />
                 <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 1:
@@ -96,7 +136,7 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
                 <Scoreboard players={players} />
-                <Party gameService={gameModuleProps} gameEvent={getRandomGameEvent(partyEvents)}/>
+                <Party gameService={gameServiceProps} gameEvent={gameService.getRandomGameEvent(partyEvents)} />
                 <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
         case 0:
@@ -104,7 +144,7 @@ const Game: React.FC<GameProps> =({ players, gameModuleSerivce, gameService }) =
             <div className="Game">
                 <WinnerAlert winners={winners} message={flash} />
                 <Scoreboard players={players} />
-                <WheelComponent gameService={gameModuleProps} />
+                <WheelComponent gameService={gameServiceProps} />
                 <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
             </div>);
 

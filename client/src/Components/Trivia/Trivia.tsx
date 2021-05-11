@@ -20,6 +20,7 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent}) => {
       all_answers = shuffleArray(all_answers)
       gameEvent.all_answers = all_answers
       setModefiedGameEvent(gameEvent);
+      
     }
   }, [gameEvent])
 
@@ -37,12 +38,10 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent}) => {
 
     if (e.target.innerText === modefiedGameEvent.correct_answer) {
       gameService.addScore(players[0], 1)
-      gameService.chooseRandomNewGame()
-      gameService.makeWinnerAlert(players[0])
-    } else {
-      gameService.chooseRandomNewGame()
-      gameService.makeWinnerAlert(null)
     }
+
+    gameService.chooseRandomNewGame()
+    gameService.makeWinnerAlert(players[0])
   }
 
   if (!modefiedGameEvent) {
