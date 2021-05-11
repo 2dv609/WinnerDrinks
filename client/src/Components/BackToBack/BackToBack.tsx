@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { TextGameModuleProps } from '../GameModueProps';
 import '../../App/App.css';
 
-// Infinity loop when open navbar (only in this component)
-
 const NUM_OF_PLAYERS = 2; // How many players do you need?
 
 const BackToBack: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {
@@ -12,10 +10,9 @@ const BackToBack: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) =
 
     useEffect(() => { 
         return () => { // Return a function for code cleanup. This will set new players 
-
-            setPlayers(gameService.getPlayers(NUM_OF_PLAYERS, gameService.players));
+          setPlayers(gameService.getPlayers(NUM_OF_PLAYERS, gameService.players));
         }
-    }, [gameService, players])
+    }, [gameService])
 
     // Either both win, or both lose.
 
