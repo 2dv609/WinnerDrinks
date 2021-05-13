@@ -24,8 +24,8 @@ function App() {
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
     { name: 'Wheel', active: true, index: 0 },
     { name: 'Party', active: true, index: 1 }, 
-    { name: 'BackToBack', active: true, index: 2 }, 
-    { name: 'Trivia', active: true, index: 3 }, 
+    { name: 'BackToBack', active: false, index: 2 }, 
+    { name: 'Trivia', active: false, index: 3 }, 
   ])
 
   useEffect(() => {

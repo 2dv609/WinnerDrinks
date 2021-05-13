@@ -61,8 +61,8 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
 
     const chooseRandomNewGame = (): void => {
         const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
-        setCurrentGameIndex(newGameIndex);
         setEventCurrentQuestion(newGameIndex)
+        setCurrentGameIndex(newGameIndex);
     }
 
     /**
@@ -103,7 +103,7 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     };
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
-        return (<div><p>Loading...</p></div>)
+        return (<div><p>Loading... Game</p></div>)
     }
 
     // If to many paused players

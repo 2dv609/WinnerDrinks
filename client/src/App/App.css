@@ -29,10 +29,10 @@ ul .names {
   width: 50%;
 }
 
-.Login input, .Game * {
+/* .Login input, .Game * {
   margin: .5rem 0;
   cursor: pointer;
-}
+} */
 
 .App-header {
   background-color: #282c34;
