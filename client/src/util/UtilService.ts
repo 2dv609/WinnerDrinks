@@ -9,17 +9,17 @@ export default class UtilService implements IUtilService {
 
   public async getTrivia(): Promise<GameEventAPI | undefined> {
     await this.db.openLocalDB()
-    return this.db.getTrivia() || this.api.getTrivia() 
+    return await this.db.getTrivia() || await this.api.getTrivia() 
   }
 
   public async getBackToBack(): Promise<GameEventAPI | undefined> {
     await this.db.openLocalDB()
-    return this.db.getBackToBack() || this.api.getBackToBack() 
+    return await  this.db.getBackToBack() || await this.api.getBackToBack() 
         
   }
 
   public async getParty(): Promise<GameEventAPI | undefined> {
     await this.db.openLocalDB()
-    return this.db.getParty() || this.api.getParty() 
+    return await  this.db.getParty() || await this.api.getParty() 
   }
 }
