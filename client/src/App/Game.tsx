@@ -9,7 +9,6 @@ import GameService from '../model/GameService'
 import WinnerAlert from './WinnerAlert'
 import Scoreboard from './Scoreboard';
 import SkipGame from './SkipGame';
-import getGameModuleService from '../model/GameModuleFactory';
 
 
 type GameProps = {
@@ -41,7 +40,7 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
         console.log(partyEvents)
         console.log(backToBackEvents)
 
-    }, [gameModuleSerivce, triviaEvents, partyEvents, backToBackEvents])
+    }, [triviaEvents, partyEvents, backToBackEvents])
 
     /**
      * This function is sent to game modules as a prop. 
