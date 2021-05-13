@@ -6,13 +6,15 @@ import LocalDB from "./LocalDB"
 export default async function getUtilService(): Promise<IUtilService> {    
 
     const api: API = new API()
+    const localDB: LocalDB = new LocalDB()
 
     if (window.indexedDB) {
         if (await api.checkStatus()) {
             return new UtilService()
             
         } else {
-            return new LocalDB()    
+            await localDB.openLocalDB()
+            return localDB    
         } 
     } else {
         return new API()

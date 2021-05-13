@@ -17,9 +17,9 @@ import { IGameModuleSetting } from '../Components/Menu/Navbar'
 function App() {
   const gameService: GameService = new GameService();
   const [players, setPlayers] = useState<Player[]>([]);
+  const [gameModuleSerivce, setGameModuleSerivce] = useState<IGameModuleService | undefined>(undefined)
   const [play, setPlay] = useState(false);
   const [nameerror, setError] = useState(false);
-  const [gameModuleSerivce, setGameModuleSerivce] = useState<IGameModuleService | undefined>(undefined)
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
     { name: 'Wheel', active: true, index: 0 },
@@ -162,7 +162,7 @@ function App() {
     
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <h1 className="title is-3">Let's play!</h1>
-        <Game activeGames={gameModuleSettings} gameService={gameService} players={players} gameModuleSerivce={gameModuleSerivce}/>
+        <Game activeGames={gameModuleSettings} gameService={gameService} players={players} gameModuleSerivce={gameModuleSerivce} />
         <ResetButton />
       </div>
       </div>

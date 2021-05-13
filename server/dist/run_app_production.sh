@@ -13,6 +13,7 @@ export NODE_ENV=production
 
 npm ci --production
 docker-compose -f container/docker-compose.yaml down
+docker volume rm winner-drinks-data
 docker volume create winner-drinks-data
 docker-compose -f container/docker-compose.yaml up -d
 pm2 delete WinnerDrinks:4000

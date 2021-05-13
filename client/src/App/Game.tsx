@@ -9,6 +9,8 @@ import GameService from '../model/GameService'
 import WinnerAlert from './WinnerAlert'
 import Scoreboard from './Scoreboard';
 import SkipGame from './SkipGame';
+import getGameModuleService from '../model/GameModuleFactory';
+
 
 type GameProps = {
   gameModuleSerivce: IGameModuleService,
@@ -17,7 +19,8 @@ type GameProps = {
   activeGames: any[]
 }
 
-const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gameService }) => {
+const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, activeGames }) => {
+    
     const gameModules = [WheelComponent, Party, BackToBack, Trivia];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
@@ -27,14 +30,18 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     const [flash, setFlash] = useState<string | undefined>();
     const [currentQuestion, setCurrentQuestion] = useState<object | number>(-1)
 
-    
+
     // Load data to game events
     useEffect(() => {
-        
         setTriviaEvents(gameModuleSerivce.getTriviaEvents())
         setBackToBackEvents(gameModuleSerivce.getBackToBackEvents())
         setPartyEvents(gameModuleSerivce.getPartyEvents())
-    }, [gameModuleSerivce])
+
+        console.log(triviaEvents)
+        console.log(partyEvents)
+        console.log(backToBackEvents)
+
+    }, [gameModuleSerivce, triviaEvents, partyEvents, backToBackEvents])
 
     /**
      * This function is sent to game modules as a prop. 

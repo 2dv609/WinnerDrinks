@@ -5,21 +5,33 @@ export default class LocalDB implements IUtilService {
 
     private db: any
     readonly dbName: string  = 'WinnerDrinks'
-    readonly triviaEvents: string = 'triviaEvents'
-    readonly partyEvents: string = 'partyEvents'
-    readonly backToBackEvents: string = 'backToBackEvents'
-
-    public async createObjectStores(): Promise<void> {
+    readonly triviaEvents: string = 'trivia'
+    readonly partyEvents: string = 'party'
+    readonly backToBackEvents: string = 'back-to-back'
+    readonly dbVersion: number  = 1
+    
+    public async openLocalDB(): Promise<void> {
         try {
             const tableNames = [this.triviaEvents, this.partyEvents, this.backToBackEvents]
-            this.db = await openDB(this.dbName, 1, { // use undefined for current version https://github.com/jakearchibald/idb#opendb 
-                upgrade(db: IDBPDatabase) {
+            this.db = await openDB(this.dbName, this.dbVersion, { // use undefined for current version https://github.com/jakearchibald/idb#opendb 
+                upgrade(db: IDBPDatabase, oldVersion, newVersion, transaction) {
+
                     for (const tableName of tableNames) {
+
                         if (db.objectStoreNames.contains(tableName)) {
                             continue;
                         }
                         db.createObjectStore(tableName, { keyPath: '_id' })
                     }
+                },
+                blocked() {
+                    console.log('blocked')
+                },
+                blocking() {
+                    console.log('blocking')
+                },
+                terminated() {
+                    console.log('terminated')
                 },
             })
 
@@ -105,7 +117,6 @@ export default class LocalDB implements IUtilService {
 
     public async getTrivia(): Promise<GameEventAPI | undefined> {
         try {
-            await this.openDB()
             const transaction = this.db.transaction(this.triviaEvents, 'readonly')
             const store = transaction.objectStore(this.triviaEvents)
             const questions = await store.getAll()
@@ -118,7 +129,6 @@ export default class LocalDB implements IUtilService {
 
     public async getBackToBack(): Promise<GameEventAPI | undefined> {
         try {
-            await this.openDB()
             const transaction = this.db.transaction(this.backToBackEvents, 'readonly')
             const store = transaction.objectStore(this.backToBackEvents)
             const questions = await store.getAll()
@@ -131,7 +141,6 @@ export default class LocalDB implements IUtilService {
 
     public async getParty(): Promise<GameEventAPI  | undefined> {
         try {    
-            await this.openDB()
             const transaction = this.db.transaction(this.partyEvents, 'readonly')
             const store = transaction.objectStore(this.partyEvents)
             const questions = await store.getAll()
@@ -139,17 +148,6 @@ export default class LocalDB implements IUtilService {
         
         } catch (error) {
             console.log('error:', error)
-        }
-    }
-
-    private async openDB(): Promise<boolean> {
-        try {
-            this.db = await openDB(this.dbName, 1) // version == undefined gives current version https://github.com/jakearchibald/idb#opendb
-            return true
-        
-        } catch (error) {
-            console.log('error:', error)
-            return false
         }
     }
 
