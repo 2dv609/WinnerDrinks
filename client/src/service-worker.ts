@@ -90,7 +90,7 @@ self.addEventListener('activate', async (event) => {
   if (self.indexedDB) {
       console.log('IndexedDB is supported');
       const db: LocalDB = new LocalDB()
-      await db.createObjectStores()
+      await db.openLocalDB()
       await db.loadDB()
 
   } else {
