@@ -40,7 +40,7 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
         console.log(partyEvents)
         console.log(backToBackEvents)
 
-    }, [triviaEvents, partyEvents, backToBackEvents])
+    }, [gameModuleSerivce, triviaEvents, partyEvents, backToBackEvents])
 
     /**
      * This function is sent to game modules as a prop. 

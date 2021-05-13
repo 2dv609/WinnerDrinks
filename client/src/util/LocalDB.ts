@@ -1,27 +1,29 @@
 import { openDB, IDBPDatabase, deleteDB } from 'idb'
 import IUtilService from './IUtilService'
+import { GameModuleName, enumKeys } from './GameModuleName'
 
+/**
+ * Class LocalDB containing utility methods to load indexedDb with remote database
+ * and implements IUtilService to get game events data from indexedDB.
+ */
 export default class LocalDB implements IUtilService {
 
     private db: any
-    readonly dbName: string  = 'WinnerDrinks'
-    readonly triviaEvents: string = 'trivia'
-    readonly partyEvents: string = 'party'
-    readonly backToBackEvents: string = 'back-to-back'
-    readonly dbVersion: number  = 1
+    private readonly dbName: string  = 'WinnerDrinks'
+    private readonly dbVersion: number  = 1
     
     public async openLocalDB(): Promise<void> {
         try {
-            const tableNames = [this.triviaEvents, this.partyEvents, this.backToBackEvents]
+
             this.db = await openDB(this.dbName, this.dbVersion, { // use undefined for current version https://github.com/jakearchibald/idb#opendb 
                 upgrade(db: IDBPDatabase, oldVersion, newVersion, transaction) {
 
-                    for (const tableName of tableNames) {
+                    for (const name of enumKeys(GameModuleName)) {
 
-                        if (db.objectStoreNames.contains(tableName)) {
+                        if (db.objectStoreNames.contains(GameModuleName[name])) {
                             continue;
                         }
-                        db.createObjectStore(tableName, { keyPath: '_id' })
+                        db.createObjectStore(GameModuleName[name], { keyPath: '_id' })
                     }
                 },
                 blocked() {
@@ -41,69 +43,37 @@ export default class LocalDB implements IUtilService {
     }
 
     public async loadDB(): Promise<void> {
-        const loadTrivia = this.loadTrivia()
-        const loadParty = this.loadParty()
-        const loadBackToBack = this.loadBackToBack()
+        const gameEventsPromises: Promise<void>[] = [] 
 
-        Promise.all([loadTrivia, loadParty, loadBackToBack]).catch(error => console.log('Load DB error:', error))
-    }
-
-    private async loadTrivia(): Promise<void> {
-        try {
-            const questions: ITrivia[] = []
-            const triviaResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/trivia`)
-            
-            if (triviaResponse) {
-                const triviaResponseJSON: any = await triviaResponse.json()
-                triviaResponseJSON.questions.forEach((question: ITrivia) => questions.push(question))    
-            }
-
-            this.loadTable(questions, this.triviaEvents)
-
-        }  catch (error) {
-            console.log('Load trivia error:', error)
+        for (const name of enumKeys(GameModuleName)) {
+            gameEventsPromises.push(this.loadAndFetchGameEvents(GameModuleName[name]))
         }
+     
+        Promise.all(gameEventsPromises).catch(error => console.log('Load DB error:', error))
     }
 
-    private async loadParty(): Promise<void> {
-        try {
-            const questions: IParty[] = []
-            const partyResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/party`)
-            
-            if (partyResponse) {
-                const partyResponseJSON: any = await partyResponse.json()
-                partyResponseJSON.questions.forEach((question: IParty) => questions.push(question))    
-            }
-
-            this.loadTable(questions, this.partyEvents)
-
-        }  catch (error) {
-            console.log('Load party error:', error)
-        }
-    }
-
-    private async loadBackToBack(): Promise<void> {
+    private async loadAndFetchGameEvents(gameModuleName: string): Promise<void> {
         try {
             const questions: IBackToBack[] = []
-            const backToBackResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/back-to-back`)
+            const backToBackResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/${gameModuleName}`)
             
             if (backToBackResponse) {
                 const backToBackResponseJSON: any = await backToBackResponse.json()
                 backToBackResponseJSON.questions.forEach((question: IBackToBack) => questions.push(question))    
             }
 
-            this.loadTable(questions, this.backToBackEvents)
+            this.loadTable(questions, gameModuleName)
 
         }  catch (error) {
             console.log('Load back-to-back error:', error)
         }
     }
 
-    private async loadTable(questions: any[] | undefined, tableName: string): Promise<void> { 
+    private async loadTable(questions: any[] | undefined, gameModuleName: string): Promise<void> { 
         try {
             if (questions) {
-                const transaction = this.db.transaction(tableName, 'readwrite');
-                const store = transaction.objectStore(tableName);
+                const transaction = this.db.transaction(gameModuleName, 'readwrite');
+                const store = transaction.objectStore(gameModuleName);
                 
                 for (const question of questions) {
                     await store.put(question);
@@ -115,34 +85,10 @@ export default class LocalDB implements IUtilService {
         }
     }   
 
-    public async getTrivia(): Promise<GameEventAPI | undefined> {
+    public async getGameEvents(gameModuleName: string): Promise<GameEventAPI | undefined> {
         try {
-            const transaction = this.db.transaction(this.triviaEvents, 'readonly')
-            const store = transaction.objectStore(this.triviaEvents)
-            const questions = await store.getAll()
-            return { questions: questions }
-        
-        } catch (error) {
-            console.log('error:', error)
-        }
-    }
-
-    public async getBackToBack(): Promise<GameEventAPI | undefined> {
-        try {
-            const transaction = this.db.transaction(this.backToBackEvents, 'readonly')
-            const store = transaction.objectStore(this.backToBackEvents)
-            const questions = await store.getAll()
-            return { questions: questions }
-        
-        } catch (error) {
-            console.log('error:', error)
-        }
-    }
-
-    public async getParty(): Promise<GameEventAPI  | undefined> {
-        try {    
-            const transaction = this.db.transaction(this.partyEvents, 'readonly')
-            const store = transaction.objectStore(this.partyEvents)
+            const transaction = this.db.transaction(gameModuleName, 'readonly')
+            const store = transaction.objectStore(gameModuleName)
             const questions = await store.getAll()
             return { questions: questions }
         
