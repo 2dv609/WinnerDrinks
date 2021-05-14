@@ -2,27 +2,27 @@ import mongoose from 'mongoose';
 const triviaSchema = new mongoose.Schema({
     category: {
         type: String,
-        required: true,
+        required: true
     },
     type: {
         type: String,
-        required: true,
+        required: true
     },
     difficulty: {
         type: String,
-        required: true,
+        required: true
     },
     question: {
         type: String,
-        required: true,
+        required: true
     },
     correct_answer: {
         type: String,
-        required: true,
+        required: true
     },
     incorrect_answers: {
         type: [String],
-        required: true,
-    },
+        required: true
+    }
 }, { timestamps: true });
 export default mongoose.model('Trivia', triviaSchema);

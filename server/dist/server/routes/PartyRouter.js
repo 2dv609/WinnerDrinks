@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { StatusController } from '../controller/status.js';
-const controller = new StatusController();
+import { PartyController } from '../controller/PartyController.js';
+const controller = new PartyController();
 const router = Router();
 router.get('/', controller.index);
 export { router };

@@ -1,4 +1,4 @@
-import BackToBack from '../model/back-to-back.js';
+import BackToBack from '../model/BackToBackModel.js';
 import fs from 'fs-extra';
 export class BackToBackController {
     /**

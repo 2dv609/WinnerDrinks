@@ -1,16 +1,16 @@
-import Trivia from '../model/trivia.js';
+import Party from '../model/PartyModel.js';
 import fs from 'fs-extra';
-export class TriviaController {
+export class PartyController {
     /**
-     * Get trivia questions.
+     * Get party questions.
      */
     async index(req, res, next) {
         try {
-            const questions = await Trivia.find();
+            const questions = await Party.find();
             res
                 .status(200)
                 .json({
-                message: 'Trivia questions',
+                message: 'Party questions',
                 questions: questions
             });
         }
@@ -19,11 +19,11 @@ export class TriviaController {
         }
     }
     /**
-     * Load trivia question to db.
+     * Load party question to db.
      */
-    async loadTrivia(dataSource) {
+    async loadParty(dataSource) {
         const data = await fs.readJson(dataSource);
-        await Trivia.deleteMany({});
-        await Trivia.insertMany(data);
+        await Party.deleteMany({});
+        await Party.insertMany(data);
     }
 }

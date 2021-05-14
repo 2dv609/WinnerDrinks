@@ -2,34 +2,37 @@
  * Module: server.js
  * The starting point of the application.
  */
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction } from 'express'
 import { dirname, join } from 'path'
 import cors from 'cors'
 import { fileURLToPath } from 'url'
-import { router } from './routes/router.js'
-import { connectDB } from './config/connectDB.js'
-import HttpException from './common/http-exception.js'
-import { PartyController } from './controller/party.js';
-import { TriviaController } from './controller/trivia.js';
-import { BackToBackController } from './controller/back-to-back.js';
+import { router } from './routes/Router.js'
+import { connectDB } from './config/ConnectDB.js'
+import HttpException from './common/HttpException.js'
+import { PartyController } from './controller/PartyController.js'
+import { TriviaController } from './controller/TriviaController.js'
+import { BackToBackController } from './controller/BackToBackController.js'
 
 /**
  * The main function of the server.
  */
 const main = async (): Promise<void> => {
-
+  // Connect to mongodb
   await connectDB()
+
+  // Express app
+  const app = express()
+
+  // Concert url to path for root dir
+  const directoryFullName = dirname(fileURLToPath(import.meta.url))
 
   // Load game modules
   const partyController: PartyController = new PartyController()
   const backToBackController: BackToBackController = new BackToBackController()
   const triviaController: TriviaController = new TriviaController()
+
+  // Load game if NODE_ENV === 'production' or process argument is set to all.
   const [,, ...gameModules] = process.argv
-
-  const app = express()
-
-  const directoryFullName = dirname(fileURLToPath(import.meta.url))
-  
   if (gameModules.includes('all') || app.get('env') === 'production') { // load all game modules
     console.log('Load game modules...')
     await backToBackController.loadBackToBack(join(directoryFullName, 'data/back-to-back.json'))
@@ -37,13 +40,6 @@ const main = async (): Promise<void> => {
     await triviaController.loadTrivia(join(directoryFullName, 'data/trivia.json'))
   }
 
-  //const baseURL = process.env.BASE_URL || '/'
-
-  app.use((req, res, next) => {
-    console.log(req.originalUrl);
-    next()
-  })
- 
   // Enable body parsing of application/json and populates the request object with a body object (req.body).
   app.use(express.json())
 
@@ -58,15 +54,15 @@ const main = async (): Promise<void> => {
 
   // Register routes.
   app.use('/api', router)
- 
+
   // Error handler.
-  const errorHandler = (error: HttpException, request: Request, response: Response, next: NextFunction ) => {
-      console.log(`${error.message}: ${error.stack}`)
-      const status = error.statusCode || error.status || 500;  
-      response.status(status).send(`${error.message}: ${error.stack}`);
-  };
+  const errorHandler = (error: HttpException, request: Request, response: Response, next: NextFunction) => {
+    console.log(`${error.message}: ${error.stack}`)
+    const status = error.statusCode || error.status || 500
+    response.status(status).send(`${error.message}: ${error.stack}`)
+  }
   app.use(errorHandler)
- 
+
   // Starts the HTTP server listening for connections.
   // Socket.io: Using server instead of express
   const portNr : string | undefined = process.env.PORT
@@ -76,5 +72,5 @@ const main = async (): Promise<void> => {
     console.log('Press Ctrl-C to terminate...')
   })
 }
- 
+
 main().catch(console.error)
