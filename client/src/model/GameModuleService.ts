@@ -4,7 +4,10 @@ import { GameModuleName } from '../util/GameModuleName'
 import IGameModuleService from './IGameModuleService'
 
 /**
- * Class containing handy methods for the Game Modules.
+ * Class containing methods to get game events for 
+ * specific game modules.
+ * 
+ * @implements IGameModuleService
  */
 export default class GameModuleService implements IGameModuleService {
 
@@ -13,10 +16,15 @@ export default class GameModuleService implements IGameModuleService {
     private partyEvents: GameEventAPI | undefined
     private backToBackEvents: GameEventAPI | undefined
  
-    public async loadGameEvents(): Promise<void> {
+    /**
+     * Load game events for game modules.
+     * 
+     * @return {Promise<void>}
+     */
+    public async loadGameEvents(): Promise<boolean> {
         const utilsService: IUtilService = await getUtilService()
 
-        Promise.all([
+        return Promise.all([
             utilsService.getGameEvents(GameModuleName.TRIVIA), 
             utilsService.getGameEvents(GameModuleName.PARTY), 
             utilsService.getGameEvents(GameModuleName.BACK_TO_BACK)])
@@ -24,17 +32,36 @@ export default class GameModuleService implements IGameModuleService {
             this.triviaEvents = response[0]
             this.partyEvents = response[1]
             this.backToBackEvents = response[2]
+            return true
+        })
+        .catch((error) => {
+            return false
         })
     }
 
+    /**
+     * Method that returns the game events for game module trivia.
+     * 
+     * @returns {GameEventAPI | undefined}
+     */
     public getTriviaEvents(): GameEventAPI | undefined {
         return this.triviaEvents
     }
     
+    /**
+     * Method that returns the game events for game module party.
+     * 
+     * @returns {GameEventAPI | undefined}
+     */
     public getPartyEvents(): GameEventAPI | undefined {
         return this.partyEvents
     }
 
+    /**
+     * Method that returns the game events for game module back-to-back.
+     * 
+     * @returns {GameEventAPI | undefined}
+     */
     public getBackToBackEvents(): GameEventAPI | undefined {
         return this.backToBackEvents
     }

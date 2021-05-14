@@ -3,6 +3,8 @@ import IUtilService from './IUtilService'
 
 /**
  * Class API containing utility methods for api calls to the server.
+ * 
+ * @implements {IUtilService}
  */
 export default class API implements IUtilService {
 
@@ -10,7 +12,7 @@ export default class API implements IUtilService {
   private readonly baseUrl: string = `${process.env.REACT_APP_SERVER_URL}/api/`
 
   /**
-   * Utility methos that check server status.
+   * Utility methos that check server API status.
    *  
    * @returns {Promise<boolean>} - True if api is aviailable else false. 
    */
@@ -21,7 +23,7 @@ export default class API implements IUtilService {
       return response.data.connectionAPI === 1
 
     } catch (error) {
-      console.log('error:', error)
+      console.log('No contact with the server API:', error)
       return false
     }
   }
@@ -32,7 +34,8 @@ export default class API implements IUtilService {
    * @param {string} apiPath - The API path.
    * 
    * @returns {Promise<GameEventAPI | undefined>} 
-   * - If api is available return the method return the requested data for the game event. 
+   * If api is available return the requested data for the specific apiPath.
+   * The api path is determined by the game module name. 
    */
   public async getGameEvents(apiPath: string): Promise<GameEventAPI | undefined> {
     try {
@@ -41,7 +44,7 @@ export default class API implements IUtilService {
       return response.data
 
     } catch (error) {
-      console.log('error:', error)
+      console.log(`Error fetching game events for path ${this.baseUrl}${apiPath}:`, error)
     }
   }
 }

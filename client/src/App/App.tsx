@@ -9,15 +9,15 @@ import ErrorMsg from './ErrorMsg'
 import Navbar from '../Components/Menu/Navbar'
 import Icon from '../Components/Menu/Icon'
 import IGameModuleService from '../model/IGameModuleService'
-import getGameModuleService from '../model/GameModuleFactory'
+import { getGameModuleService, getGameService } from '../model/GameModuleFactory'
 import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../Components/Menu/Navbar'
 
 
 function App() {
-  const gameService: GameService = new GameService();
+  const gameService: GameService = getGameService();
+  const [gameModuleService, setGameModuleSerivce] = useState<IGameModuleService>()
   const [players, setPlayers] = useState<Player[]>([]);
-  const [gameModuleSerivce, setGameModuleSerivce] = useState<IGameModuleService | undefined>(undefined)
   const [play, setPlay] = useState(false);
   const [nameerror, setError] = useState(false);
   const [navbarOpen, setNavbarOpen] = useState(false);
@@ -29,7 +29,7 @@ function App() {
   ])
 
   useEffect(() => {
-    getGameModuleService().then((gms: IGameModuleService) => {setGameModuleSerivce(gms)})
+    getGameModuleService().then((gms: IGameModuleService | undefined) => {setGameModuleSerivce(gms)})
   }, [])
 
   /**
@@ -67,11 +67,11 @@ function App() {
     }
   };
 
-  if (!gameModuleSerivce) {
+  if (!gameModuleService) {
     return (
-      <div></div>
-    )
-  }
+      <div><p>Loading...</p></div>
+      )
+    }
 
   if (!play) {
     if (!nameerror) {
@@ -162,8 +162,7 @@ function App() {
     
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <h1 className="title is-3">Let's play!</h1>
-        <Game activeGames={gameModuleSettings} gameService={gameService} players={players} gameModuleSerivce={gameModuleSerivce} />
-        
+        <Game activeGames={gameModuleSettings} gameService={gameService} players={players} gameModuleSerivce={gameModuleService} />
       </div>
       </div>
     )
