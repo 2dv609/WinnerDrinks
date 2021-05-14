@@ -3,6 +3,7 @@ import './Navbar.css'
 import Player from '../../model/Player'
 // import 'bulma/css/bulma.css'
 import PlayerSettingBox from './PlayerSettingBox';
+import ResetButton from '../../App/ResetButton';
 
 export interface IGameModuleSetting {
   name: string,
@@ -106,6 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({
               return <PlayerSettingBox deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive}/>
             })}
           </ul>
+          <ResetButton />
         </aside>
       </div>
     </nav>

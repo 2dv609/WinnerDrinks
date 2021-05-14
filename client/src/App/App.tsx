@@ -163,7 +163,6 @@ function App() {
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <h1 className="title is-3">Let's play!</h1>
         <Game activeGames={gameModuleSettings} gameService={gameService} players={players} gameModuleSerivce={gameModuleService} />
-        <ResetButton />
       </div>
       </div>
     )
