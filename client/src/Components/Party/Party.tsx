@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextGameModuleProps } from '../GameModueProps';
+import { TextGameModuleProps } from '../GameModuleProps';
 
 
 const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {

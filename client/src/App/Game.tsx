@@ -12,13 +12,13 @@ import SkipGame from './SkipGame';
 
 
 type GameProps = {
-  gameModuleSerivce: IGameModuleService | undefined,
+  gameModuleService: IGameModuleService | undefined,
   players: Player[],
   gameService: GameService,
   activeGames: any[]
 }
 
-const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, activeGames }) => {
+const Game: React.FC<GameProps> =({ gameModuleService, players, gameService, activeGames }) => {
     
     const gameModules = [WheelComponent, Party, BackToBack, Trivia];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
@@ -32,19 +32,21 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
 
     // Load data to game events
     useEffect(() => {
-        if (!gameModuleSerivce) return
+        if (!gameModuleService) return
 
-        setTriviaEvents(gameModuleSerivce.getTriviaEvents())
-        setBackToBackEvents(gameModuleSerivce.getBackToBackEvents())
-        setPartyEvents(gameModuleSerivce.getPartyEvents())
+        setTriviaEvents(gameModuleService.getTriviaEvents())
+        setBackToBackEvents(gameModuleService.getBackToBackEvents())
+        setPartyEvents(gameModuleService.getPartyEvents())
 
-    }, [gameModuleSerivce])
+    }, [gameModuleService])
 
     /**
      * This function is sent to game modules as a prop. 
      * If any winner is declared, they are passed as parameters to this function
      * 
      * @param p The winner(s). Null means no points awarded. 
+     * @param message A custom flash message for the winner, for example "Wrong answer". 
+     * @author Delfi
      */
      const makeWinnerAlert = (p: Player | Player[] | null, message?: string): void => {
         if (Array.isArray(p)) { // If there are several winners
@@ -62,7 +64,9 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
             setFlash(undefined)
         }
     }
-
+    /**
+     * Selects a new game at random if it is activated.
+     */
     const chooseRandomNewGame = (): void => {
         const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
         setCurrentGameIndex(newGameIndex);
@@ -71,6 +75,7 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
 
     /**
      * Function that get question from current game-module and save it in state.
+     * 
      */
      const setEventCurrentQuestion = (currentGameIndex: number) => {
       let currentGame: any;
@@ -90,7 +95,12 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
       }
       setCurrentQuestion(currentGame)
     }
-
+    /**
+     * TODO: Explain method
+     * @author Anonymous
+     * @param gameEventId 
+     * @param gameEvents 
+     */
     const removeGameEvent = (gameEventId: string, gameEvents: GameEventAPI): void => {
         gameEvents.questions.filter((question: ITrivia | IParty | IBackToBack) => {
             return question._id !== gameEventId        

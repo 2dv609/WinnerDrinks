@@ -1,5 +1,5 @@
 import Player from './Player'
-import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/GameModueProps'
+import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/GameModuleProps'
 
 export default class GameService {
 

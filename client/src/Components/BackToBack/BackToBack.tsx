@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { TextGameModuleProps } from '../GameModueProps';
+import { TextGameModuleProps } from '../GameModuleProps';
 import '../../App/App.css';
 
 const NUM_OF_PLAYERS = 2; // How many players do you need?

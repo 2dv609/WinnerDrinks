@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './WheelComponent.css'
-import { AnimationGameModuleProps } from '../GameModueProps'
+import { AnimationGameModuleProps } from '../GameModuleProps'
 
 const DEG = 360
 const colors = ['#9ede73', '#f7ea00', '#e48900', '#be0000']
@@ -128,6 +128,14 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
       setErrorMessage('Stylesheet has already been reset...')
     }
   }
+  /**
+   * Return a function for code cleanup.
+   */
+//   useEffect(() => { 
+//     return () => {
+//       reset();
+//     }
+// }, [])
 
   return (
     
