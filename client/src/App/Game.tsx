@@ -12,7 +12,7 @@ import SkipGame from './SkipGame';
 
 
 type GameProps = {
-  gameModuleSerivce: IGameModuleService,
+  gameModuleSerivce: IGameModuleService | undefined,
   players: Player[],
   gameService: GameService,
   activeGames: any[]
@@ -32,15 +32,18 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
 
     // Load data to game events
     useEffect(() => {
+
+        if (!gameModuleSerivce) return
+
         setTriviaEvents(gameModuleSerivce.getTriviaEvents())
         setBackToBackEvents(gameModuleSerivce.getBackToBackEvents())
         setPartyEvents(gameModuleSerivce.getPartyEvents())
+        
+        console.log(gameModuleSerivce.getTriviaEvents())
+        console.log(gameModuleSerivce.getBackToBackEvents())
+        console.log(gameModuleSerivce.getPartyEvents())
 
-        console.log(triviaEvents)
-        console.log(partyEvents)
-        console.log(backToBackEvents)
-
-    }, [gameModuleSerivce, triviaEvents, partyEvents, backToBackEvents])
+    }, [gameModuleSerivce])
 
     /**
      * This function is sent to game modules as a prop. 

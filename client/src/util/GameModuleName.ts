@@ -1,7 +1,7 @@
 /**
  * Enum containing game module names. These names
  * are used for the indexedDB tables and the api calls
- * for each game module. 
+ * for each game module.
  */
 export enum  GameModuleName {
     TRIVIA = 'trivia',
@@ -10,7 +10,7 @@ export enum  GameModuleName {
 }
 
 /**
- * Helper function to iterate through the values of a string enum.
+ * Helper function to iterate over the keys of a string enum.
  * Ref: https://www.petermorlion.com/iterating-a-typescript-enum/.
  * 
  * @param obj - The string enum class to ierate over.  
