@@ -145,7 +145,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
       })}
       </div>
       <div className="d-flex">
-        <button onClick={startSpin}>Spin!</button>
+        {/* <button onClick={startSpin}>Spin!</button> */}
       </div>
       <div>
         <p>{errorMessage}</p>
