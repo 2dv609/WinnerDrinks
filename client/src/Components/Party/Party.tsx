@@ -3,12 +3,11 @@ import { TextGameModuleProps } from '../GameModuleProps';
 
 
 const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {
-    // const gp: GameProps = props.gp;
     const [players, setPlayers] = useState(gameService.getPlayers(2, gameService.players));
     
     function addPlayerToGameEvent(): string {
         //const gameEvent: string = gameEvent.question
-        return gameEvent.question.replace('{players[0]}', `${players[0]}`).replace('{players[1]}', `${players[1]}`)
+        return gameEvent.question.replace(/{p0}/g, `${players[0]}`).replace(/{p1}/g, `${players[1]}`)
     }
 
     useEffect(() => { 
