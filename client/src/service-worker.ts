@@ -89,9 +89,9 @@ self.addEventListener('message', (event) => {
 self.addEventListener('activate', async (event) => {
   if (self.indexedDB) {
       console.log('IndexedDB is supported');
-      const db: LocalDB = new LocalDB()
-      await db.openLocalDB()
-      await db.loadDB()
+      const db: LocalDB = new LocalDB();
+      await db.openLocalDB();
+      await db.loadDB();
 
   } else {
       console.log('IndexedDB is NOT supported');

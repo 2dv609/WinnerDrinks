@@ -21,8 +21,8 @@ export type NavbarProps = {
   addUser: (newUserName: string) => void
 }
 
-const Navbar: React.FC<NavbarProps> = ({ 
-  navbarOpen, players, gameModuleSettings, 
+const Navbar: React.FC<NavbarProps> = ({
+  navbarOpen, players, gameModuleSettings,
   updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
 
   const [inputName, setInputName] = useState('')
@@ -35,17 +35,17 @@ const Navbar: React.FC<NavbarProps> = ({
 
     let activeModules = 0
 
-    for(let i = 0; i < gameModuleSettings.length; i++) {
-      if(gameModuleSettings[i].active) activeModules++
+    for (let i = 0; i < gameModuleSettings.length; i++) {
+      if (gameModuleSettings[i].active) activeModules++
     }
 
     const copiedArray = [...gameModuleSettings]
     // Error checking, cannot disable if every module is disabled
-    for(let i = 0; i < copiedArray.length; i++) {
-      if(copiedArray[i].name === moduleName) {
-        if(copiedArray[i].active) {
+    for (let i = 0; i < copiedArray.length; i++) {
+      if (copiedArray[i].name === moduleName) {
+        if (copiedArray[i].active) {
           // 2 game modules must be active!
-          if(activeModules === 2) {
+          if (activeModules === 2) {
             console.log('Atleast 2 game modules must be enabled')
             return
           }
@@ -55,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({
         break;
       }
     }
-    onGameModuleSettingUpdate(copiedArray)    
+    onGameModuleSettingUpdate(copiedArray)
   }
 
   /**
@@ -69,12 +69,12 @@ const Navbar: React.FC<NavbarProps> = ({
     }
     deleteUser(playerName)
   }
-  
+
   return (
     <nav>
-      <div className={("links ") +  (navbarOpen ? "nav-open" : "")}>
+      <div className={("links ") + (navbarOpen ? "nav-open" : "")}>
         {/* Bulma menu */}
-        <aside className="menu is-flex is-flex-direction-column" style={{padding: '12px', height: '100%'}}>
+        <aside className="menu is-flex is-flex-direction-column" style={{ padding: '12px', height: '100%' }}>
           <h2 className="subtitle">Settings</h2>
 
           {/* Game module settings */}
@@ -82,11 +82,11 @@ const Navbar: React.FC<NavbarProps> = ({
           <ul className="menu-list">
             {gameModuleSettings.map((module: IGameModuleSetting, index: number) => {
               return (
-              <li key={index}>
-                <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
-                  <label className="checkbox"><input type="checkbox" onChange={() => (module.active)} checked={module.active} style={{marginRight: '8px'}}/>{module.name} Module</label>
-                </a>
-              </li>)
+                <li key={index}>
+                  <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
+                    <label className="checkbox"><input type="checkbox" onChange={() => (module.active)} checked={module.active} style={{ marginRight: '8px' }} />{module.name} Module</label>
+                  </a>
+                </li>)
             })}
           </ul>
 
@@ -102,12 +102,14 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
           {/* Names */}
           <p className="menu-label">Players</p>
-          <ul className="menu-list" style={{overflowY: 'scroll'}}>
+          <ul className="menu-list" style={{ overflowY: 'scroll' }}>
             {players.map((player: Player, index: number) => {
-              return <PlayerSettingBox deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive}/>
+              return <PlayerSettingBox deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive} />
             })}
           </ul>
+          <div className="menu-label">Advanced</div>
           <ResetButton />
+
         </aside>
       </div>
     </nav>

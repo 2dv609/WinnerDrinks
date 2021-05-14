@@ -3,7 +3,6 @@ import Login from './Login'
 import Game from './Game'
 import Player from '../model/Player'
 import 'bulma'
-import './App.css'
 import ErrorMsg from './ErrorMsg'
 import Navbar from '../Components/Menu/Navbar'
 import Icon from '../Components/Menu/Icon'
@@ -25,15 +24,15 @@ function App() {
     { name: 'Party', active: true, index: 1 }, 
     { name: 'BackToBack', active: true, index: 2 }, 
     { name: 'Trivia', active: true, index: 3 }, 
-  ])
+  ]);
 
   useEffect(() => {
     getGameModuleService().then((gms: IGameModuleService | undefined) => {setGameModuleSerivce(gms)})
-  }, [])
+  }, []);
 
   /**
    * Function that deletes an added player by name.
-   * @param palyerName Name of Player to be deleted from state.
+   * @param playerName Name of Player to be deleted from state.
    */
   const deleteUser = (playerName: string): void => {
     const updatedPlayers: Player[] = [...players]
@@ -67,9 +66,7 @@ function App() {
   };
 
   if (!gameModuleService) {
-    return (
-      <div><p>Loading...</p></div>
-      )
+    return (<h1><progress className="progress is-large is-info" max="100">Loading</progress></h1>)
     }
 
   if (!play) {
@@ -88,7 +85,7 @@ function App() {
           onGameModuleSettingUpdate={gameModuleSettingUpdate} 
           updatePlayerActive={updatePlayerActive} />
 
-        <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
+        <div className="App" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
 
           <Login addUser={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
@@ -110,7 +107,7 @@ function App() {
       );
     } else {
       return (
-        <div>
+        <div className="App">
 
         {/* Navbar */}
         <Icon setNavbarOpen={setNavbarOpen} />
@@ -123,7 +120,7 @@ function App() {
           onGameModuleSettingUpdate={gameModuleSettingUpdate} 
           updatePlayerActive={updatePlayerActive} />
         
-        <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
+        <div className="box" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
           <Login addUser={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
