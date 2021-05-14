@@ -3,7 +3,6 @@ import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/Gam
 
 export default class GameService {
 
-    
     public addScore = (p: Player, score: number) => {
         p.addScore(score)
     }
