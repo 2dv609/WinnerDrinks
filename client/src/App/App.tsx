@@ -160,7 +160,7 @@ function App() {
         updatePlayerActive={updatePlayerActive} />
     
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
-        <h1 className="title is-3">Let's play!</h1>
+        <h1 className="title is-3">WinnerDrinks</h1>
         <Game activeGames={gameModuleSettings} gameService={gameService} players={players} gameModuleService={gameModuleService} />
       </div>
       </div>
