@@ -1,8 +1,8 @@
 import express from 'express';
-import { router as partyRouter } from './party.js';
-import { router as triviaRouter } from './trivia.js';
-import { router as backToBackRouter } from './back-to-back.js';
-import { router as statusRouter } from './status.js';
+import { router as partyRouter } from './PartyRouter.js';
+import { router as triviaRouter } from './TriviaRouter.js';
+import { router as backToBackRouter } from './BackToBackRouter.js';
+import { router as statusRouter } from './StatusRouter.js';
 export const router = express.Router();
 router.use('/party', partyRouter);
 router.use('/trivia', triviaRouter);

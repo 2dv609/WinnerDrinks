@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { PartyController } from '../controller/party.js';
-const controller = new PartyController();
+import { TriviaController } from '../controller/TriviaController.js';
+const controller = new TriviaController();
 const router = Router();
 router.get('/', controller.index);
 export { router };

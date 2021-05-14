@@ -1,11 +1,11 @@
 import mongoose from 'mongoose'
-import { IParty } from '../types/party'
+import { IParty } from '../types/Party.js'
 
 const partySchema: mongoose.Schema = new mongoose.Schema(
   {
     question: {
       type: String,
-      required: true,  
+      required: true
     }
   },
   { timestamps: true }

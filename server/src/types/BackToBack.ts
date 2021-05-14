@@ -1,5 +1,5 @@
 import { Document } from 'mongoose'
 
-export interface IParty extends Document {
+export interface IBackToBack extends Document {
   question: string
 }
