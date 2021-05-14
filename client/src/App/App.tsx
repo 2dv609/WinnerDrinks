@@ -9,7 +9,7 @@ import ErrorMsg from './ErrorMsg'
 import Navbar from '../Components/Menu/Navbar'
 import Icon from '../Components/Menu/Icon'
 import IGameModuleService from '../model/IGameModuleService'
-import { getGameModuleService, getGameService } from '../model/GameModuleFactory'
+import { getGameModuleService, getGameService } from '../model/ModuleFactory'
 import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../Components/Menu/Navbar'
 

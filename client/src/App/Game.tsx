@@ -32,16 +32,11 @@ const Game: React.FC<GameProps> =({ gameModuleSerivce, players, gameService, act
 
     // Load data to game events
     useEffect(() => {
-
         if (!gameModuleSerivce) return
 
         setTriviaEvents(gameModuleSerivce.getTriviaEvents())
         setBackToBackEvents(gameModuleSerivce.getBackToBackEvents())
         setPartyEvents(gameModuleSerivce.getPartyEvents())
-        
-        console.log(gameModuleSerivce.getTriviaEvents())
-        console.log(gameModuleSerivce.getBackToBackEvents())
-        console.log(gameModuleSerivce.getPartyEvents())
 
     }, [gameModuleSerivce])
 
