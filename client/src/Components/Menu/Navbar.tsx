@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Navbar.css'
 import Player from '../../model/Player'
 import PlayerSettingBox from './PlayerSettingBox';
-import ResetButton from '../../App/ResetButton';
+// import ResetButton from '../../App/ResetButton';
 
 export interface IGameModuleSetting {
   name: string,
@@ -74,12 +74,14 @@ const Navbar: React.FC<NavbarProps> = ({
       <div id="navDiv" className={("links ") + (navbarOpen ? "nav-open" : "")}>
         {/* Bulma menu */}
         <aside className="menu is-flex is-flex-direction-column" style={{ padding: '12px', height: '100%' }}>
-          
-          <div className="field">
-          <h2 className="subtitle">Settings</h2>
-          <button className="modal-close" onClick={() => {
-            document.querySelector('#navDiv')?.classList.toggle('nav-open')
-          }}>Close</button>
+
+          <div className="">
+
+            <button className="delete" onClick={() => {
+              document.querySelector('#navDiv')?.classList.toggle('nav-open')
+            }}>Close</button>
+
+            <h2 className="subtitle">Settings</h2>
           </div>
 
           {/* Game module settings */}
@@ -112,8 +114,8 @@ const Navbar: React.FC<NavbarProps> = ({
               return <PlayerSettingBox deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive} />
             })}
           </ul>
-          <div className="menu-label">Advanced</div>
-          <ResetButton />
+          {/* <div className="menu-label">Advanced</div>
+          <ResetButton /> */}
 
         </aside>
       </div>

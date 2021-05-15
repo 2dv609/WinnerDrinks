@@ -11,13 +11,12 @@ import { getGameModuleService, getGameService } from '../model/ModuleFactory'
 import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../Components/Menu/Navbar'
 
-
 function App() {
   const gameService: GameService = getGameService();
   const [gameModuleService, setGameModuleSerivce] = useState<IGameModuleService>()
   const [players, setPlayers] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
-  const [nameerror, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
     { name: 'Wheel', active: true, index: 0 },
@@ -70,7 +69,6 @@ function App() {
     }
 
   if (!play) {
-    if (!nameerror) {
       return (
         <div>
 
@@ -88,14 +86,18 @@ function App() {
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
         <div className="box">
         <Login addUser={addUser} />
-            <input className="button" type="button" value="Done" onClick={() => {
+        <div className="control block">
+          <div className="block"></div>
+        <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
             if (players.length < 2) {
-              setError(true);
+              setError("There needs to be at least two players to start the game!");
             } else {
               setPlay(true); 
             }
             }} />
+        </div>
+        <ErrorMsg message={error}></ErrorMsg>
           <h2 className="title is-5" >Players</h2>
           <ul className="columns">
             {players.map(player =>
@@ -107,47 +109,6 @@ function App() {
         </div>
         </div>
       );
-    } else {
-      return (
-        
-        <div className="">
-
-        {/* Navbar */}
-        <Icon setNavbarOpen={setNavbarOpen} />
-        <Navbar
-          navbarOpen={navbarOpen}
-          players={players}  
-          gameModuleSettings={gameModuleSettings} 
-          addUser={addUser} 
-          deleteUser={deleteUser} 
-          onGameModuleSettingUpdate={gameModuleSettingUpdate} 
-          updatePlayerActive={updatePlayerActive} />
-        
-        <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
-          <div className="box">
-          <Login addUser={addUser} />
-            <input className="button" type="button" value="Done" onClick={() => {
-            // must be at least two players. 
-            if (players.length < 2) {
-              setError(true);
-            } else {
-              setPlay(true); 
-            }
-            }} />
-          <ErrorMsg message='There needs to be at least two players to start the game!'></ErrorMsg>
-          <h2 className="title is-5" >Players</h2>
-          <ul className="columns">
-            {players.map(player =>
-              (<li className="column" key={player.toString()}>{player.toString()}</li>)
-            )}
-          </ul>
-          </div>
-
-        </div>
-        </div>
-
-      );
-    }
   } else {
     return (
       <div>

@@ -1,13 +1,14 @@
 .App {
   text-align: center;
-  background-color: #fffc48;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
   font-family: Poppins;
 }
 
+body {
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #fffc48;
+  
+}
 
 .scoreboard {
   text-align: left;
