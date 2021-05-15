@@ -1,3 +1,7 @@
+/**
+ * Menu for configuring various settings. 
+ * @author Caesar
+ */
 import React, { useState } from 'react';
 import './Navbar.css'
 import Player from '../../model/Player'
@@ -15,13 +19,14 @@ export type NavbarProps = {
   players: Player[],
   gameModuleSettings: IGameModuleSetting[],
   updatePlayerActive: (playerName: string) => void,
+  setNavBarOpen: (value: boolean) => void,
   onGameModuleSettingUpdate: (gameModuleSettings: IGameModuleSetting[]) => void,
   deleteUser: (userName: string) => void,
   addUser: (newUserName: string) => void
 }
 
 const Navbar: React.FC<NavbarProps> = ({
-  navbarOpen, players, gameModuleSettings,
+  navbarOpen, setNavBarOpen, players, gameModuleSettings,
   updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
 
   const [inputName, setInputName] = useState('')
@@ -71,14 +76,15 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav>
-      <div id="navDiv" className={("links ") + (navbarOpen ? "nav-open" : "")}>
+      <div id="navDiv" className={("links") + (navbarOpen ? " nav-open" : "")}>
         {/* Bulma menu */}
         <aside className="menu is-flex is-flex-direction-column" style={{ padding: '12px', height: '100%' }}>
 
           <div className="">
-
+            {/* Delete button for closing the menu. @author Delfi */}
             <button className="delete" onClick={() => {
-              document.querySelector('#navDiv')?.classList.toggle('nav-open')
+              setNavBarOpen(false)
+              document.querySelector('#navDiv')?.classList.toggle('nav-open');
             }}>Close</button>
 
             <h2 className="subtitle">Settings</h2>

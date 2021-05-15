@@ -76,6 +76,7 @@ function App() {
         <Icon setNavbarOpen={setNavbarOpen} />
         <Navbar 
           navbarOpen={navbarOpen}
+          setNavBarOpen={setNavbarOpen}
           players={players}  
           gameModuleSettings={gameModuleSettings} 
           addUser={addUser} 
@@ -116,6 +117,7 @@ function App() {
       <Icon setNavbarOpen={setNavbarOpen} />
       <Navbar
         navbarOpen={navbarOpen}
+        setNavBarOpen={setNavbarOpen}
         players={players}  
         gameModuleSettings={gameModuleSettings} 
         addUser={addUser} 

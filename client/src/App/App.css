@@ -4,7 +4,6 @@
 }
 
 body {
-  box-sizing: border-box;
   min-height: 100vh;
   background-color: #fffc48;
   
@@ -14,6 +13,3 @@ body {
   text-align: left;
 }
 
-.nameerror {
-  margin: 10px;
-}
