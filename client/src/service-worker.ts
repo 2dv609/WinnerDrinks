@@ -83,15 +83,13 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Any other custom service worker logic can go here.
-
 // Load IndexedDB 
-self.addEventListener('activate', async (event) => {
+self.addEventListener('install', async (event) => {
   if (self.indexedDB) {
       console.log('IndexedDB is supported');
-      const db: LocalDB = new LocalDB()
-      await db.openLocalDB()
-      await db.loadDB()
+      const db: LocalDB = new LocalDB();
+      await db.openLocalDB();
+      await db.loadDB();
 
   } else {
       console.log('IndexedDB is NOT supported');

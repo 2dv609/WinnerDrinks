@@ -72,7 +72,7 @@ export default class LocalDB implements IUtilService {
         try {
             const gameEvents: (IBackToBack | ITrivia | IParty)[] = []
             const response: any = await fetch(`${process.env.PUBLIC_URL}/api/${gameModuleName}`)
-            
+
             if (response) {
                 const responseJSON: any = await response.json()
                 responseJSON.questions.forEach((question: IBackToBack) => gameEvents.push(question))    

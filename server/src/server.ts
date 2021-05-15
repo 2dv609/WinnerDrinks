@@ -61,15 +61,14 @@ const main = async (): Promise<void> => {
     const status = error.statusCode || error.status || 500
     response.status(status).send(`${error.message}: ${error.stack}`)
   }
+
+  // Use cors to (during development)
   app.use(errorHandler)
 
   // Starts the HTTP server listening for connections.
-  // Socket.io: Using server instead of express
   const portNr : string | undefined = process.env.PORT
-  console.log(portNr)
   app.listen(portNr, () => {
-    console.log(`Server running at http://localhost:${portNr}`)
-    console.log('Press Ctrl-C to terminate...')
+    console.log(`WinnerDrinks listen at port: ${portNr}`)
   })
 }
 

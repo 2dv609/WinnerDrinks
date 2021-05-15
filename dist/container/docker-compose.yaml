@@ -1,0 +1,32 @@
+version: "3.3"
+
+services:
+
+  mongodb:
+    container_name: mongodb_wd
+    build:    
+      context: ./mongodb
+      labels: 
+        - "winner-drinks.xyz/27017=Database winnerdrinks"
+    volumes:
+     - winner-drinks-data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME_FILE: /run/secrets/mongodb_username
+      MONGO_INITDB_ROOT_PASSWORD_FILE: /run/secrets/mongodb_password    
+    secrets: 
+      - mongodb_username
+      - mongodb_password
+
+secrets:
+  mongodb_username:
+    file: ./secrets/mongodb_pw
+  mongodb_password:
+    file: ./secrets/mongodb_un
+
+
+volumes:
+  winner-drinks-data:
+    external: true
+

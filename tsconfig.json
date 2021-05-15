@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "outDir": "dist/server",
+    "rootDir": "server/src",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+  },
+  "include": ["server/src/**/*"],
+  "exclude": ["server/src/types/*.ts", "node_modules", ".vscode", ".env"],
+}

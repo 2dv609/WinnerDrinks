@@ -17,4 +17,3 @@ elif [ "$2" = "" ]; then
 else
 	scp -r -i $1 server/dist/* $2:/var/www/winner-drinks
 fi
-

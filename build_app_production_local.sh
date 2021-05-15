@@ -3,11 +3,29 @@
 # Build application for local production
 # Use this script if you want to test service workers and indexedDB on local machine.
 
-# Install npm packages on server for production
-D1=server/node_modules
-if [ ! -d "$D1" ]; then
-    npm ci --prefix server --production
+
+# Check if client/.env exists if not abort
+F1=client/.env
+if [ ! -f "$F1" ]; then
+    echo "File client/.env is missing"
+    exit 1
 fi
+
+
+# Install npm packages on server for production
+D0=node_modules
+if [ ! -d "$D0" ]; then
+    npm ci --prefix --production
+fi
+
+
+# Build server for production
+npm run build
+D1=dist/docker/winner-drinks/dist/server
+if [ -d "$D1" ]; then
+    rm -Rf $D1
+fi
+cp -r dist/server dist/docker/winner-drinks/dist
 
 
 # Install npm packages on client for production
@@ -17,44 +35,26 @@ if [ ! -d "$D2" ]; then
 fi
 
 
-# Build server for production
-D3=server/dist
-if [ ! -d "$D3" ]; then
-    mkdir server/dist
-fi
-npm run build --prefix server
-
-
-# Check if client/.env exists
-F1=client/.env
-if [ ! -f "$F1" ]; then
-    echo "File client/.env is missing"
-    exit 1
-fi
-
-
 # Build client for local production 
-D4=server/dist/build
+npm run build --prefix client
+D4=dist/docker/winner-drinks/dist/build
 if [ -d "$D4" ]; then
     rm -Rf $D4 
 fi
-npm run build --prefix client
-mv client/build server/dist/
+mv client/build dist/docker/winner-drinks/dist
 
 
-# Copy server/package.json to server/dist
-F2=server/dist/package.json
+# Copy package.json to dist/docker/winner-drinks/
+F2=dist/docker/winner-drinks/package.json
 if [ -f "$F2" ]; then
     rm -Rf $F2
 fi
-cp server/package.json server/dist/
+cp package.json dist/docker/winner-drinks
 
 
-# Copy server/package-lock.json to server/dist
-F3=server/dist/package-lock.json
+# Copy package-lock.json to dist/docker/winner-drinks/
+F3=dist/docker/winner-drinks/package-lock.json
 if [ -f "$F3" ]; then
     rm -Rf $F3
 fi
-cp server/package-lock.json server/dist/
-
-
+cp package-lock.json dist/docker/winner-drinks
