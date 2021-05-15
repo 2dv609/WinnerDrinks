@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './Navbar.css'
 import Player from '../../model/Player'
-// import 'bulma/css/bulma.css'
 import PlayerSettingBox from './PlayerSettingBox';
 import ResetButton from '../../App/ResetButton';
 
@@ -72,10 +71,16 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav>
-      <div className={("links ") + (navbarOpen ? "nav-open" : "")}>
+      <div id="navDiv" className={("links ") + (navbarOpen ? "nav-open" : "")}>
         {/* Bulma menu */}
         <aside className="menu is-flex is-flex-direction-column" style={{ padding: '12px', height: '100%' }}>
+          
+          <div className="field">
           <h2 className="subtitle">Settings</h2>
+          <button className="modal-close" onClick={() => {
+            document.querySelector('#navDiv')?.classList.toggle('nav-open')
+          }}>Close</button>
+          </div>
 
           {/* Game module settings */}
           <p className="menu-label">Game Modules</p>
