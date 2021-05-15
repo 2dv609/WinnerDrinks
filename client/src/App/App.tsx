@@ -85,9 +85,9 @@ function App() {
           onGameModuleSettingUpdate={gameModuleSettingUpdate} 
           updatePlayerActive={updatePlayerActive} />
 
-        <div className="App" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
-
-          <Login addUser={addUser} />
+        <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
+        <div className="box">
+        <Login addUser={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
             if (players.length < 2) {
@@ -103,11 +103,14 @@ function App() {
             )}
           </ul>
         </div>
+
+        </div>
         </div>
       );
     } else {
       return (
-        <div className="App">
+        
+        <div className="">
 
         {/* Navbar */}
         <Icon setNavbarOpen={setNavbarOpen} />
@@ -120,7 +123,8 @@ function App() {
           onGameModuleSettingUpdate={gameModuleSettingUpdate} 
           updatePlayerActive={updatePlayerActive} />
         
-        <div className="box" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
+        <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
+          <div className="box">
           <Login addUser={addUser} />
             <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
@@ -137,6 +141,8 @@ function App() {
               (<li className="column" key={player.toString()}>{player.toString()}</li>)
             )}
           </ul>
+          </div>
+
         </div>
         </div>
 
