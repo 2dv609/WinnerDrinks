@@ -42,6 +42,12 @@ function App() {
     }
   }
 
+  const updatePlayerName = (currentName: string, newName: string) => {
+    const updatedPlayers: Player[] = [...players]
+    updatedPlayers.forEach((player) => player.name === currentName ? player.name = newName : false)
+    setPlayers(updatedPlayers)
+  }
+
   const gameModuleSettingUpdate = (gameModuleSettings: IGameModuleSetting[]): void => {
     setGameModuleSettings(gameModuleSettings)
   }
@@ -75,6 +81,7 @@ function App() {
         {/* Navbar */}
         <Icon setNavbarOpen={setNavbarOpen} />
         <Navbar 
+          updatePlayerName={updatePlayerName}
           navbarOpen={navbarOpen}
           players={players}  
           gameModuleSettings={gameModuleSettings} 
@@ -115,6 +122,7 @@ function App() {
       {/* Navbar */}
       <Icon setNavbarOpen={setNavbarOpen} />
       <Navbar
+        updatePlayerName={updatePlayerName}
         navbarOpen={navbarOpen}
         players={players}  
         gameModuleSettings={gameModuleSettings} 
