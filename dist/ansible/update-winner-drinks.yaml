@@ -1,6 +1,6 @@
 ---
 - name: Update WinnerDrinks
-  hosts: test
+  hosts: development
   become: ubuntu
   tasks:
 
