@@ -10,25 +10,80 @@ and the server side code in the directory *server*.
 ### Notes on running the app locally for development
 Make sure Docker is running on your computer.  
 Run `npm install` in both the server and client directory.  
-Then run the script build_app_production.sh in the root directory.  
-Then in server/dist, run the script run_app_production_local.sh.  
-Open localhost:4000 on your computer. 
+Then... 
+
+```
+$ cd dist
+```
+
+```
+$ cd start_mongodb_container_development.sh
+```
+
+```
+$ cd ../server
+```
+
+```
+$ npm run start:dev:init
+```
+
+```
+$ cd ../client
+```
+
+```
+$ npm run start
+```
+
+Open localhost:3000 on your computer. 
 
 
 ### Build app for production
+
 ```
-$ ./build_app_production.sh
+$ cd dist
 ```
 
-### Build production for local testing of serviceworkers and IndexedDB
 ```
 $ ./build_app_production_local.sh
 ```
 
-### Build production folder
 ```
-server/dist
+$ ./run_app_production.sh
 ```
+
+### Deploy application
+
+```
+$ ./scp_app_to_server.sh <path_to_ssh_key> <user>@<server_public_IP>
+```
+
+Login to remote server
+
+```
+$ cd /var/www/winner-drinks OBS! in remote server
+```
+
+```
+$ ./run_app_production.sh OBS! in remote server
+```
+
+### Build app for local production, for testing of serviceworkers and IndexedDB
+
+```
+$ cd dist
+```
+
+```
+$ ./build_app_production_local.sh
+```
+
+```
+$ ./run_app_production.sh
+```
+
+Open localhost:4000 on your computer. 
 
 ### Git Workflow
 
