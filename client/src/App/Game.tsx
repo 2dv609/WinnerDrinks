@@ -69,8 +69,8 @@ const Game: React.FC<GameProps> =({ gameModuleService, players, gameService, act
      */
     const chooseRandomNewGame = (): void => {
         const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
-        setCurrentGameIndex(newGameIndex);
         setEventCurrentQuestion(newGameIndex)
+        setCurrentGameIndex(newGameIndex);
     }
 
     /**
@@ -117,12 +117,18 @@ const Game: React.FC<GameProps> =({ gameModuleService, players, gameService, act
     };
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
-        return (<div><p>Loading...</p></div>)
+        return (<div className="button is-loading"></div>)
     }
 
     // If to many paused players
     if (gameService.getNumActivePlayers(players) < 2) {
-      return <h1>Too many players are paused. Please wait for them and start their session again!</h1>
+      return <div className="message is-danger" >
+        <div className="message-header">Sorry!</div>
+        <div className="message-body">
+        <p>Too many players are paused. </p>
+        <p>Please wait for them and start their session again!</p>
+        </div>
+        </div>
     }
 
     let currentGame;
@@ -142,18 +148,18 @@ const Game: React.FC<GameProps> =({ gameModuleService, players, gameService, act
     }
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
-      return (<div><p>Loading...</p></div>)
+      return (<h1><progress className="progress is-large is-info" max="100">Loading</progress></h1>)
     } else if(currentQuestion < 0) {
       chooseRandomNewGame()
-      return (<h1>Hej</h1>)
+      return (<h1><progress className="progress is-large is-info" max="100">Loading</progress></h1>)
     }
 
     return (
       <div className="Game">
           <WinnerAlert winners={winners} message={flash} />
-          <Scoreboard players={players} />
           {currentGame}
           <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
+          {/* <Scoreboard players={players} /> */}
       </div>
     );
 }

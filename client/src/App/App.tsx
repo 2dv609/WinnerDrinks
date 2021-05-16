@@ -3,7 +3,6 @@ import Login from './Login'
 import Game from './Game'
 import Player from '../model/Player'
 import 'bulma'
-import './App.css'
 import ErrorMsg from './ErrorMsg'
 import Navbar from '../Components/Menu/Navbar'
 import Icon from '../Components/Menu/Icon'
@@ -12,28 +11,27 @@ import { getGameModuleService, getGameService } from '../model/ModuleFactory'
 import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../Components/Menu/Navbar'
 
-
 function App() {
   const gameService: GameService = getGameService();
   const [gameModuleService, setGameModuleSerivce] = useState<IGameModuleService>()
   const [players, setPlayers] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
-  const [nameerror, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
     { name: 'Wheel', active: true, index: 0 },
     { name: 'Party', active: true, index: 1 }, 
     { name: 'BackToBack', active: true, index: 2 }, 
     { name: 'Trivia', active: true, index: 3 }, 
-  ])
+  ]);
 
   useEffect(() => {
     getGameModuleService().then((gms: IGameModuleService | undefined) => {setGameModuleSerivce(gms)})
-  }, [])
+  }, []);
 
   /**
    * Function that deletes an added player by name.
-   * @param palyerName Name of Player to be deleted from state.
+   * @param playerName Name of Player to be deleted from state.
    */
   const deleteUser = (playerName: string): void => {
     const updatedPlayers: Player[] = [...players]
@@ -67,13 +65,10 @@ function App() {
   };
 
   if (!gameModuleService) {
-    return (
-      <div><p>Loading...</p></div>
-      )
+    return (<h1><progress className="progress is-large is-info" max="100">Loading</progress></h1>)
     }
 
   if (!play) {
-    if (!nameerror) {
       return (
         <div>
 
@@ -81,6 +76,7 @@ function App() {
         <Icon setNavbarOpen={setNavbarOpen} />
         <Navbar 
           navbarOpen={navbarOpen}
+          setNavBarOpen={setNavbarOpen}
           players={players}  
           gameModuleSettings={gameModuleSettings} 
           addUser={addUser} 
@@ -89,16 +85,20 @@ function App() {
           updatePlayerActive={updatePlayerActive} />
 
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
-
-          <Login addUser={addUser} />
-            <input className="button" type="button" value="Done" onClick={() => {
+        <div className="box">
+        <Login addUser={addUser} />
+        <div className="control block">
+          <div className="block"></div>
+        <input className="button" type="button" value="Done" onClick={() => {
             // must be at least two players. 
             if (players.length < 2) {
-              setError(true);
+              setError("There needs to be at least two players to start the game!");
             } else {
               setPlay(true); 
             }
             }} />
+        </div>
+        <ErrorMsg message={error}></ErrorMsg>
           <h2 className="title is-5" >Players</h2>
           <ul className="columns">
             {players.map(player =>
@@ -106,45 +106,10 @@ function App() {
             )}
           </ul>
         </div>
+
+        </div>
         </div>
       );
-    } else {
-      return (
-        <div>
-
-        {/* Navbar */}
-        <Icon setNavbarOpen={setNavbarOpen} />
-        <Navbar
-          navbarOpen={navbarOpen}
-          players={players}  
-          gameModuleSettings={gameModuleSettings} 
-          addUser={addUser} 
-          deleteUser={deleteUser} 
-          onGameModuleSettingUpdate={gameModuleSettingUpdate} 
-          updatePlayerActive={updatePlayerActive} />
-        
-        <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
-          <Login addUser={addUser} />
-            <input className="button" type="button" value="Done" onClick={() => {
-            // must be at least two players. 
-            if (players.length < 2) {
-              setError(true);
-            } else {
-              setPlay(true); 
-            }
-            }} />
-          <ErrorMsg message='There needs to be at least two players to start the game!'></ErrorMsg>
-          <h2 className="title is-5" >Players</h2>
-          <ul className="columns">
-            {players.map(player =>
-              (<li className="column" key={player.toString()}>{player.toString()}</li>)
-            )}
-          </ul>
-        </div>
-        </div>
-
-      );
-    }
   } else {
     return (
       <div>
@@ -152,6 +117,7 @@ function App() {
       <Icon setNavbarOpen={setNavbarOpen} />
       <Navbar
         navbarOpen={navbarOpen}
+        setNavBarOpen={setNavbarOpen}
         players={players}  
         gameModuleSettings={gameModuleSettings} 
         addUser={addUser} 
@@ -160,7 +126,7 @@ function App() {
         updatePlayerActive={updatePlayerActive} />
     
       <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
-        <h1 className="title is-3">Let's play!</h1>
+        <h1 className="title is-3">WinnerDrinks</h1>
         <Game activeGames={gameModuleSettings} gameService={gameService} players={players} gameModuleService={gameModuleService} />
       </div>
       </div>

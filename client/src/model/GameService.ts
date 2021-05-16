@@ -10,7 +10,8 @@ export default class GameService {
     public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[], activeGames: any[]): number => {
         let newIndex = currentGameIndex
         while (newIndex === currentGameIndex || !activeGames[newIndex].active) { // Don't allow the same game twice in a row. 
-            newIndex = Math.floor(Math.random() * gameModules.length)
+          console.log('while')
+          newIndex = Math.floor(Math.random() * gameModules.length)
         }
         return newIndex
     }

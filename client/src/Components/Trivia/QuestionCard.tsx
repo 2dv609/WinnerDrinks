@@ -12,11 +12,13 @@ const QuestionCard: React.FC<Props> = ({ answer, handleAnswer }) => {
   }, [])
 
   return (
-
-      <div className={'questionDiv card'}
+    <div className="column" >
+      <div className={'button is-info is-light'}
         onClick={handleAnswer}>
         {answer}
       </div>
+    </div>
+
 
   );
 }
