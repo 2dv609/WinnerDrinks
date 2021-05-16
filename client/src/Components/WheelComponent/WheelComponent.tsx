@@ -33,18 +33,17 @@ const randomIntFromInterval = (min: number, max: number): number => Math.floor(M
  * @returns {jsx} Component
  */
 const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) =>  {
-  // Error checking number of users. If < 4 => duplicate one of the users / If > 4 => skip one of the users
-  // const gp: GameProps = props.gp;
-  // let list = gameService.getPlayers(4, gameService.players)
 
   const [loading, setLoading] = useState(true)
-  const [newList, setNewList] = useState<Player[]>([])
+  const [players, setPlayers] = useState<Player[]>([])
   const [rotateDeg, setRotateDeg] = useState(0)
   const [isReset, setIsReset] = useState(true)
-  // const [winner, setWinner] = useState(new Player('Random'))
-  console.log('asfdsa')
+
+  /**
+   * Function run once on render an every time gameService is changed.
+   * Function check how many players there are in the game and duplicate if they are too few.
+   */
   useEffect(() => {
-    console.log('here2')
     let list = gameService.getPlayers(4, gameService.players)
 
     if(list.length === 2) {
@@ -56,11 +55,9 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
       newListConst.push(list[index])
       list = newListConst
     }
-    console.log('herea')
 
-    setNewList(list)
+    setPlayers(list)
     setRotateDeg(DEG / list.length)
-    console.log('here')
     setLoading(false)
 
   }, [gameService])
@@ -98,14 +95,12 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
    * Calls the other function and set the winner.
    */
   const startSpin = () => {
-    console.log("TRIGGERD")
     if(isReset) {
 
-      const winnerIndex = randomIntFromInterval(1, newList.length) - 1
+      const winnerIndex = randomIntFromInterval(1, players.length) - 1
       const degrees = getRandomRotationDegrees(winnerIndex)
     
       let styleSheet = document.styleSheets[0];
-      console.log(styleSheet)
 
       let keyframes = `
       @keyframes spin {
@@ -123,7 +118,11 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
     setIsReset(false)
   }
 
-  const setter = (winner: Player) => {
+  /**
+   * Function that call correct gameService methods with winner object.
+   * @param winner 
+   */
+  const addScore = (winner: Player) => {
     gameService.addScore(winner, 1)
     gameService.makeWinnerAlert(winner)
     gameService.chooseRandomNewGame()
@@ -134,13 +133,9 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
    * @param {Number} index 
    */
   const getWinner = (index: number) => {
-    const aWinner = newList[index]
-
-    console.log(aWinner)
-
+    const aWinner = players[index]
     reset();
-
-    setter(aWinner)
+    addScore(aWinner)
   }
 
   /**
@@ -149,7 +144,6 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
   const reset = () => {
     try {
       let styleSheet = document.styleSheets[0];
-      console.log(styleSheet.cssRules)
       // styleSheet.deleteRule(2)
       styleSheet.deleteRule(styleSheet.cssRules.length - 1)
 
@@ -166,7 +160,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
       <span style={{margin: '0px'}}>|</span>
       <div onClick={startSpin} className="wheel" style={style}>
 
-        {newList.map((val, index) => {
+        {players.map((val, index) => {
           const degree = (index * rotateDeg) //- 45
           
           return (
