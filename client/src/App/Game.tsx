@@ -69,8 +69,8 @@ const Game: React.FC<GameProps> =({ gameModuleService, players, gameService, act
      */
     const chooseRandomNewGame = (): void => {
         const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
-        setCurrentGameIndex(newGameIndex);
         setEventCurrentQuestion(newGameIndex)
+        setCurrentGameIndex(newGameIndex);
     }
 
     /**
