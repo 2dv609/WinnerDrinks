@@ -7,10 +7,11 @@
 import Player from '../model/Player'
 
 type ScoreBoardProps = {
-    players: Player[]
+    players: Player[],
+    message: string | undefined
 }  
   
-const Scoreboard: React.FC<ScoreBoardProps> = ({ players }) => {
+const Scoreboard: React.FC<ScoreBoardProps> = ({ players, message }) => {
 
     if (players == null) {
         return (
