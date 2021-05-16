@@ -74,7 +74,7 @@ const Navbar: React.FC<NavbarProps> = ({
     <nav>
       <div id="navDiv" className={("links ") + (navbarOpen ? "nav-open" : "")}>
         {/* Bulma menu */}
-        <aside className="menu is-flex is-flex-direction-column" style={{ padding: '12px', height: '100%' }}>
+        <aside className="menu is-flex is-flex-direction-column p-3" style={{ height: '100%' }}>
 
           <div className="">
 
@@ -92,7 +92,10 @@ const Navbar: React.FC<NavbarProps> = ({
               return (
                 <li key={index}>
                   <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
-                    <label className="checkbox"><input type="checkbox" onChange={() => (module.active)} checked={module.active} style={{ marginRight: '8px' }} />{module.name} Module</label>
+                    <label className="checkbox mr-3">
+                      <input type="checkbox" className="mr-3" onChange={() => (module.active)} checked={module.active} />
+                      {module.name} Module
+                      </label>
                   </a>
                 </li>)
             })}
