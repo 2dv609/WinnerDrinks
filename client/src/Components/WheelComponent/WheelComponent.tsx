@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './WheelComponent.css'
-import { AnimationGameModuleProps } from '../GameModueProps'
+import { AnimationGameModuleProps } from '../GameModuleProps'
 import Player from '../../model/Player';
 
 const DEG = 360
