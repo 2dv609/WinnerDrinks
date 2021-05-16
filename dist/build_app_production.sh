@@ -4,7 +4,7 @@
 
 
 # Check if client/.env exists
-F1=client/.env
+F1=../client/.env
 if [ ! -f "$F1" ]; then
     echo "File client/.env is missing"
     exit 1
@@ -15,6 +15,11 @@ PUBLIC_URL=https://winner-drinks.xyz" > $F1
 
 fi
 
+# Create a dist/winner-drinks/build folder
+DB=docker/winner-drinks/build
+if [ ! -d "$DB" ]; then
+    mkdir $DB
+fi
 
 # Install npm packages on server for production
 D0=../server/node_modules

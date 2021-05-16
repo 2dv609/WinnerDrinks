@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "http://localhost:4000/static/css/main.c2fd89de.chunk.css",
-    "main.js": "http://localhost:4000/static/js/main.5b8139f7.chunk.js",
-    "main.js.map": "http://localhost:4000/static/js/main.5b8139f7.chunk.js.map",
-    "runtime-main.js": "http://localhost:4000/static/js/runtime-main.4f9a6479.js",
-    "runtime-main.js.map": "http://localhost:4000/static/js/runtime-main.4f9a6479.js.map",
-    "static/css/2.e372e80d.chunk.css": "http://localhost:4000/static/css/2.e372e80d.chunk.css",
-    "static/js/2.27c3aac3.chunk.js": "http://localhost:4000/static/js/2.27c3aac3.chunk.js",
-    "static/js/2.27c3aac3.chunk.js.map": "http://localhost:4000/static/js/2.27c3aac3.chunk.js.map",
-    "static/js/3.8cadc1b9.chunk.js": "http://localhost:4000/static/js/3.8cadc1b9.chunk.js",
-    "static/js/3.8cadc1b9.chunk.js.map": "http://localhost:4000/static/js/3.8cadc1b9.chunk.js.map",
-    "index.html": "http://localhost:4000/index.html",
-    "service-worker.js": "http://localhost:4000/service-worker.js",
-    "service-worker.js.map": "http://localhost:4000/service-worker.js.map",
-    "static/css/2.e372e80d.chunk.css.map": "http://localhost:4000/static/css/2.e372e80d.chunk.css.map",
-    "static/css/main.c2fd89de.chunk.css.map": "http://localhost:4000/static/css/main.c2fd89de.chunk.css.map",
-    "static/js/2.27c3aac3.chunk.js.LICENSE.txt": "http://localhost:4000/static/js/2.27c3aac3.chunk.js.LICENSE.txt"
+    "main.css": "https://winner-drinks.xyz/static/css/main.ca2c5f35.chunk.css",
+    "main.js": "https://winner-drinks.xyz/static/js/main.18dbbe62.chunk.js",
+    "main.js.map": "https://winner-drinks.xyz/static/js/main.18dbbe62.chunk.js.map",
+    "runtime-main.js": "https://winner-drinks.xyz/static/js/runtime-main.16ace38a.js",
+    "runtime-main.js.map": "https://winner-drinks.xyz/static/js/runtime-main.16ace38a.js.map",
+    "static/css/2.e372e80d.chunk.css": "https://winner-drinks.xyz/static/css/2.e372e80d.chunk.css",
+    "static/js/2.9a920a67.chunk.js": "https://winner-drinks.xyz/static/js/2.9a920a67.chunk.js",
+    "static/js/2.9a920a67.chunk.js.map": "https://winner-drinks.xyz/static/js/2.9a920a67.chunk.js.map",
+    "static/js/3.8cadc1b9.chunk.js": "https://winner-drinks.xyz/static/js/3.8cadc1b9.chunk.js",
+    "static/js/3.8cadc1b9.chunk.js.map": "https://winner-drinks.xyz/static/js/3.8cadc1b9.chunk.js.map",
+    "index.html": "https://winner-drinks.xyz/index.html",
+    "service-worker.js": "https://winner-drinks.xyz/service-worker.js",
+    "service-worker.js.map": "https://winner-drinks.xyz/service-worker.js.map",
+    "static/css/2.e372e80d.chunk.css.map": "https://winner-drinks.xyz/static/css/2.e372e80d.chunk.css.map",
+    "static/css/main.ca2c5f35.chunk.css.map": "https://winner-drinks.xyz/static/css/main.ca2c5f35.chunk.css.map",
+    "static/js/2.9a920a67.chunk.js.LICENSE.txt": "https://winner-drinks.xyz/static/js/2.9a920a67.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.4f9a6479.js",
+    "static/js/runtime-main.16ace38a.js",
     "static/css/2.e372e80d.chunk.css",
-    "static/js/2.27c3aac3.chunk.js",
-    "static/css/main.c2fd89de.chunk.css",
-    "static/js/main.5b8139f7.chunk.js"
+    "static/js/2.9a920a67.chunk.js",
+    "static/css/main.ca2c5f35.chunk.css",
+    "static/js/main.18dbbe62.chunk.js"
   ]
 }

@@ -159,7 +159,7 @@ const Game: React.FC<GameProps> =({ gameModuleService, players, gameService, act
           <WinnerAlert winners={winners} message={flash} />
           {currentGame}
           <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
-          {/* <Scoreboard players={players} /> */}
+          <Scoreboard players={players} />
       </div>
     );
 }

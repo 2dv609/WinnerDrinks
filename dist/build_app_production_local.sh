@@ -12,6 +12,13 @@ if [ ! -f "$F1" ]; then
 fi
 
 
+# Create a dist/winner-drinks/build folder
+DB=docker/winner-drinks/build
+if [ ! -d "$DB" ]; then
+    mkdir $DB
+fi
+
+
 # Install npm packages on server for production
 D0=../server/node_modules
 if [ ! -d "$D0" ]; then
