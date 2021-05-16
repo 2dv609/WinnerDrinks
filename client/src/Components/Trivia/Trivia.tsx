@@ -37,11 +37,13 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent}) => {
     }
 
     if (e.target.innerText === modefiedGameEvent.correct_answer) {
-      gameService.addScore(players[0], 1)
+      gameService.addScore(players[0], 1);
+      gameService.makeWinnerAlert(players[0]); 
+    } else {
+      gameService.makeWinnerAlert(null, 'Wrong answer.'); 
     }
-
     gameService.chooseRandomNewGame()
-    gameService.makeWinnerAlert(players[0])
+    
   }
 
   if (!modefiedGameEvent) {
