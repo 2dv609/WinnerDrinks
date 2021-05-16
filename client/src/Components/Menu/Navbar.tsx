@@ -80,14 +80,17 @@ const Navbar: React.FC<NavbarProps> = ({
         {/* Bulma menu */}
         <aside className="menu is-flex is-flex-direction-column" style={{ padding: '12px', height: '100%' }}>
 
-          <div className="">
-            {/* Delete button for closing the menu. @author Delfi */}
-            <button className="delete" onClick={() => {
+          <div className="level is-mobile">
+            <div className="level-left">
+            <h2 className="subtitle level-item">Settings</h2>
+            </div>
+            <div className="level-right">
+                {/* Delete button for closing the menu. @author Delfi */}
+                <button className="delete level-item" onClick={() => {
               setNavBarOpen(false)
               document.querySelector('#navDiv')?.classList.toggle('nav-open');
             }}>Close</button>
-
-            <h2 className="subtitle">Settings</h2>
+            </div>
           </div>
 
           {/* Game module settings */}
