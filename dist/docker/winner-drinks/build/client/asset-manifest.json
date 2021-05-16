@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "https://winner-drinks.xyz/static/css/main.ca2c5f35.chunk.css",
-    "main.js": "https://winner-drinks.xyz/static/js/main.18dbbe62.chunk.js",
-    "main.js.map": "https://winner-drinks.xyz/static/js/main.18dbbe62.chunk.js.map",
+    "main.js": "https://winner-drinks.xyz/static/js/main.247a4ff0.chunk.js",
+    "main.js.map": "https://winner-drinks.xyz/static/js/main.247a4ff0.chunk.js.map",
     "runtime-main.js": "https://winner-drinks.xyz/static/js/runtime-main.16ace38a.js",
     "runtime-main.js.map": "https://winner-drinks.xyz/static/js/runtime-main.16ace38a.js.map",
     "static/css/2.e372e80d.chunk.css": "https://winner-drinks.xyz/static/css/2.e372e80d.chunk.css",
@@ -22,6 +22,6 @@
     "static/css/2.e372e80d.chunk.css",
     "static/js/2.9a920a67.chunk.js",
     "static/css/main.ca2c5f35.chunk.css",
-    "static/js/main.18dbbe62.chunk.js"
+    "static/js/main.247a4ff0.chunk.js"
   ]
 }

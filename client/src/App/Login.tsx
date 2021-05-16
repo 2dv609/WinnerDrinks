@@ -9,7 +9,7 @@ const Login: React.FC<LoginProps> = ({ addUser }) => {
   const [input, setInput] = useState('');
   return (
     <div className="">
-      <h1 className="title">Add players</h1>
+      <h1 className="title">Add players ???</h1>
       <div className="control block">
       <input className="input" type="text" value={input} name="newname" id="newname" onChange={e => {
         if ((e.target as any).value.length > 10) return;
