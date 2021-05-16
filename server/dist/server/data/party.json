@@ -1,17 +1,62 @@
 [
     {
-        "question": "{players[0]} och {players[1]} spelar sten-sax-påse, vinnaren tar en shot"
+        "question": "{p0} and {p1}, play a game of rock-paper-scissors."
     },
     {
-        "question": "{players[0]} och {players[1]} dricker 10000 shots"
+        "question": "{p0}, guess how many pushups {p1} can do. If you're correct you win."
     },
     {
-        "question": "{players[0]} kittlar {players[1]} annars sprängs solen"
+        "question": "{p0}, confess your love to {p1} as convincingly as you can. If s/he decides it was good enough, you win."
     },
     {
-        "question": "{players[0]} och {players[1]} pratar känslor"
+        "question": "{p0}, tickle {p1} for 7 seconds. If s/he laughs (or declines) they lose. Otherwise you lose."
     },
     {
-        "question": "{players[0]} och {players[1]} inser livets mening eller tar en shot"
+        "question": "{p0} and {p1}, stare deeply into each other's eyes and the first to blink loses. "
+    },
+    {
+        "question": "{p0} and {p1}, the first to say the word 'SLIME' wins."
+    },
+    {
+        "question": "{p0}, say something really nice about {p1}. If s/he feels genuinely touched, you win."
+    },
+    {
+        "question": "{p0}, say something nice about yourself that you're really proud of. If {p1} deems you were too humble or disingenuous, you lose."
+    },
+    {
+        "question": "{p0} and {p1}, sing Happy Birthday. The better performer wins."
+    },
+    {
+        "question": "{p0}, get naked, otherwise {p1} wins."
+    },
+    {
+        "question": "{p0}, guess the favorite drink of {p1}. If you're correct you win."
+    },
+    {
+        "question": "{p0}, guess how many exes {p1} has. If you're correct you win."
+    },
+    {
+        "question": "{p0}, if you're taller than {p1}, you win."
+    },
+    {
+        "question": "{p0}, if you're older than {p1}, you win."
+    },
+    {
+        "question": "{p0}, if you have longer hair than {p1}, you win."
+    },
+    {
+        "question": "{p0}, do a really strange dance. If {p1} feels awkward, you win."
+    },
+    {
+        "question": "{p0}, allow {p1} to slap you, or you lose. (If anyone declines, they lose.)"
+    },
+    {
+        "question": "{p0} and {p1}, have a sit-up competition."
+    },
+    {
+        "question": "{p0}, show {p1} the most recent photo taken on your phone, or you lose."
+    },
+    {
+        "question": "{p0}, acknowledge {p1} as your superior god or you lose."
     }
 ]

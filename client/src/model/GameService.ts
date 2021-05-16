@@ -1,9 +1,8 @@
 import Player from './Player'
-import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/GameModueProps'
+import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/GameModuleProps'
 
 export default class GameService {
 
-    
     public addScore = (p: Player, score: number) => {
         p.addScore(score)
     }
@@ -16,12 +15,20 @@ export default class GameService {
         }
         return newIndex
     }
-
+    /**
+     * 
+     * @param nrOfPlayers The amount of players you need for the component
+     * @param players An array of players that the function will fetch from. 
+     * @returns A sublist from your array that contains the requested amount of active players. 
+     */
     public getPlayers = (nrOfPlayers: number, players: Player[]): Player[] => {
         const activePlayers: Player[] = [];
         
         for (let i = 0; i < players.length; i++) {
-            activePlayers.push(players[i])
+            if (players[i].isActive) {
+                activePlayers.push(players[i])
+            }
+            
         }
 
         this.shuffle(activePlayers);

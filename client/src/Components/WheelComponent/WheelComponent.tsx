@@ -152,6 +152,14 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
       console.log('Stylesheet has already been reset...')
     }
   }
+  /**
+   * Return a function for code cleanup.
+   */
+//   useEffect(() => { 
+//     return () => {
+//       reset();
+//     }
+// }, [])
 
   if(loading) return( <p>Loading...</p>)
 
@@ -169,14 +177,17 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService }) => 
             </div>
           )
         })}
+       </div>
 
-{/*         <div className="d-flex"><button onClick={startSpin}>Spin!</button>
+      {/*     
+        <div className="d-flex">
+          <button onClick={startSpin}>Spin!</button>
         </div>
-        <div className="BOC">
+        <div>
           <p>{errorMessage}</p>
           <p>{result}</p>
-        </div> */}
-    </div>
+        </div>
+      */}
     </div>
   )
 }

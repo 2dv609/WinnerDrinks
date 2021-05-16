@@ -1,25 +1,45 @@
 import { openDB, IDBPDatabase, deleteDB } from 'idb'
 import IUtilService from './IUtilService'
+import { GameModuleName, enumKeys } from './GameModuleName'
 
+/**
+ * Class LocalDB containing utility methods for indexedDB. 
+ * 
+ * @implements {IUtilService}
+ */
 export default class LocalDB implements IUtilService {
 
     private db: any
-    readonly dbName: string  = 'WinnerDrinks'
-    readonly triviaEvents: string = 'triviaEvents'
-    readonly partyEvents: string = 'partyEvents'
-    readonly backToBackEvents: string = 'backToBackEvents'
-
-    public async createObjectStores(): Promise<void> {
+    private readonly dbName: string  = 'WinnerDrinks'
+    private readonly dbVersion: number  = 1
+    
+    /**
+     * Open the database and upgrades it if needed.
+     * 
+     * @return {Promise<void>}
+     */
+    public async openLocalDB(): Promise<void> {
         try {
-            const tableNames = [this.triviaEvents, this.partyEvents, this.backToBackEvents]
-            this.db = await openDB(this.dbName, 1, { // use undefined for current version https://github.com/jakearchibald/idb#opendb 
-                upgrade(db: IDBPDatabase) {
-                    for (const tableName of tableNames) {
-                        if (db.objectStoreNames.contains(tableName)) {
+
+            this.db = await openDB(this.dbName, this.dbVersion, { // use undefined for current version https://github.com/jakearchibald/idb#opendb 
+                upgrade(db: IDBPDatabase, oldVersion, newVersion, transaction) {
+
+                    for (const name of enumKeys(GameModuleName)) {
+
+                        if (db.objectStoreNames.contains(GameModuleName[name])) {
                             continue;
                         }
-                        db.createObjectStore(tableName, { keyPath: '_id' })
+                        db.createObjectStore(GameModuleName[name], { keyPath: '_id' })
                     }
+                },
+                blocked() {
+                    console.log('blocked')
+                },
+                blocking() {
+                    console.log('blocking')
+                },
+                terminated() {
+                    console.log('terminated')
                 },
             })
 
@@ -28,86 +48,72 @@ export default class LocalDB implements IUtilService {
         }
     }
 
+    /**
+     * Load the database using game module names as table names.
+     * 
+     * @return {Promise<void>}
+     */
     public async loadDB(): Promise<void> {
-        const loadTrivia = this.loadTrivia()
-        const loadParty = this.loadParty()
-        const loadBackToBack = this.loadBackToBack()
+        const gameEventsPromises: Promise<void>[] = [] 
 
-        Promise.all([loadTrivia, loadParty, loadBackToBack]).catch(error => console.log('Load DB error:', error))
+        for (const name of enumKeys(GameModuleName)) {
+            gameEventsPromises.push(this.loadAndFetchGameEvents(GameModuleName[name]))
+        }
+     
+        Promise.all(gameEventsPromises).catch(error => console.log('Load DB error:', error))
     }
 
-    private async loadTrivia(): Promise<void> {
+    /**
+     * Fetch the data using game module name as api paths.
+     * 
+     * @return {Promise<void>}
+     */
+    private async loadAndFetchGameEvents(gameModuleName: string): Promise<void> {
         try {
-            const questions: ITrivia[] = []
-            const triviaResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/trivia`)
+            const gameEvents: (IBackToBack | ITrivia | IParty)[] = []
+            const response: any = await fetch(`${process.env.PUBLIC_URL}/api/${gameModuleName}`)
             
-            if (triviaResponse) {
-                const triviaResponseJSON: any = await triviaResponse.json()
-                triviaResponseJSON.questions.forEach((question: ITrivia) => questions.push(question))    
+            if (response) {
+                const responseJSON: any = await response.json()
+                responseJSON.questions.forEach((question: IBackToBack) => gameEvents.push(question))    
             }
 
-            this.loadTable(questions, this.triviaEvents)
+            this.loadTable(gameEvents, gameModuleName)
 
         }  catch (error) {
-            console.log('Load trivia error:', error)
+            console.log(`Error when loading game events for game module ${gameModuleName}:`, error)
         }
     }
 
-    private async loadParty(): Promise<void> {
+    /**
+     * Load the database using game module names as table names.
+     * 
+     * @return {Promise<void>}
+     */
+    private async loadTable(gameEvents: (IBackToBack | ITrivia | IParty)[], gameModuleName: string): Promise<void> { 
         try {
-            const questions: IParty[] = []
-            const partyResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/party`)
+            const transaction = this.db.transaction(gameModuleName, 'readwrite');
+            const store = transaction.objectStore(gameModuleName);
             
-            if (partyResponse) {
-                const partyResponseJSON: any = await partyResponse.json()
-                partyResponseJSON.questions.forEach((question: IParty) => questions.push(question))    
-            }
-
-            this.loadTable(questions, this.partyEvents)
-
-        }  catch (error) {
-            console.log('Load party error:', error)
-        }
-    }
-
-    private async loadBackToBack(): Promise<void> {
-        try {
-            const questions: IBackToBack[] = []
-            const backToBackResponse: any = await fetch(`${process.env.PUBLIC_URL}/api/back-to-back`)
-            
-            if (backToBackResponse) {
-                const backToBackResponseJSON: any = await backToBackResponse.json()
-                backToBackResponseJSON.questions.forEach((question: IBackToBack) => questions.push(question))    
-            }
-
-            this.loadTable(questions, this.backToBackEvents)
-
-        }  catch (error) {
-            console.log('Load back-to-back error:', error)
-        }
-    }
-
-    private async loadTable(questions: any[] | undefined, tableName: string): Promise<void> { 
-        try {
-            if (questions) {
-                const transaction = this.db.transaction(tableName, 'readwrite');
-                const store = transaction.objectStore(tableName);
-                
-                for (const question of questions) {
-                    await store.put(question);
-                }
+            for (const question of gameEvents) {
+                await store.put(question);
             }
         
         } catch (error) {
-            console.log('Load table error:', error)
+            console.log(`Error when loading indexedDB table for game module ${gameModuleName}:`, error)
         }
     }   
 
-    public async getTrivia(): Promise<GameEventAPI | undefined> {
+    /**
+     * Get data from indexedDB using.
+     *
+     * @param  {string} gameModuleName - name of a game module. 
+     * @return {Promise<GameEventAPI | undefined>} - The game events for the game module or undefined if error. 
+     */
+    public async getGameEvents(gameModuleName: string): Promise<GameEventAPI | undefined> {
         try {
-            await this.openDB()
-            const transaction = this.db.transaction(this.triviaEvents, 'readonly')
-            const store = transaction.objectStore(this.triviaEvents)
+            const transaction = this.db.transaction(gameModuleName, 'readonly')
+            const store = transaction.objectStore(gameModuleName)
             const questions = await store.getAll()
             return { questions: questions }
         
@@ -116,43 +122,11 @@ export default class LocalDB implements IUtilService {
         }
     }
 
-    public async getBackToBack(): Promise<GameEventAPI | undefined> {
-        try {
-            await this.openDB()
-            const transaction = this.db.transaction(this.backToBackEvents, 'readonly')
-            const store = transaction.objectStore(this.backToBackEvents)
-            const questions = await store.getAll()
-            return { questions: questions }
-        
-        } catch (error) {
-            console.log('error:', error)
-        }
-    }
-
-    public async getParty(): Promise<GameEventAPI  | undefined> {
-        try {    
-            await this.openDB()
-            const transaction = this.db.transaction(this.partyEvents, 'readonly')
-            const store = transaction.objectStore(this.partyEvents)
-            const questions = await store.getAll()
-            return { questions: questions }
-        
-        } catch (error) {
-            console.log('error:', error)
-        }
-    }
-
-    private async openDB(): Promise<boolean> {
-        try {
-            this.db = await openDB(this.dbName, 1) // version == undefined gives current version https://github.com/jakearchibald/idb#opendb
-            return true
-        
-        } catch (error) {
-            console.log('error:', error)
-            return false
-        }
-    }
-
+    /**
+     * Delete the database.
+     * 
+     * @return {Promise<void>}
+     */
     public async deleteLocalDB(): Promise<void> {
         await deleteDB(this.dbName)
     }

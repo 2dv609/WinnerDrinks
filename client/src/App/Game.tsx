@@ -10,14 +10,16 @@ import WinnerAlert from './WinnerAlert'
 import Scoreboard from './Scoreboard';
 import SkipGame from './SkipGame';
 
+
 type GameProps = {
-  gameModuleSerivce: IGameModuleService,
+  gameModuleService: IGameModuleService | undefined,
   players: Player[],
   gameService: GameService,
   activeGames: any[]
 }
 
-const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gameService }) => {
+const Game: React.FC<GameProps> =({ gameModuleService, players, gameService, activeGames }) => {
+    
     const gameModules = [WheelComponent, Party, BackToBack, Trivia];
     const [currentGameIndex, setCurrentGameIndex] = useState(1);
     const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
@@ -27,20 +29,24 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     const [flash, setFlash] = useState<string | undefined>();
     const [currentQuestion, setCurrentQuestion] = useState<object | number>(-1)
 
-    
+
     // Load data to game events
     useEffect(() => {
-        
-        setTriviaEvents(gameModuleSerivce.getTriviaEvents())
-        setBackToBackEvents(gameModuleSerivce.getBackToBackEvents())
-        setPartyEvents(gameModuleSerivce.getPartyEvents())
-    }, [gameModuleSerivce])
+        if (!gameModuleService) return
+
+        setTriviaEvents(gameModuleService.getTriviaEvents())
+        setBackToBackEvents(gameModuleService.getBackToBackEvents())
+        setPartyEvents(gameModuleService.getPartyEvents())
+
+    }, [gameModuleService])
 
     /**
      * This function is sent to game modules as a prop. 
      * If any winner is declared, they are passed as parameters to this function
      * 
      * @param p The winner(s). Null means no points awarded. 
+     * @param message A custom flash message for the winner, for example "Wrong answer". 
+     * @author Delfi
      */
      const makeWinnerAlert = (p: Player | Player[] | null, message?: string): void => {
         if (Array.isArray(p)) { // If there are several winners
@@ -58,7 +64,9 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
             setFlash(undefined)
         }
     }
-
+    /**
+     * Selects a new game at random if it is activated.
+     */
     const chooseRandomNewGame = (): void => {
         const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
         setEventCurrentQuestion(newGameIndex)
@@ -67,6 +75,7 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
 
     /**
      * Function that get question from current game-module and save it in state.
+     * 
      */
      const setEventCurrentQuestion = (currentGameIndex: number) => {
       let currentGame: any;
@@ -86,7 +95,12 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
       }
       setCurrentQuestion(currentGame)
     }
-
+    /**
+     * TODO: Explain method
+     * @author Anonymous
+     * @param gameEventId 
+     * @param gameEvents 
+     */
     const removeGameEvent = (gameEventId: string, gameEvents: GameEventAPI): void => {
         gameEvents.questions.filter((question: ITrivia | IParty | IBackToBack) => {
             return question._id !== gameEventId        
@@ -103,12 +117,18 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     };
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
-        return (<div><p>Loading... Game</p></div>)
+        return (<div className="button is-loading"></div>)
     }
 
     // If to many paused players
     if (gameService.getNumActivePlayers(players) < 2) {
-      return <h1>Too many players are paused. Please wait for them and start their session again!</h1>
+      return <div className="message is-danger" >
+        <div className="message-header">Sorry!</div>
+        <div className="message-body">
+        <p>Too many players are paused. </p>
+        <p>Please wait for them and start their session again!</p>
+        </div>
+        </div>
     }
 
     let currentGame;
@@ -128,18 +148,18 @@ const Game: React.FC<GameProps> =({ activeGames, players, gameModuleSerivce, gam
     }
 
     if (!triviaEvents || !backToBackEvents || !partyEvents) {
-      return (<div><p>Loading...</p></div>)
+      return (<h1><progress className="progress is-large is-info" max="100">Loading</progress></h1>)
     } else if(currentQuestion < 0) {
       chooseRandomNewGame()
-      return (<h1>Hej</h1>)
+      return (<h1><progress className="progress is-large is-info" max="100">Loading</progress></h1>)
     }
 
     return (
       <div className="Game">
           <WinnerAlert winners={winners} message={flash} />
-          <Scoreboard players={players} />
           {currentGame}
           <SkipGame makeWinnerAlert={makeWinnerAlert} chooseRandomNewGame={chooseRandomNewGame} />
+          <Scoreboard players={players} />
       </div>
     );
 }

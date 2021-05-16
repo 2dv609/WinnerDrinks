@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { TextGameModuleProps } from '../GameModueProps';
+import { TextGameModuleProps } from '../GameModuleProps';
 import '../../App/App.css';
 
 const NUM_OF_PLAYERS = 2; // How many players do you need?
@@ -18,6 +18,7 @@ const BackToBack: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) =
 
     return (
         <div className="box container">
+            <div>{players[0].toString()} and {players[1].toString()}</div>
             <div data-testid="game-event" className="content">{gameEvent.question}</div>
             <h3 className="title is-6">Were both correct?</h3>
 
