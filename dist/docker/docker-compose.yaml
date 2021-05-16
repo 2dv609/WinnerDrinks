@@ -27,12 +27,12 @@ services:
     build:
       context: ./winner-drinks
     ports:
-      - "4001:4001"
+      - "4000:4000"
     networks:
       winner-drinks-net:
         ipv4_address: 10.0.2.3
     environment:
-      PORT: 4001
+      PORT: 4000
       NODE_ENV: production
       MONGO_USERNAME: admin
       MONGO_PASSWORD: admin
@@ -41,20 +41,6 @@ services:
       MONGO_DB: winner_drinks
     depends_on:
       - mongodb
-    restart: on-failure
-
-  proxy:
-    container_name: proxy
-    build:
-      context: ./proxy
-    ports:
-      - "4000:80"
-    networks:
-      winner-drinks-net:
-        ipv4_address: 10.0.2.4
-    depends_on:
-      - mongodb
-      - winner-drinks 
     restart: on-failure
 
 secrets:

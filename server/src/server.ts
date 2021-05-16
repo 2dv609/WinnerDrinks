@@ -34,10 +34,9 @@ const main = async (): Promise<void> => {
   // Load game if NODE_ENV === 'production' or process argument is set to all.
   const [,, ...gameModules] = process.argv
   if (gameModules.includes('all') || app.get('env') === 'production') { // load all game modules
-    console.log('Load game modules...')
-    await backToBackController.loadBackToBack(join(directoryFullName, 'data/back-to-back.json'))
-    await partyController.loadParty(join(directoryFullName, 'data/party.json'))
-    await triviaController.loadTrivia(join(directoryFullName, 'data/trivia.json'))
+    await backToBackController.loadBackToBack(join(directoryFullName, '../data/back-to-back.json'))
+    await partyController.loadParty(join(directoryFullName, '../data/party.json'))
+    await triviaController.loadTrivia(join(directoryFullName, '../data/trivia.json'))
   }
 
   // Enable body parsing of application/json and populates the request object with a body object (req.body).
@@ -49,7 +48,7 @@ const main = async (): Promise<void> => {
   // Serve static files when production and trust first proxy.
   if (app.get('env') === 'production') {
     app.set('trust proxy', 1)
-    app.use(express.static(join(directoryFullName, '../build')))
+    app.use(express.static(join(directoryFullName, '../client')))
   }
 
   // Register routes.

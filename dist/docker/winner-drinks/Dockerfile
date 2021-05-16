@@ -14,6 +14,6 @@ RUN npm ci --production
 
 RUN npm install pm2 -g
 
-COPY dist .
+COPY build .
 
 CMD [ "pm2-runtime", "server/server.js" ]

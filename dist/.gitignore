@@ -1,4 +1,4 @@
 # .gitignore dist
 
 # dependencies
-/build
+/docker/winner-drinks/build
