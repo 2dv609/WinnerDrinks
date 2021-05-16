@@ -1,3 +1,7 @@
+/**
+ * Menu for configuring various settings. 
+ * @author Caesar
+ */
 import React, { useState } from 'react';
 import './Navbar.css'
 import Player from '../../model/Player'
@@ -16,13 +20,14 @@ export type NavbarProps = {
   players: Player[],
   gameModuleSettings: IGameModuleSetting[],
   updatePlayerActive: (playerName: string) => void,
+  setNavBarOpen: (value: boolean) => void,
   onGameModuleSettingUpdate: (gameModuleSettings: IGameModuleSetting[]) => void,
   deleteUser: (userName: string) => void,
   addUser: (newUserName: string) => void
 }
 
 const Navbar: React.FC<NavbarProps> = ({
-  navbarOpen, players, gameModuleSettings, updatePlayerName,
+updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
   updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
 
   const [inputName, setInputName] = useState('')
@@ -72,17 +77,21 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav>
-      <div id="navDiv" className={("links ") + (navbarOpen ? "nav-open" : "")}>
+      <div id="navDiv" className={("links") + (navbarOpen ? " nav-open" : "")}>
         {/* Bulma menu */}
         <aside className="menu is-flex is-flex-direction-column p-3" style={{ height: '100%' }}>
 
-          <div className="">
-
-            <button className="delete" onClick={() => {
-              document.querySelector('#navDiv')?.classList.toggle('nav-open')
+          <div className="level is-mobile">
+            <div className="level-left">
+            <h2 className="subtitle level-item">Settings</h2>
+            </div>
+            <div className="level-right">
+                {/* Delete button for closing the menu. @author Delfi */}
+                <button className="delete level-item" onClick={() => {
+              setNavBarOpen(false)
+              document.querySelector('#navDiv')?.classList.toggle('nav-open');
             }}>Close</button>
-
-            <h2 className="subtitle">Settings</h2>
+            </div>
           </div>
 
           {/* Game module settings */}

@@ -17,22 +17,29 @@ const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {
     }, [gameService])
 
     return (
-        <div className="card">
+        <div className="card block">
             <div className="card-content">
                 <div data-testid="game-event" className="content">{addPlayerToGameEvent()}</div>
                 <h3>Who won?</h3>
+                <div className="columns">
+                    <div className="column">
+                        <button className="button" onClick={() => {
+                            gameService.addScore(players[1], 1)
+                            gameService.makeWinnerAlert(players[1])
+                            gameService.chooseRandomNewGame()
+                        }}>{players[1].toString()}</button>
+                    </div>
+                    <div className="column">
+                        <button className="button" onClick={() => {
+                            gameService.addScore(players[0], 1)
+                            gameService.makeWinnerAlert(players[0])
+                            gameService.chooseRandomNewGame()
+                        }}>{players[0].toString()}</button>
+                    </div>
+                </div>
 
-                <button className="button" onClick={() => {
-                    gameService.addScore(players[0], 1)
-                    gameService.makeWinnerAlert(players[0])
-                    gameService.chooseRandomNewGame()
-                }}>{players[0].toString()}</button>
 
-                <button className="button" onClick={() => {
-                    gameService.addScore(players[1], 1)
-                    gameService.makeWinnerAlert(players[1])
-                    gameService.chooseRandomNewGame()
-                }}>{players[1].toString()}</button>
+
 
             </div>
         </div>

@@ -119,6 +119,7 @@ function App() {
         <Navbar 
           updatePlayerName={updatePlayerName}
           navbarOpen={navbarOpen}
+          setNavBarOpen={setNavbarOpen}
           players={players}  
           gameModuleSettings={gameModuleSettings} 
           addUser={addUser} 
@@ -160,6 +161,7 @@ function App() {
       <Navbar
         updatePlayerName={updatePlayerName}
         navbarOpen={navbarOpen}
+        setNavBarOpen={setNavbarOpen}
         players={players}  
         gameModuleSettings={gameModuleSettings} 
         addUser={addUser} 
