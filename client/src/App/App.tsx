@@ -24,6 +24,7 @@ function App() {
     { name: 'BackToBack', active: true, index: 2 }, 
     { name: 'Trivia', active: true, index: 3 }, 
   ]);
+  const MAX_PLAYERS = 10
 
   useEffect(() => {
     getGameModuleService().then((gms: IGameModuleService | undefined) => {setGameModuleSerivce(gms)})
@@ -43,6 +44,12 @@ function App() {
   }
 
   const updatePlayerName = (currentName: string, newName: string) => {
+    const alreadyAdded = playerExistInArray(newName)
+    if(alreadyAdded) {
+      window.alert("Player's name already exists in the game!") //For now.
+      return
+    }
+
     const updatedPlayers: Player[] = [...players]
     updatedPlayers.forEach((player) => player.name === currentName ? player.name = newName : false)
     setPlayers(updatedPlayers)
@@ -61,8 +68,37 @@ function App() {
     setPlayers(updatedPlayers)
   }
 
+  /**
+   * Function that checks if an name already exists in added players array
+   * @param name Name to be checked
+   * @returns boolean, {true} if exists, {false} if not exists
+   */
+  const playerExistInArray = (name: string) => {
+    let exist = false
+    
+    for (let i = 0; i < players.length; i++) {
+      if(players[i].name === name) {
+        exist = true
+        break
+      }
+    }
+    
+    return exist
+  }
+
   const addUser = (newPlayerName: string): void => {
     try {
+      if(players.length >= MAX_PLAYERS) {
+        window.alert(`Cannot add more players, max players are ${MAX_PLAYERS}`) //For now.
+        return
+      }
+      
+      const alreadyAdded = playerExistInArray(newPlayerName)
+      if(alreadyAdded) {
+        window.alert('Player is already added to the game!') //For now.
+        return
+      }
+
       const newPlayer = new Player(newPlayerName);
       setPlayers([...players, newPlayer]);
     } catch (error) {
