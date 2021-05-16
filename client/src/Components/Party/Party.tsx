@@ -17,7 +17,7 @@ const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {
     }, [gameService])
 
     return (
-        <div className="card">
+        <div className="card block">
             <div className="card-content">
                 <div data-testid="game-event" className="content">{addPlayerToGameEvent()}</div>
                 <h3>Who won?</h3>
