@@ -9,7 +9,8 @@ and the server side code in the directory *server*.
 
 ### Notes on running the app locally for development
 Make sure Docker is running on your computer.  
-Run `npm install` in both the server and client directory.  
+Run `npm install` in both the server and client directory and
+create a server/.env   
 Then... 
 
 ```
