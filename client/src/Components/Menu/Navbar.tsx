@@ -15,6 +15,7 @@ export interface IGameModuleSetting {
 }
 
 export type NavbarProps = {
+  updatePlayerName: any,
   navbarOpen: boolean,
   players: Player[],
   gameModuleSettings: IGameModuleSetting[],
@@ -26,7 +27,7 @@ export type NavbarProps = {
 }
 
 const Navbar: React.FC<NavbarProps> = ({
-  navbarOpen, setNavBarOpen, players, gameModuleSettings,
+updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
   updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
 
   const [inputName, setInputName] = useState('')
@@ -78,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = ({
     <nav>
       <div id="navDiv" className={("links") + (navbarOpen ? " nav-open" : "")}>
         {/* Bulma menu */}
-        <aside className="menu is-flex is-flex-direction-column" style={{ padding: '12px', height: '100%' }}>
+        <aside className="menu is-flex is-flex-direction-column p-3" style={{ height: '100%' }}>
 
           <div className="level is-mobile">
             <div className="level-left">
@@ -100,7 +101,10 @@ const Navbar: React.FC<NavbarProps> = ({
               return (
                 <li key={index}>
                   <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
-                    <label className="checkbox"><input type="checkbox" onChange={() => (module.active)} checked={module.active} style={{ marginRight: '8px' }} />{module.name} Module</label>
+                    <label className="checkbox mr-3">
+                      <input type="checkbox" className="mr-3" onChange={() => (module.active)} checked={module.active} />
+                      {module.name} Module
+                      </label>
                   </a>
                 </li>)
             })}
@@ -110,17 +114,20 @@ const Navbar: React.FC<NavbarProps> = ({
           {/* Name input */}
           <div className="field has-addons">
             <div className="control">
-              <input className="input" type="text" placeholder="Input name" onChange={e => setInputName(e.target.value)} />
+              <input className="input" type="text" value={inputName} placeholder="Input name" onChange={e => setInputName(e.target.value)} />
             </div>
             <div className="control">
-              <button className="button is-info" onClick={() => addUser(inputName)}>Add</button>
+              <button className="button is-info" onClick={() => {
+                addUser(inputName)
+                setInputName('')
+                }}>Add</button>
             </div>
           </div>
           {/* Names */}
           <p className="menu-label">Players</p>
           <ul className="menu-list" style={{ overflowY: 'scroll' }}>
             {players.map((player: Player, index: number) => {
-              return <PlayerSettingBox deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive} />
+              return <PlayerSettingBox updatePlayerName={updatePlayerName} deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive} />
             })}
           </ul>
           {/* <div className="menu-label">Advanced</div>
