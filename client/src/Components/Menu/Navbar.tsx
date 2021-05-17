@@ -11,6 +11,7 @@ import ResetButton from '../../App/ResetButton';
 export interface IGameModuleSetting {
   name: string,
   active: boolean,
+  enable: boolean,
   index: number
 }
 
@@ -38,6 +39,7 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
   const updateActiveGameModule = (e: any, moduleName: string) => {
     e.preventDefault()
 
+    console.log(moduleName)
     let activeModules = 0
 
     for (let i = 0; i < gameModuleSettings.length; i++) {
@@ -88,9 +90,9 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
             {gameModuleSettings.map((module: IGameModuleSetting, index: number) => {
               return (
                 <li key={index}>
-                  <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
+                  <a href="/" onClick={(e: any) => module.enable ? updateActiveGameModule(e, module.name) : e.preventDefault()}>
                     <label className="checkbox mr-3">
-                      <input type="checkbox" className="mr-3" onChange={() => (module.active)} checked={module.active} />
+                      <input type="checkbox" disabled={!module.enable} className="mr-3" onChange={() => (module.active)} checked={module.active} />
                       {module.name} Module
                       </label>
                   </a>

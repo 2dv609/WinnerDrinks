@@ -41,7 +41,6 @@ function PlayerSettingBox({player, updatePlayerActive, deletePlayer, updatePlaye
     )
   }
 
-  console.log(deleteConfirm)
   if(deleteConfirm) {
     return(
       <div className="box is-flex is-flex-direction-row is-align-items-center is-justify-content-space-between" >
