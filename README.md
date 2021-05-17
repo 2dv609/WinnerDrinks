@@ -9,7 +9,7 @@ and the server side code in the directory *server*.
 
 ### Notes on running the app locally for development
 Make sure Docker is running on your computer.  
-Run `npm install` in both the server and client directory and
+Run `npm ci` in both the server and client directory and
 create a server/.env   
 Then... 
 
@@ -42,7 +42,8 @@ Open localhost:3000 on your computer.
 
 ### Build and deploy app for production
 
-Install ansible and python, the scripts is tested with
+Make sure ansible and python is running on your computer, 
+the scripts is tested with
 
 * Ansible version 2.9.6
 * Python version 3.8.5
