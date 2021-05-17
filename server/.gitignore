@@ -1,5 +1,4 @@
-# .gitignore server
-
-# dependencies
+.DS_Store
 /node_modules
 .env
+./build

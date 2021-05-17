@@ -1,5 +1,0 @@
-# .gitignore dist
-
-# dependencies
-/node_modules
-/build

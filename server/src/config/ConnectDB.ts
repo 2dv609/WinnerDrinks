@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+// import urlencode from 'urlencode'
 
 /**
  * Establishes a connection to a database.
@@ -22,7 +23,7 @@ export const connectDB = async (): Promise<void> => {
     })
   })
 
-  const dbConnectionString : string | undefined =
+  const dbConnectionString : string =
   `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}`
 
   // Connect to the server.
