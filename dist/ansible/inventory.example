@@ -1,0 +1,7 @@
+[development]
+<public_ip machine1>
+<public_ip machine2>
+<public_ip machine3>
+
+[test]
+<public_ip machine1>

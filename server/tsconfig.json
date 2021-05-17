@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
-    "outDir": "dist/server",
+    "outDir": "build",
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
