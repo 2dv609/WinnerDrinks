@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import './Navbar.css'
 import Player from '../../model/Player'
 import PlayerSettingBox from './PlayerSettingBox';
-// import ResetButton from '../../App/ResetButton';
+import ResetButton from '../../App/ResetButton';
 
 export interface IGameModuleSetting {
   name: string,
@@ -130,9 +130,9 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
               return <PlayerSettingBox updatePlayerName={updatePlayerName} deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive} />
             })}
           </ul>
-          {/* <div className="menu-label">Advanced</div>
-          <ResetButton /> */}
-
+          {/* Reset page */}
+          <div className="menu-label"></div>
+          <ResetButton />
         </aside>
       </div>
     </nav>

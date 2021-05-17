@@ -5,7 +5,7 @@ function ComponentGetToKnow() {
     <div >
         <button className="button is-danger" onClick={() => {
             window.location.reload();
-        }}>Reload page</button>
+        }}>Reset page</button>
     </div>);
 }
 
