@@ -53,7 +53,7 @@ cd dist
 ```
 
 ```
-./deploy_app_remote.sh
+./deploy_app_remote.sh <path_to_ssh_key> <public_ip_addres_machine_1> <public_ip_addres_machine_2> <public_ip_addres_machine_3>
 ```
 
 Open winner-drinks.xyz, obs can take some minute. 
