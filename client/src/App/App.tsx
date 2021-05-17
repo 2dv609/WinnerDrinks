@@ -93,7 +93,7 @@ function App() {
 
     // Update game module back to back
     const activePlayers = gameService.getNumActivePlayers(players)
-    const tooFew = activePlayers <= 2
+    const tooFew = activePlayers > 2
     updateEnableGameModule(tooFew)
 
     setPlayers(updatedPlayers)
