@@ -37,6 +37,11 @@ function App() {
    * @param playerName Name of Player to be deleted from state.
    */
   const deleteUser = (playerName: string): void => {
+    /* if (players.length <= 2) {
+      // Cannot delete player, just one player left
+      // Error checking
+      return
+    } */
     const updatedPlayers: Player[] = [...players]
     const index = updatedPlayers.findIndex((player: Player) => player.name === playerName)
     if (index >= 0) {

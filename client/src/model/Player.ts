@@ -14,8 +14,8 @@ class Player {
      * @param name Must be at least 3 characters long and not exceed 10.
      */
     constructor(name: string) {
-        if (name.length < 3 || name.length > 10) {
-            throw Error("Name must be at least 3 characters and not exceed 10.");
+        if (name.length < 1 || name.length > 10) {
+            throw Error("Name must be at least 1 characters and not exceed 10.");
         };
         if (name && !name.trim()) {
             throw Error("Name cannot be empty.");

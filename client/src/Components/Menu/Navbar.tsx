@@ -63,18 +63,6 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
     onGameModuleSettingUpdate(copiedArray)
   }
 
-  /**
-   * Function that calls delete-player function in parent-component after error-checking.
-   */
-  const deletePlayer = (playerName: string) => {
-    if (players.length <= 2) {
-      // Cannot delete player, just one player left
-      // Error checking
-      return
-    }
-    deleteUser(playerName)
-  }
-
   return (
     <nav>
       <div id="navDiv" className={("links") + (navbarOpen ? " nav-open" : "")}>
@@ -127,7 +115,7 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
           <p className="menu-label">Players</p>
           <ul className="menu-list" style={{ overflowY: 'scroll' }}>
             {players.map((player: Player, index: number) => {
-              return <PlayerSettingBox updatePlayerName={updatePlayerName} deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive} />
+              return <PlayerSettingBox updatePlayerName={updatePlayerName} deletePlayer={deleteUser} player={player} key={index} updatePlayerActive={updatePlayerActive} />
             })}
           </ul>
           {/* Reset page */}
