@@ -1,6 +1,5 @@
 # .gitignore dist
 
 # dependencies
-/docker/winner-drinks/build
-/ansible/inventory
- 
+docker/winner-drinks/build
+ansible/inventory
