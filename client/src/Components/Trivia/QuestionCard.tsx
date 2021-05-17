@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import './QuestionCard.css';
 
 type Props = {
@@ -7,9 +7,6 @@ type Props = {
 }
 
 const QuestionCard: React.FC<Props> = ({ answer, handleAnswer }) => {
-
-  useEffect(() => {
-  }, [])
 
   return (
     <div className="column" >

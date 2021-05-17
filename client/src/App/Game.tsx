@@ -29,7 +29,7 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
   const [winners, setWinners] = useState<Player[] | null>([]);
   const [flash, setFlash] = useState<string | undefined>();
   const [currentQuestion, setCurrentQuestion] = useState<object | number>(-1)
-
+  const [currentPlayers, setCurrentPlayers] = useState<any>(undefined)
 
   // Load data to game events
   useEffect(() => {
@@ -84,14 +84,17 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
       case 3:
         if (!triviaEvents) return
         currentGame = gameService.getRandomGameEvent(triviaEvents);
+        setCurrentPlayers(gameServiceProps.getPlayers(1, gameServiceProps.players))
         break;
       case 2:
         if (!backToBackEvents) return
         currentGame = gameService.getRandomGameEvent(backToBackEvents);
+        setCurrentPlayers(gameServiceProps.getPlayers(2, gameServiceProps.players))
         break;
       case 1:
         if (!partyEvents) return
         currentGame = gameService.getRandomGameEvent(partyEvents)
+        setCurrentPlayers(gameServiceProps.getPlayers(2, gameServiceProps.players))
         break;
     }
     setCurrentQuestion(currentGame)
@@ -135,13 +138,13 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
   let currentGame;
   switch (currentGameIndex) {
     case 3:
-      currentGame = <Trivia gameService={gameServiceProps} gameEvent={currentQuestion} />;
+      currentGame = <Trivia currentPlayers={currentPlayers} gameService={gameServiceProps} gameEvent={currentQuestion} />;
       break;
     case 2:
-      currentGame = <BackToBack gameService={gameServiceProps} gameEvent={currentQuestion} />;
+      currentGame = <BackToBack currentPlayers={currentPlayers} gameService={gameServiceProps} gameEvent={currentQuestion} />;
       break;
     case 1:
-      currentGame = <Party gameService={gameServiceProps} gameEvent={currentQuestion} />;
+      currentGame = <Party currentPlayers={currentPlayers} gameService={gameServiceProps} gameEvent={currentQuestion} />;
       break;
     case 0:
       currentGame = <WheelComponent gameService={gameServiceProps} />;

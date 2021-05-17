@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { TextGameModuleProps } from '../GameModuleProps';
 
 
-const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {
-    const [players, setPlayers] = useState(gameService.getPlayers(2, gameService.players));
+const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, currentPlayers }) => {
 
     function addPlayerToGameEvent(): string {
-        //const gameEvent: string = gameEvent.question
-        return gameEvent.question.replace(/{p0}/g, `${players[0]}`).replace(/{p1}/g, `${players[1]}`)
+        return gameEvent.question.replace(/{p0}/g, `${currentPlayers[0]}`).replace(/{p1}/g, `${currentPlayers[1]}`)
     }
-
-    useEffect(() => {
-        return () => { // Return a function for code cleanup. This will set new players 
-            setPlayers(gameService.getPlayers(2, gameService.players));
-        }
-    }, [gameService])
 
     return (
         <div className="card block">
@@ -24,17 +16,17 @@ const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent }) => {
                 <div className="columns">
                     <div className="column">
                         <button className="button" onClick={() => {
-                            gameService.addScore(players[1], 1)
-                            gameService.makeWinnerAlert(players[1])
+                            gameService.addScore(currentPlayers[1], 1)
+                            gameService.makeWinnerAlert(currentPlayers[1])
                             gameService.chooseRandomNewGame()
-                        }}>{players[1].toString()}</button>
+                        }}>{currentPlayers[1].toString()}</button>
                     </div>
                     <div className="column">
                         <button className="button" onClick={() => {
-                            gameService.addScore(players[0], 1)
-                            gameService.makeWinnerAlert(players[0])
+                            gameService.addScore(currentPlayers[0], 1)
+                            gameService.makeWinnerAlert(currentPlayers[0])
                             gameService.chooseRandomNewGame()
-                        }}>{players[0].toString()}</button>
+                        }}>{currentPlayers[0].toString()}</button>
                     </div>
                 </div>
 
