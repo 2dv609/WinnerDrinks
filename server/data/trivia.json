@@ -580,5 +580,66 @@
         "Italy",
         "Netherlands"
       ]
+    },
+    {
+      "category": "History",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "När uppfanns ölet?",
+      "correct_answer": "3500 f Kr",
+      "incorrect_answers": [
+        "2000 f Kr",
+        "200 f Kr",
+        "Sent 500-tal"
+      ]
+    },
+    {
+      "category": "General Knowledge",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Vilken är Södermanlands landskapsblomma?",
+      "correct_answer": "Vit näckros",
+      "incorrect_answers": [
+        "Röd trädgårdsros",
+        "Blåsippa",
+        "Gullregn"
+      ]
+    },
+    {
+      "category": "History",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Vad hette den första webbläsaren?",
+      "correct_answer": "World Wide Web",
+      "incorrect_answers": [
+        "Netscape",
+        "Safari",
+        "Opera"
+      ]
+    },
+    {
+      "category": "History",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "När uppfanns internet?",
+      "correct_answer": "1969",
+      "incorrect_answers": [
+        "1982",
+        "1992",
+        "1945"
+      ]
+    },
+    {
+      "category": "General Knowledge",
+      "type": "multiple",
+      "difficulty": "medium",
+      "question": "Vilka uppfann popcornen?",
+      "correct_answer": "Aztekerna",
+      "incorrect_answers": [
+        "USA",
+        "Mongolerna",
+        "Nordamerikas ursprungsbefolkning"
+      ]
     }
+    
   ]
