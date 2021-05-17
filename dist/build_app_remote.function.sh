@@ -3,10 +3,18 @@
 # ---------------------------------------
 
 function build_app_remote {
-    # Check if client/.env exists
+    
+    # Check if server/.env exists if not abort
+    F0=../server/.env
+    if [ ! -f "$F0" ]; then
+        echo "File server/.env is missing"
+        exit 1
+    fi
+
+    # Check if client/.env exists if not abort
     F1=../client/.env
     if [ ! -f "$F1" ]; then
-        echo "File client/.env is missing"
+        echo "File server/.env is missing"
         exit 1
 
     else # Write .env to build for production 

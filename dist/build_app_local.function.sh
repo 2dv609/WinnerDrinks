@@ -6,6 +6,13 @@
 
 function build_app_local {
     # Check if client/.env exists if not abort
+    F0=../server/.env
+    if [ ! -f "$F0" ]; then
+        echo "File server/.env is missing"
+        exit 1
+    fi
+    
+    # Check if server/.env exists if not abort
     F1=../client/.env
     if [ ! -f "$F1" ]; then
         echo "File client/.env is missing"
