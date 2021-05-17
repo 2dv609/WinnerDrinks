@@ -54,7 +54,7 @@ cd dist
 ./deploy_app_remote.sh
 ```
 
-Open winner-drinks.xyz. 
+Open winner-drinks.xyz, obs can take some minute. 
 
 OBS! Application is cached and you may have to 
 
@@ -74,7 +74,7 @@ cd dist
 ./deploy_app_local.sh
 ```
 
-Open localhost:4000 on your computer.
+Open localhost:4000 on your computer, obs can take some minute.
 
 OBS! Application is cached and you may have to 
 
