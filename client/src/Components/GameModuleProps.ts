@@ -16,5 +16,6 @@ export type TextGameModuleProps = {
 }
 
 export type AnimationGameModuleProps = {
-    gameService: GameModuleProps
+    gameService: GameModuleProps,
+    currentPlayers: Player[]
 }

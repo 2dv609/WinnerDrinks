@@ -71,7 +71,30 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
   const chooseRandomNewGame = (): void => {
     const newGameIndex: number = gameService.getNewGameIndex(currentGameIndex, gameModules, activeGames)
     setEventCurrentQuestion(newGameIndex)
+    setCurrentPlayersInGame(newGameIndex)
     setCurrentGameIndex(newGameIndex);
+  }
+
+  const setCurrentPlayersInGame = (currentGameIndex: number) => {
+    let currentPlayersInGame: any;
+    switch (currentGameIndex) {
+      case 3:
+        if (!triviaEvents) return
+        currentPlayersInGame = gameServiceProps.getPlayers(1, gameServiceProps.players)
+        break;
+      case 2:
+        if (!backToBackEvents) return
+        currentPlayersInGame = gameServiceProps.getPlayers(2, gameServiceProps.players)
+        break;
+      case 1:
+        if (!partyEvents) return
+        currentPlayersInGame = gameServiceProps.getPlayers(2, gameServiceProps.players)
+        break;
+      case 0:
+        currentPlayersInGame = generateMorePlayers(gameServiceProps.getPlayers(4, gameServiceProps.players))
+        break;
+    }
+    setCurrentPlayers(currentPlayersInGame)
   }
 
   /**
@@ -111,6 +134,28 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
     })
   }
 
+  /**
+   * Function that generate random integer in span (min and max included).
+   * @param {Number} min Min number
+   * @param {Number} max Max number
+   * @returns {Number} Random number generated
+   */
+  const randomIntFromInterval = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
+
+  const generateMorePlayers = (list: Player[]) => {
+    if(list.length === 2) {
+      const newListConst = list.concat(list)
+      list = newListConst
+    } else if(list.length === 3) {
+      const index = randomIntFromInterval(0, 2)
+      const newListConst = [...list]
+      newListConst.push(list[index])
+      list = newListConst
+    }
+
+    return list
+  }
+
   const gameServiceProps = {
     players: players,
     getPlayers: gameService.getPlayers,
@@ -147,7 +192,7 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
       currentGame = <Party currentPlayers={currentPlayers} gameService={gameServiceProps} gameEvent={currentQuestion} />;
       break;
     case 0:
-      currentGame = <WheelComponent gameService={gameServiceProps} />;
+      currentGame = <WheelComponent currentPlayers={currentPlayers} gameService={gameServiceProps} />;
       break;
   }
 
