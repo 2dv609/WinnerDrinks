@@ -11,9 +11,11 @@ interface GameModuleProps {
 
 export type TextGameModuleProps = {
     gameService: GameModuleProps,
-    gameEvent: any
+    gameEvent: any,
+    currentPlayers: Player[]
 }
 
 export type AnimationGameModuleProps = {
-    gameService: GameModuleProps
+    gameService: GameModuleProps,
+    currentPlayers: Player[]
 }

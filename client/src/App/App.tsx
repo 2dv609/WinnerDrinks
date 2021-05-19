@@ -21,10 +21,10 @@ function App() {
   const [gameMode, setGameMode] = useState(GameMode.STANDARD);
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
-    { name: 'Wheel', active: true, index: 0 },
-    { name: 'Party', active: true, index: 1 },
-    { name: 'BackToBack', active: true, index: 2 },
-    { name: 'Trivia', active: true, index: 3 },
+    { name: 'Wheel', enable: true, active: true, index: 0 },
+    { name: 'Party', enable: true, active: true, index: 1 },
+    { name: 'BackToBack', enable: false, active: false, index: 2 },
+    { name: 'Trivia', enable: true, active: true, index: 3 },
   ]);
   const MAX_PLAYERS = 10
 
@@ -37,9 +37,19 @@ function App() {
    * @param playerName Name of Player to be deleted from state.
    */
   const deleteUser = (playerName: string): void => {
+    /* if (players.length <= 2) {
+      // Cannot delete player, just one player left
+      // Error checking
+      return
+    } */
     const updatedPlayers: Player[] = [...players]
     const index = updatedPlayers.findIndex((player: Player) => player.name === playerName)
     if (index >= 0) {
+      // Update enabled game module
+      if(players.length - 1 <= 2) {
+        updateEnableGameModule(false)
+      }
+
       updatedPlayers.splice(index, 1)
       setPlayers(updatedPlayers);
     }
@@ -61,13 +71,33 @@ function App() {
     setGameModuleSettings(gameModuleSettings)
   }
 
+  const updateEnableGameModule = (enable: boolean) => {
+    const copiedArray = [...gameModuleSettings]
+
+    for(let i = 0; i < copiedArray.length; i++) {
+      if(copiedArray[i].name === 'BackToBack') {
+        copiedArray[i].enable = enable
+        copiedArray[i].active = enable
+      }
+    }
+
+    setGameModuleSettings(copiedArray)
+  }
+
   /**
    * Function updating the state of the player. If (s)he is active or paused.
    */
   const updatePlayerActive = (playerName: string): void => {
     const updatedPlayers: Player[] = [...players]
     updatedPlayers.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
+
+    // Update game module back to back
+    const activePlayers = gameService.getNumActivePlayers(players)
+    const tooFew = activePlayers > 2
+    updateEnableGameModule(tooFew)
+
     setPlayers(updatedPlayers)
+    
   }
 
   /**
@@ -79,7 +109,7 @@ function App() {
     let exist = false
 
     for (let i = 0; i < players.length; i++) {
-      if (players[i].name === name) {
+      if (players[i].name.toLowerCase() === name.toLowerCase()) {
         exist = true
         break
       }
@@ -102,6 +132,12 @@ function App() {
       }
 
       const newPlayer = new Player(newPlayerName);
+
+      // Update enabled game module
+      if(players.length + 1 > 2) {
+        updateEnableGameModule(true)
+      }
+
       setPlayers([...players, newPlayer]);
     } catch (error) {
       window.alert(error) //For now.

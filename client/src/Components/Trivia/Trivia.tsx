@@ -6,10 +6,7 @@ import './Trivia.css';
 import QuestionCard from './QuestionCard';
 import { TextGameModuleProps } from '../GameModuleProps';
 
-const NUM_OF_PLAYERS = 1;
-
-const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent}) => {
-  const [players, setPlayers] = useState(gameService.getPlayers(NUM_OF_PLAYERS, gameService.players));
+const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, currentPlayers}) => {
   const [modefiedGameEvent, setModefiedGameEvent] = useState<ITrivia>();
 
   useEffect(() => {
@@ -24,21 +21,14 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent}) => {
     }
   }, [gameEvent])
 
-  useEffect(() => {
-    return () => { // Return a function for code cleanup. This will set new players 
-      setPlayers(gameService.getPlayers(NUM_OF_PLAYERS, gameService.players))
-    }
-  }, [gameService])
-
-
   const handleAnswer = (e: any) => {
     if (!modefiedGameEvent) {
       return
     }
 
     if (e.target.innerText === modefiedGameEvent.correct_answer) {
-      gameService.addScore(players[0], 1);
-      gameService.makeWinnerAlert(players[0]); 
+      gameService.addScore(currentPlayers[0], 1);
+      gameService.makeWinnerAlert(currentPlayers[0]); 
     } else {
       gameService.makeWinnerAlert(null, 'Wrong answer.'); 
     }
@@ -64,7 +54,7 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent}) => {
       <div id={'gameInfo'}>
         <h4 className="title is-6">Turn to answer a question: </h4>
         <ul>
-          <li className="block tag is-medium" >{players[0].name}</li>
+          <li className="block tag is-medium" >{currentPlayers[0].name}</li>
         </ul>
       </div>
 

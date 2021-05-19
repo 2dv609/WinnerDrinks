@@ -11,6 +11,7 @@ import ResetButton from '../../App/ResetButton';
 export interface IGameModuleSetting {
   name: string,
   active: boolean,
+  enable: boolean,
   index: number
 }
 
@@ -38,6 +39,7 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
   const updateActiveGameModule = (e: any, moduleName: string) => {
     e.preventDefault()
 
+    console.log(moduleName)
     let activeModules = 0
 
     for (let i = 0; i < gameModuleSettings.length; i++) {
@@ -61,18 +63,6 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
       }
     }
     onGameModuleSettingUpdate(copiedArray)
-  }
-
-  /**
-   * Function that calls delete-player function in parent-component after error-checking.
-   */
-  const deletePlayer = (playerName: string) => {
-    if (players.length <= 2) {
-      // Cannot delete player, just one player left
-      // Error checking
-      return
-    }
-    deleteUser(playerName)
   }
 
   return (
@@ -100,9 +90,9 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
             {gameModuleSettings.map((module: IGameModuleSetting, index: number) => {
               return (
                 <li key={index}>
-                  <a href="/" onClick={(e: any) => updateActiveGameModule(e, module.name)}>
+                  <a href="/" onClick={(e: any) => module.enable ? updateActiveGameModule(e, module.name) : e.preventDefault()}>
                     <label className="checkbox mr-3">
-                      <input type="checkbox" className="mr-3" onChange={() => (module.active)} checked={module.active} />
+                      <input type="checkbox" disabled={!module.enable} className="mr-3" onChange={() => (module.active)} checked={module.active} />
                       {module.name} Module
                       </label>
                   </a>
@@ -127,7 +117,7 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
           <p className="menu-label">Players</p>
           <ul className="menu-list" style={{ overflowY: 'scroll' }}>
             {players.map((player: Player, index: number) => {
-              return <PlayerSettingBox updatePlayerName={updatePlayerName} deletePlayer={deletePlayer} player={player} key={index} updatePlayerActive={updatePlayerActive} />
+              return <PlayerSettingBox updatePlayerName={updatePlayerName} deletePlayer={deleteUser} player={player} key={index} updatePlayerActive={updatePlayerActive} />
             })}
           </ul>
           {/* Reset page */}
