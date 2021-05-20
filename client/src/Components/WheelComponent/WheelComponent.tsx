@@ -109,7 +109,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
    * @param winner 
    */
   const addScore = (winner: Player) => {
-    gameService.addScore(winner, 1)
+    gameService.addScore(winner)
     gameService.makeWinnerAlert(winner)
     gameService.chooseRandomNewGame()
   }

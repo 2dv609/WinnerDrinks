@@ -16,14 +16,14 @@ const Party: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, currentP
                 <div className="columns">
                     <div className="column">
                         <button className="button" onClick={() => {
-                            gameService.addScore(currentPlayers[1], 1)
+                            gameService.addScore(currentPlayers[1])
                             gameService.makeWinnerAlert(currentPlayers[1])
                             gameService.chooseRandomNewGame()
                         }}>{currentPlayers[1].toString()}</button>
                     </div>
                     <div className="column">
                         <button className="button" onClick={() => {
-                            gameService.addScore(currentPlayers[0], 1)
+                            gameService.addScore(currentPlayers[0])
                             gameService.makeWinnerAlert(currentPlayers[0])
                             gameService.chooseRandomNewGame()
                         }}>{currentPlayers[0].toString()}</button>

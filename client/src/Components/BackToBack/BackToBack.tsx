@@ -12,8 +12,8 @@ const BackToBack: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, cur
             <div className="columns">
                 <div className="column">
                     <button className="button is-primary is-light" onClick={() => {
-                        gameService.addScore(currentPlayers[0], 1)
-                        gameService.addScore(currentPlayers[1], 1)
+                        gameService.addScore(currentPlayers[0])
+                        gameService.addScore(currentPlayers[1])
                         gameService.makeWinnerAlert(currentPlayers)
                         gameService.chooseRandomNewGame()
                     }}>They were correct!</button>

@@ -3,8 +3,8 @@ import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/Gam
 
 export default class GameService {
 
-    public addScore = (p: Player, score: number) => {
-        p.addScore(score)
+    public addScore = (p: Player) => {
+        p.addScore(1)
     }
 
     public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[], activeGames: any[]): number => {
