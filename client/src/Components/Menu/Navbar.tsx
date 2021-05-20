@@ -93,7 +93,7 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
                   <a href="/" onClick={(e: any) => module.enable ? updateActiveGameModule(e, module.name) : e.preventDefault()}>
                     <label className="checkbox mr-3">
                       <input type="checkbox" disabled={!module.enable} className="mr-3" onChange={() => (module.active)} checked={module.active} />
-                      {module.name} Module
+                      {module.name}
                       </label>
                   </a>
                 </li>)

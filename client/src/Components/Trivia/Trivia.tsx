@@ -27,7 +27,7 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, current
     }
 
     if (e.target.innerText === modefiedGameEvent.correct_answer) {
-      gameService.addScore(currentPlayers[0], 1);
+      gameService.addScore(currentPlayers[0]);
       gameService.makeWinnerAlert(currentPlayers[0]); 
     } else {
       gameService.makeWinnerAlert(null, 'Wrong answer.'); 

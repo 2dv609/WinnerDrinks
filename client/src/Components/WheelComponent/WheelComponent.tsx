@@ -109,7 +109,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
    * @param winner 
    */
   const addScore = (winner: Player) => {
-    gameService.addScore(winner, 1)
+    gameService.addScore(winner)
     gameService.makeWinnerAlert(winner)
     gameService.chooseRandomNewGame()
   }
@@ -150,7 +150,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
           const degree = (index * rotateDeg) //- 45
           
           return (
-            <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `200px solid ${colors[index]}`}} className="arrow">
+            <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `150px solid ${colors[index]}`}} className="arrow">
               <span>{val.toString()}</span>
             </div>
           )
