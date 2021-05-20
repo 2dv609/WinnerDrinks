@@ -11,6 +11,7 @@ import { getGameModuleService, getGameService } from '../model/ModuleFactory'
 import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../Components/Menu/Navbar'
 import { GameMode } from '../model/GameMode'
+import Footer from '../Components/Footer/Footer'
 
 function App() {
   const gameService: GameService = getGameService();
@@ -200,6 +201,8 @@ function App() {
             </ul>
           </div>
         </div>
+      
+        <Footer />
       </div>
     );
   } else {
