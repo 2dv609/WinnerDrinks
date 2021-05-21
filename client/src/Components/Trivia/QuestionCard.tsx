@@ -11,7 +11,7 @@ const QuestionCard: React.FC<Props> = ({ answer, handleAnswer }) => {
   return (
     <div className="column" >
       <div className={'button is-info is-light'}
-        onClick={handleAnswer}>
+        onClick={handleAnswer} data-testid="answer-alternatives">
         {answer}
       </div>
     </div>
