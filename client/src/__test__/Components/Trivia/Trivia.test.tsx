@@ -4,10 +4,10 @@ import Trivia from '../../../Components/Trivia/Trivia'
 import QuestionCard from '../../../Components/Trivia/QuestionCard'
 import { render, fireEvent } from '@testing-library/react' 
 import '@testing-library/jest-dom/extend-expect'
-import { getGameService } from '../../../model/ModelFactory'
+import { getGameService, getGameModuleService } from '../../../model/ModelFactory'
 import GameService from '../../../model/GameService'
+import IGameModuleService from '../../../model/IGameModuleService'
 import Player from '../../../model/Player'
-import API from '../../../util/API'
 import { playersMock, gameServiceMock } from '../mock/TestMock'
 import { formatAPIResponseString } from '../../../Components/Trivia/utils/api-functions'
 import { v1 as uuidv1 } from 'uuid'
@@ -22,7 +22,7 @@ describe('Test suite for game module party', () => {
     /* ----- Test cases setup ---------- */
     /* --------------------------------- */
 
-    const api: API = new API()
+    let gameModuleService: IGameModuleService | undefined 
     let triviaEvents: GameEventAPI | undefined
     
     const gameService: GameService = getGameService()
@@ -47,7 +47,11 @@ describe('Test suite for game module party', () => {
     }
 
     beforeAll(async () => {
-        triviaEvents = await api.getGameEvents('trivia')
+        gameModuleService = await getGameModuleService()
+
+        if (gameModuleService) {
+            triviaEvents = gameModuleService.getTriviaEvents()
+        }
     })
 
     test('Game module trivia should use props gameService, gameEvent and currentPlayers', () => {
@@ -91,7 +95,6 @@ describe('Test suite for game module party', () => {
     test('T1.MT.UI.1: Trivia game events should contain 1 active game participant\'s name', () => {
         const { getByTestId } = render(<Trivia currentPlayers={currentPlayer} gameService={gameServiceMock} gameEvent={triviaQuestionMock}></Trivia>)
         expect(getByTestId('current-player')).toHaveTextContent(currentPlayer[0].name)
-        
     })
 
     test('T1.MT.UI.2: Game module trivia should display a trivia game event', () => {

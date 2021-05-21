@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import Party from '../../../Components/Party/Party'
 import { render, fireEvent } from '@testing-library/react' 
 import '@testing-library/jest-dom/extend-expect'
-import { getGameService } from '../../../model/ModelFactory'
+import { getGameService, getGameModuleService } from '../../../model/ModelFactory'
 import GameService from '../../../model/GameService'
+import IGameModuleService from '../../../model/IGameModuleService'
 import Player from '../../../model/Player'
-import API from '../../../util/API'
 import { playersMock, gameServiceMock } from '../mock/TestMock'
 
 /* --------------------------------- */
@@ -19,7 +19,7 @@ describe('Test suite for game module party', () => {
     /* ----- Test cases setup ---------- */
     /* --------------------------------- */
 
-    const api: API = new API()
+    let gameModuleService: IGameModuleService | undefined
     let partyEvents: GameEventAPI | undefined
     
     const gameService: GameService = getGameService()
@@ -30,7 +30,11 @@ describe('Test suite for game module party', () => {
     }
 
     beforeAll(async () => {
-        partyEvents = await api.getGameEvents('party')
+        gameModuleService = await getGameModuleService()
+
+        if (gameModuleService) {
+            partyEvents = gameModuleService.getPartyEvents()
+        }
     })
 
     test('Game module party should use props gameService, gameEvent and currentPlayers', () => {
