@@ -1,7 +1,7 @@
-import API from '../../util/API'
+// import API from '../../util/API'
 
 
-describe('API test of server', () => {
+/* describe('API test of server', () => {
 
   let api: API
 
@@ -84,9 +84,6 @@ describe('API test of server', () => {
   })
 })
 
-/* ------------------------------------------- */
-/* ----------- Help functions ---------------- */
-/* ------------------------------------------- */
 
 function  isEventsUnique(gameEvents: GameEventAPI): boolean {
   const events: string[] = []
@@ -99,4 +96,4 @@ function  isEventsUnique(gameEvents: GameEventAPI): boolean {
   const numberOfquestions = events.length
 
   return numberOfUniqueQuestions === numberOfquestions  
-}
+} */
