@@ -1,6 +1,6 @@
 import Player from '../model/Player';
 
-interface GameModuleProps {
+export interface GameModuleProps {
     players: Player[]
     getPlayers: (amount: number, players: Player[]) => Player[]; // Let the component decide how many players it needs. 
     addScore: (p: Player) => void; // Adds a score to a player

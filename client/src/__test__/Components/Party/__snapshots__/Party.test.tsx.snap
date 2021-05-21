@@ -1,29 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Game module should match snapshot 1`] = `
+exports[`Party test Game module tree should match snapshot 1`] = `
 <div
-  className="box"
+  className="card block"
 >
   <div
-    className="content"
-    data-testid="game-event"
+    className="card-content"
   >
-    This is a party mock question Mats Tom
+    <div
+      className="content"
+      data-testid="game-event"
+    >
+      mockQuestion Sandra and Carl
+    </div>
+    <h3>
+      Who won?
+    </h3>
+    <div
+      className="columns"
+    >
+      <div
+        className="column"
+      >
+        <button
+          className="button"
+          data-testid="button-1"
+          onClick={[Function]}
+        >
+          Carl
+        </button>
+      </div>
+      <div
+        className="column"
+      >
+        <button
+          className="button"
+          data-testid="button-0"
+          onClick={[Function]}
+        >
+          Sandra
+        </button>
+      </div>
+    </div>
   </div>
-  <h3>
-    Who won?
-  </h3>
-  <button
-    className="button"
-    onClick={[Function]}
-  >
-    Mats
-  </button>
-  <button
-    className="button"
-    onClick={[Function]}
-  >
-    Tom
-  </button>
 </div>
 `;
