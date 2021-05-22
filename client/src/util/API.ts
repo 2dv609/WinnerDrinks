@@ -13,7 +13,6 @@ export default class API implements IUtilService {
 
   /**
    * Utility methos that check server API status.
-   *  
    * @returns {Promise<boolean>} - True if api is aviailable else false. 
    */
   public async checkStatus(): Promise<boolean> {
@@ -32,7 +31,6 @@ export default class API implements IUtilService {
    * Utility method that return data for the requested api call.
    *  
    * @param {string} apiPath - The API path.
-   * 
    * @returns {Promise<GameEventAPI | undefined>} 
    * If api is available return the requested data for the specific apiPath.
    * The api path is determined by the game module name. 

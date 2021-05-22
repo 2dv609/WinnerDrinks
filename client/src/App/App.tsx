@@ -7,7 +7,7 @@ import ErrorMsg from './ErrorMsg'
 import Navbar from '../Components/Menu/Navbar'
 import Icon from '../Components/Menu/Icon'
 import IGameModuleService from '../model/IGameModuleService'
-import { getGameModuleService, getGameService } from '../model/ModelFactory'
+import { getGameModuleService, getGameService, getGameModuleSettings } from '../model/ModelFactory'
 import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../Components/Menu/Navbar'
 import { GameMode } from '../model/GameMode'
@@ -21,12 +21,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [gameMode, setGameMode] = useState(GameMode.STANDARD);
   const [navbarOpen, setNavbarOpen] = useState(false);
-  const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>([
-    { name: 'Wheel', enable: true, active: true, index: 0 },
-    { name: 'Party', enable: true, active: true, index: 1 },
-    { name: 'BackToBack', enable: false, active: false, index: 2 },
-    { name: 'Trivia', enable: true, active: true, index: 3 },
-  ]);
+  const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>(getGameModuleSettings);
   const MAX_PLAYERS = 10
 
   useEffect(() => {

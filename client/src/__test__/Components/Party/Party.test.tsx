@@ -6,8 +6,9 @@ import '@testing-library/jest-dom/extend-expect'
 import { getGameService } from '../../../model/ModelFactory'
 import GameService from '../../../model/GameService'
 import Player from '../../../model/Player'
-import API from '../../../util/API'
 import { playersMock, gameServiceMock } from '../mock/TestMock'
+import fs from 'fs-extra'
+import { join } from 'path'
 
 /* --------------------------------- */
 /* Test cases for game module party. */
@@ -19,8 +20,11 @@ describe('Test suite for game module party', () => {
     /* ----- Test cases setup ---------- */
     /* --------------------------------- */
 
-    const api: API = new API()
-    let partyEvents: GameEventAPI | undefined
+    type RawPartyEvent = {
+        question: string
+    }
+
+    let partyEvents: RawPartyEvent[]
     
     const gameService: GameService = getGameService()
     const currentPlayers: Player[] = gameService.getPlayers(2, playersMock)
@@ -30,7 +34,8 @@ describe('Test suite for game module party', () => {
     }
 
     beforeAll(async () => {
-        partyEvents = await api.getGameEvents('party')
+        const partyEventsPath: string = join( __dirname, '../../../../../server/data/party.json')
+        partyEvents = await fs.readJson(partyEventsPath)
     })
 
     test('Game module party should use props gameService, gameEvent and currentPlayers', () => {
@@ -43,7 +48,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        expect(partyEvents.questions.length >= 20).toBeTruthy()
+        expect(partyEvents.length >= 20).toBeTruthy()
     })
 
     test('T1.MP.S.2:  game events should contain only unique game events', () => {
@@ -53,7 +58,7 @@ describe('Test suite for game module party', () => {
 
         const questions: string[] = []
         
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        partyEvents.forEach((event: RawPartyEvent ): void => {
             questions.push(event.question)
         })
 
@@ -65,7 +70,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        partyEvents.forEach((event: RawPartyEvent ): void => {
             expect(event.question.split(' ').length <= 60).toBeTruthy()
         })
     })
@@ -78,7 +83,7 @@ describe('Test suite for game module party', () => {
 
         const questions: string[] = []
         
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        partyEvents.forEach((event: RawPartyEvent ): void => {
             questions.push(event.question)
         })
 

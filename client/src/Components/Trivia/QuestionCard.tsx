@@ -15,8 +15,6 @@ const QuestionCard: React.FC<Props> = ({ answer, handleAnswer }) => {
         {answer}
       </div>
     </div>
-
-
   );
 }
 

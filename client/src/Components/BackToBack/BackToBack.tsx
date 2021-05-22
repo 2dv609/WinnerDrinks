@@ -6,12 +6,12 @@ const BackToBack: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, cur
 
     return (
         <div className="box container">
-            <div>{currentPlayers[0].toString()} and {currentPlayers[1].toString()}</div>
-            <div data-testid="game-event" className="content">{gameEvent.question}</div>
+            <div data-testid="current-players" >{currentPlayers[0].toString()} and {currentPlayers[1].toString()}</div>
+            <div className="content" data-testid="game-event" >{gameEvent.question}</div>
             <h3 className="title is-6">Were both correct?</h3>
             <div className="columns">
                 <div className="column">
-                    <button className="button is-primary is-light" onClick={() => {
+                    <button className="button is-primary is-light" data-testid="button-correct" onClick={() => {
                         gameService.addScore(currentPlayers[0])
                         gameService.addScore(currentPlayers[1])
                         gameService.makeWinnerAlert(currentPlayers)
@@ -19,7 +19,7 @@ const BackToBack: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, cur
                     }}>They were correct!</button>
                 </div>
                 <div className="column">
-                    <button className="button is-danger is-light" onClick={() => {
+                    <button className="button is-danger is-light" data-testid="button-incorrect" onClick={() => {
                         gameService.makeWinnerAlert(null)
                         gameService.chooseRandomNewGame()
                     }}>They were wrong!</button>

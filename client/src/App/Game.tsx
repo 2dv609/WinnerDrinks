@@ -10,13 +10,14 @@ import WinnerAlert from './WinnerAlert'
 import Scoreboard from './Scoreboard';
 import SkipGame from './SkipGame';
 import { GameMode } from '../model/GameMode'
+import { IGameModuleSetting } from '../Components/Menu/Navbar';
 
 type GameProps = {
   gameModuleService: IGameModuleService | undefined,
   gameMode: number,
   players: Player[],
   gameService: GameService,
-  activeGames: any[]
+  activeGames: IGameModuleSetting[]
 }
 
 const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameService, activeGames }) => {

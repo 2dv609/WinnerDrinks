@@ -61,7 +61,7 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, current
 
       <h2 className="content block" data-testid="game-event">{formatAPIResponseString(gameEvent.question)}</h2>
 
-      <div className={'answersDiv is-centered columns'} data-testid="question-cards">
+      <div className={'answersDiv is-centered columns'} >
 
         {modefiedGameEvent.all_answers.map((answer: string) => {
           return <QuestionCard answer={formatAPIResponseString(answer)} handleAnswer={handleAnswer} key={uuidv1()} />

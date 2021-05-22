@@ -4,13 +4,15 @@ import Trivia from '../../../Components/Trivia/Trivia'
 import QuestionCard from '../../../Components/Trivia/QuestionCard'
 import { render, fireEvent } from '@testing-library/react' 
 import '@testing-library/jest-dom/extend-expect'
-import { getGameService } from '../../../model/ModelFactory'
+import { getGameService, getGameModuleService } from '../../../model/ModelFactory'
 import GameService from '../../../model/GameService'
+import IGameModuleService from '../../../model/IGameModuleService'
 import Player from '../../../model/Player'
-import API from '../../../util/API'
 import { playersMock, gameServiceMock } from '../mock/TestMock'
 import { formatAPIResponseString } from '../../../Components/Trivia/utils/api-functions'
 import { v1 as uuidv1 } from 'uuid'
+import fs from 'fs-extra'
+import { join } from 'path'
 
 /* --------------------------------- */
 /* Test cases for game module trivia. */
@@ -22,8 +24,11 @@ describe('Test suite for game module party', () => {
     /* ----- Test cases setup ---------- */
     /* --------------------------------- */
 
-    const api: API = new API()
-    let triviaEvents: GameEventAPI | undefined
+    type RawTriviaEvent = {
+        question: string
+    }
+
+    let triviaEvents: RawTriviaEvent[] 
     
     const gameService: GameService = getGameService()
     const currentPlayer: Player[] = gameService.getPlayers(1, playersMock)
@@ -47,7 +52,8 @@ describe('Test suite for game module party', () => {
     }
 
     beforeAll(async () => {
-        triviaEvents = await api.getGameEvents('trivia')
+        const partyEventsPath: string = join( __dirname, '../../../../../server/data/trivia.json')
+        triviaEvents = await fs.readJson(partyEventsPath)
     })
 
     test('Game module trivia should use props gameService, gameEvent and currentPlayers', () => {
@@ -60,7 +66,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        expect(triviaEvents.questions.length >= 20).toBeTruthy()
+        expect(triviaEvents.length >= 20).toBeTruthy()
     })
 
     test('T1.MT.S.2: Trivia game events should contain only unique game events', () => {
@@ -70,7 +76,7 @@ describe('Test suite for game module party', () => {
 
         const questions: string[] = []
         
-        triviaEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        triviaEvents.forEach((event: RawTriviaEvent ):void => {
             questions.push(event.question)
         })
 
@@ -82,7 +88,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        triviaEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        triviaEvents.forEach((event: RawTriviaEvent ) => {
             expect(event.question.split(' ').length <= 60).toBeTruthy()
         })
     })
@@ -91,7 +97,6 @@ describe('Test suite for game module party', () => {
     test('T1.MT.UI.1: Trivia game events should contain 1 active game participant\'s name', () => {
         const { getByTestId } = render(<Trivia currentPlayers={currentPlayer} gameService={gameServiceMock} gameEvent={triviaQuestionMock}></Trivia>)
         expect(getByTestId('current-player')).toHaveTextContent(currentPlayer[0].name)
-        
     })
 
     test('T1.MT.UI.2: Game module trivia should display a trivia game event', () => {

@@ -1,56 +1,90 @@
 import Player from './Player'
 import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/GameModuleProps'
+import { IGameModuleSetting } from '../Components/Menu/Navbar'
 
+/**
+ * Class GameService containing commmon logic for the Application.
+ */
 export default class GameService {
 
-    public addScore = (p: Player) => {
+    /**
+     * Add one point to a players total score.
+     * 
+     * @param {Player} p - A player
+     */
+    public addScore = (p: Player): void => {
         p.addScore(1)
     }
 
-    public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[], activeGames: any[]): number => {
-        let newIndex = currentGameIndex
+    /**
+     * Return a new game index that can not be the same as the last. 
+     * 
+     * @param {number} currentGameIndex - The current game index 
+     * @param {(React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]} gameModules - An array of game modules 
+     * @param {IGameModuleSetting[]} activeGames - An array of game module settings 
+     * @returns {number} 
+     */
+    public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[], activeGames: IGameModuleSetting[]): number => {
+        let newIndex: number = currentGameIndex
         while (newIndex === currentGameIndex || !activeGames[newIndex].active) { // Don't allow the same game twice in a row. 
-          console.log('while')
           newIndex = Math.floor(Math.random() * gameModules.length)
         }
         return newIndex
     }
     /**
+     * Get the players for a game event.
      * 
-     * @param nrOfPlayers The amount of players you need for the component
+     * @param nrOfPlayers The amount of players you need for the component.
      * @param players An array of players that the function will fetch from. 
-     * @returns A sublist from your array that contains the requested amount of active players. 
+     * @returns A sublist from your array that contains the requested amount of active players.
      */
     public getPlayers = (nrOfPlayers: number, players: Player[]): Player[] => {
-        const activePlayers: Player[] = [];
-        
+        const activePlayers: Player[] = []
+
         for (let i = 0; i < players.length; i++) {
             if (players[i].isActive) {
                 activePlayers.push(players[i])
             }
             
         }
-
-        this.shuffle(activePlayers);
+        const shuffledActivePlayers = this.shuffle(activePlayers)
         
-        return activePlayers.slice(0, nrOfPlayers);
+        return shuffledActivePlayers.slice(0, nrOfPlayers)
     }
 
-    private shuffle(array: Player[]) {
-        var m = array.length, t, i;
+    /**
+     * Shuffle an array of players.
+     *  
+     * @param {Player[]} players - An array of players.
+     * @returns {Player[]} - An shuffled array of players.
+     */
+    private shuffle(players: Player[]): Player[] {
+        var m = players.length, t, i
         while (m) {
-            i = Math.floor(Math.random() * m--);
-            t = array[m];
-            array[m] = array[i];
-            array[i] = t;
+            i = Math.floor(Math.random() * m--)
+            t = players[m]
+            players[m] = players[i]
+            players[i] = t
         }
-        return array;
+        return players
     }
 
+    /**
+     * Get a random game event.
+     * 
+     * @param {GameEventAPI} gameEventAPI - A object of type GameEventApi 
+     * @returns {IBackToBack | IParty | ITrivia} - A random game event. 
+     */
     public getRandomGameEvent = (gameEventAPI: GameEventAPI): IBackToBack | IParty | ITrivia => {
         return gameEventAPI.questions[Math.floor(Math.random() * gameEventAPI.questions.length)]
     }
 
+    /**
+     * Get the number of active players.
+     *  
+     * @param {Player[]} players - An array of players.
+     * @returns {number} - The nuber of active players.
+     */
     public getNumActivePlayers = (players: Player[]): number => {
         let numOfActivePlayers = 0
 
@@ -59,5 +93,5 @@ export default class GameService {
         })
 
         return numOfActivePlayers
-      }
+    }
 }
