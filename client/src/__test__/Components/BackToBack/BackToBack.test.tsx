@@ -98,6 +98,7 @@ describe('Test suite for game module back to back', () => {
         const chooseNewRandomGameSpy = jest.spyOn(gameServiceMock, 'chooseRandomNewGame')
         
         fireEvent.click(getByTestId('button-correct'))
+
         expect(addScoreSpy).toBeCalledTimes(2)
         expect(makeWinnerAlertSpy).toBeCalled()
         expect(chooseNewRandomGameSpy).toBeCalled()
@@ -110,6 +111,7 @@ describe('Test suite for game module back to back', () => {
         const chooseNewRandomGameSpy = jest.spyOn(gameServiceMock, 'chooseRandomNewGame')
         
         fireEvent.click(getByTestId('button-incorrect'))
+        
         expect(makeWinnerAlertSpy).toBeCalled()
         expect(chooseNewRandomGameSpy).toBeCalled()
     })

@@ -1,6 +1,7 @@
 import GameModuleService from './GameModuleService'
 import IGameModuleService from './IGameModuleService'
 import GameService from './GameService'
+import { IGameModuleSetting } from '../Components/Menu/Navbar'
 
 /**
  * Factory method that return a promise of an instance 
@@ -29,4 +30,14 @@ export async function getGameModuleService(): Promise<IGameModuleService | undef
  */
  export function getGameService(): GameService {
     return new GameService()
+}
+
+export function getGameModuleSettings(): IGameModuleSetting[] {
+    
+    return [
+        { name: 'Wheel', enable: true, active: true, index: 0 },
+        { name: 'Party', enable: true, active: true, index: 1 },
+        { name: 'BackToBack', enable: false, active: false, index: 2 },
+        { name: 'Trivia', enable: true, active: true, index: 3 },
+    ]
 }

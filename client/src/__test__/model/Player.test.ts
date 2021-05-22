@@ -2,7 +2,7 @@ import Player from '../../model/Player'
 
 describe('Test suite for class model/Player.ts', () => {
 
-    test('A empty player name should throw error', () => {
+    test('An empty player name should throw error', () => {
         expect(() => { new Player(' ')}).toThrow('Name cannot be empty.')
     })
     
@@ -42,5 +42,5 @@ describe('Test suite for class model/Player.ts', () => {
 /* --------------------------------- */
 
 const createPlayerName = (lengthName: number): string => {
-    return Math.random().toString(36).substring(0, lengthName);
+    return Math.random().toString(36).substring(0, lengthName)
 }
