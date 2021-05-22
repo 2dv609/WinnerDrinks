@@ -1,13 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 import BackToBack from '../../../Components/BackToBack/BackToBack'
 import { render, fireEvent } from '@testing-library/react' 
 import '@testing-library/jest-dom/extend-expect'
-import { getGameModuleService, getGameService } from '../../../model/ModelFactory'
+import { getGameService } from '../../../model/ModelFactory'
 import GameService from '../../../model/GameService'
 import Player from '../../../model/Player'
 import { playersMock, gameServiceMock } from '../mock/TestMock'
-import IGameModuleService from '../../../model/IGameModuleService';
+import fs from 'fs-extra'
+import { join } from 'path'
 
 /* --------------------------------- */
 /* Test cases for game module party. */
@@ -19,8 +19,11 @@ describe('Test suite for game module back to back', () => {
     /* ----- Test cases setup ---------- */
     /* --------------------------------- */
 
-    let gameModuleService: IGameModuleService | undefined
-    let partyEvents: GameEventAPI | undefined
+    type RawBackToBackEvent = {
+        question: string
+    }
+
+    let backToBackEvents: RawBackToBackEvent[]
     
     const gameService: GameService = getGameService()
     const currentPlayers: Player[] = gameService.getPlayers(2, playersMock)
@@ -30,11 +33,8 @@ describe('Test suite for game module back to back', () => {
     }
 
     beforeAll(async () => {
-        gameModuleService = await getGameModuleService()
-
-        if (gameModuleService) {
-            partyEvents = gameModuleService.getBackToBackEvents()
-        }
+        const backToBackEventsPath: string = join( __dirname, '../../../../../server/data/back-to-back.json')
+        backToBackEvents = await fs.readJson(backToBackEventsPath)
     })
 
     test('Game module back to back should use props gameService, gameEvent and currentPlayers', () => {
@@ -43,21 +43,21 @@ describe('Test suite for game module back to back', () => {
     })
 
     test.skip('T1.MBB.S.1: Back to back game events should contain at least 20 game events', () => {
-        if (!partyEvents) {
+        if (!backToBackEvents) {
             return
         }
 
-        expect(partyEvents.questions.length >= 20).toBeTruthy()
+        expect(backToBackEvents.length >= 20).toBeTruthy()
     })
 
     test('T1.MBB.S.2: Back to back game events should contain only unique game events', () => {
-        if (!partyEvents) {
+        if (!backToBackEvents) {
             return
         }
 
         const questions: string[] = []
         
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        backToBackEvents.forEach((event: RawBackToBackEvent): void => {
             questions.push(event.question)
         })
 
@@ -65,11 +65,11 @@ describe('Test suite for game module back to back', () => {
     })
 
     test('T1.MBB.S.3: Back to back game events should not have more than 60 words', () => {
-        if (!partyEvents) {
+        if (!backToBackEvents) {
             return
         }
 
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        backToBackEvents.forEach((event: RawBackToBackEvent ): void => {
             expect(event.question.split(' ').length <= 60).toBeTruthy()
         })
     })

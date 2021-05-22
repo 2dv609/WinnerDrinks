@@ -3,11 +3,12 @@ import ReactDOM from 'react-dom';
 import Party from '../../../Components/Party/Party'
 import { render, fireEvent } from '@testing-library/react' 
 import '@testing-library/jest-dom/extend-expect'
-import { getGameService, getGameModuleService } from '../../../model/ModelFactory'
+import { getGameService } from '../../../model/ModelFactory'
 import GameService from '../../../model/GameService'
-import IGameModuleService from '../../../model/IGameModuleService'
 import Player from '../../../model/Player'
 import { playersMock, gameServiceMock } from '../mock/TestMock'
+import fs from 'fs-extra'
+import { join } from 'path'
 
 /* --------------------------------- */
 /* Test cases for game module party. */
@@ -19,8 +20,11 @@ describe('Test suite for game module party', () => {
     /* ----- Test cases setup ---------- */
     /* --------------------------------- */
 
-    let gameModuleService: IGameModuleService | undefined
-    let partyEvents: GameEventAPI | undefined
+    type RawPartyEvent = {
+        question: string
+    }
+
+    let partyEvents: RawPartyEvent[]
     
     const gameService: GameService = getGameService()
     const currentPlayers: Player[] = gameService.getPlayers(2, playersMock)
@@ -30,11 +34,8 @@ describe('Test suite for game module party', () => {
     }
 
     beforeAll(async () => {
-        gameModuleService = await getGameModuleService()
-
-        if (gameModuleService) {
-            partyEvents = gameModuleService.getPartyEvents()
-        }
+        const partyEventsPath: string = join( __dirname, '../../../../../server/data/party.json')
+        partyEvents = await fs.readJson(partyEventsPath)
     })
 
     test('Game module party should use props gameService, gameEvent and currentPlayers', () => {
@@ -47,7 +48,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        expect(partyEvents.questions.length >= 20).toBeTruthy()
+        expect(partyEvents.length >= 20).toBeTruthy()
     })
 
     test('T1.MP.S.2:  game events should contain only unique game events', () => {
@@ -57,7 +58,7 @@ describe('Test suite for game module party', () => {
 
         const questions: string[] = []
         
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        partyEvents.forEach((event: RawPartyEvent ): void => {
             questions.push(event.question)
         })
 
@@ -69,7 +70,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        partyEvents.forEach((event: RawPartyEvent ): void => {
             expect(event.question.split(' ').length <= 60).toBeTruthy()
         })
     })
@@ -82,7 +83,7 @@ describe('Test suite for game module party', () => {
 
         const questions: string[] = []
         
-        partyEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        partyEvents.forEach((event: RawPartyEvent ): void => {
             questions.push(event.question)
         })
 

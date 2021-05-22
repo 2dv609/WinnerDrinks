@@ -11,6 +11,8 @@ import Player from '../../../model/Player'
 import { playersMock, gameServiceMock } from '../mock/TestMock'
 import { formatAPIResponseString } from '../../../Components/Trivia/utils/api-functions'
 import { v1 as uuidv1 } from 'uuid'
+import fs from 'fs-extra'
+import { join } from 'path'
 
 /* --------------------------------- */
 /* Test cases for game module trivia. */
@@ -22,8 +24,11 @@ describe('Test suite for game module party', () => {
     /* ----- Test cases setup ---------- */
     /* --------------------------------- */
 
-    let gameModuleService: IGameModuleService | undefined 
-    let triviaEvents: GameEventAPI | undefined
+    type RawTriviaEvent = {
+        question: string
+    }
+
+    let triviaEvents: RawTriviaEvent[] 
     
     const gameService: GameService = getGameService()
     const currentPlayer: Player[] = gameService.getPlayers(1, playersMock)
@@ -47,11 +52,8 @@ describe('Test suite for game module party', () => {
     }
 
     beforeAll(async () => {
-        gameModuleService = await getGameModuleService()
-
-        if (gameModuleService) {
-            triviaEvents = gameModuleService.getTriviaEvents()
-        }
+        const partyEventsPath: string = join( __dirname, '../../../../../server/data/trivia.json')
+        triviaEvents = await fs.readJson(partyEventsPath)
     })
 
     test('Game module trivia should use props gameService, gameEvent and currentPlayers', () => {
@@ -64,7 +66,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        expect(triviaEvents.questions.length >= 20).toBeTruthy()
+        expect(triviaEvents.length >= 20).toBeTruthy()
     })
 
     test('T1.MT.S.2: Trivia game events should contain only unique game events', () => {
@@ -74,7 +76,7 @@ describe('Test suite for game module party', () => {
 
         const questions: string[] = []
         
-        triviaEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        triviaEvents.forEach((event: RawTriviaEvent ):void => {
             questions.push(event.question)
         })
 
@@ -86,7 +88,7 @@ describe('Test suite for game module party', () => {
             return
         }
 
-        triviaEvents.questions.forEach((event: IParty | ITrivia | IBackToBack ) => {
+        triviaEvents.forEach((event: RawTriviaEvent ) => {
             expect(event.question.split(' ').length <= 60).toBeTruthy()
         })
     })
