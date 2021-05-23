@@ -1,6 +1,6 @@
 import Player from './Player'
 import { TextGameModuleProps, AnimationGameModuleProps } from '../Components/GameModuleProps'
-import { IGameModuleSetting } from '../Components/Menu/Navbar'
+import { IGameModuleSetting } from './GameModule'
 
 /**
  * Class GameService containing commmon logic for the Application.
@@ -21,12 +21,12 @@ export default class GameService {
      * 
      * @param {number} currentGameIndex - The current game index 
      * @param {(React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[]} gameModules - An array of game modules 
-     * @param {IGameModuleSetting[]} activeGames - An array of game module settings 
+     * @param {IGameModuleSetting[]} gameModuleSettings - An array of game module settings 
      * @returns {number} 
      */
-    public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[], activeGames: IGameModuleSetting[]): number => {
+    public getNewGameIndex = (currentGameIndex: number, gameModules: (React.FC<TextGameModuleProps> | React.FC<AnimationGameModuleProps>)[], gameModuleSettings: IGameModuleSetting[]): number => {
         let newIndex: number = currentGameIndex
-        while (newIndex === currentGameIndex || !activeGames[newIndex].active) { // Don't allow the same game twice in a row. 
+        while (newIndex === currentGameIndex || !gameModuleSettings[newIndex].active) { // Don't allow the same game twice in a row. 
           newIndex = Math.floor(Math.random() * gameModules.length)
         }
         return newIndex

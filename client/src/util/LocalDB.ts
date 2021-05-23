@@ -1,6 +1,5 @@
 import { openDB, IDBPDatabase, deleteDB } from 'idb'
 import IUtilService from './IUtilService'
-import { GameModuleName, enumKeys } from './GameModuleName'
 
 /**
  * Class LocalDB containing utility methods for indexedDB. 
@@ -18,18 +17,18 @@ export default class LocalDB implements IUtilService {
      * 
      * @return {Promise<void>}
      */
-    public async openLocalDB(): Promise<void> {
+    public async openLocalDB(tableNames: string[]): Promise<void> {
         try {
 
             this.db = await openDB(this.dbName, this.dbVersion, { // use undefined for current version https://github.com/jakearchibald/idb#opendb 
                 upgrade(db: IDBPDatabase, oldVersion, newVersion, transaction) {
 
-                    for (const name of enumKeys(GameModuleName)) {
+                    for (const tableName of tableNames) {
 
-                        if (db.objectStoreNames.contains(GameModuleName[name])) {
+                        if (db.objectStoreNames.contains(tableName)) {
                             continue;
                         }
-                        db.createObjectStore(GameModuleName[name], { keyPath: '_id' })
+                        db.createObjectStore(tableName, { keyPath: '_id' })
                     }
                 },
                 blocked() {
@@ -53,11 +52,11 @@ export default class LocalDB implements IUtilService {
      * 
      * @return {Promise<void>}
      */
-    public async loadDB(): Promise<void> {
+    public async loadDB(tableNames: string[]): Promise<void> {
         const gameEventsPromises: Promise<void>[] = [] 
 
-        for (const name of enumKeys(GameModuleName)) {
-            gameEventsPromises.push(this.loadAndFetchGameEvents(GameModuleName[name]))
+        for (const name of tableNames) {
+            gameEventsPromises.push(this.loadAndFetchGameEvents(name))
         }
      
         Promise.all(gameEventsPromises).catch(error => console.log('Load DB error:', error))

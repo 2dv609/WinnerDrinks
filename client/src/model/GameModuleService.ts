@@ -1,6 +1,6 @@
 import IUtilService from '../util/IUtilService'
 import getUtilService from '../util/UtilServiceFactory'
-import { GameModuleName } from '../util/GameModuleName'
+import GameModule from './GameModule'
 import IGameModuleService from './IGameModuleService'
 
 /**
@@ -22,12 +22,13 @@ export default class GameModuleService implements IGameModuleService {
      * @return {Promise<void>}
      */
     public async loadGameEvents(): Promise<boolean> {
-        const utilsService: IUtilService = await getUtilService()
+        const gameModule = new GameModule()
+        const utilsService: IUtilService = await getUtilService(gameModule.getNames())
 
         return Promise.all([
-            utilsService.getGameEvents(GameModuleName.TRIVIA), 
-            utilsService.getGameEvents(GameModuleName.PARTY), 
-            utilsService.getGameEvents(GameModuleName.BACK_TO_BACK)])
+            utilsService.getGameEvents(gameModule.TRIVIA), 
+            utilsService.getGameEvents(gameModule.PARTY), 
+            utilsService.getGameEvents(gameModule.BACK_TO_BACK)])
         .then((response) => {
             this.triviaEvents = response[0]
             this.partyEvents = response[1]

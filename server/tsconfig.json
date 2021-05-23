@@ -6,8 +6,8 @@
     "rootDir": "src",
     "strict": true,
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/types/*.ts", "node_modules", ".vscode", ".env"],
+  "include": ["src/**/*", "index.d.ts"],
+  "exclude": ["src/types", "node_modules", ".vscode", ".env"],
 }

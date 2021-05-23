@@ -1,13 +1,13 @@
-import IUtilService from "./IUtilService"
+import IUtilService from './IUtilService'
 import API from './API'
-import LocalDB from "./LocalDB"
+import LocalDB from './LocalDB'
 
 /**
  * Factory method that return an instance of a type IUtilservice.
  * 
  * @returns {Promis<IUtilservice>}
  */
-export default async function getUtilService(): Promise<IUtilService> {    
+export default async function getUtilService(gameModuleNames: string[]): Promise<IUtilService> {    
 
     const api: API = new API()
     const localDB: LocalDB = new LocalDB()
@@ -19,7 +19,7 @@ export default async function getUtilService(): Promise<IUtilService> {
             return api
             
         } else {
-            await localDB.openLocalDB() // return data from indexed db
+            await localDB.openLocalDB(gameModuleNames) // return data from indexed db
             return localDB    
         }
         

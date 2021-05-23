@@ -10,7 +10,7 @@ import WinnerAlert from './WinnerAlert'
 import Scoreboard from './Scoreboard';
 import SkipGame from './SkipGame';
 import { GameMode } from '../model/GameMode'
-import { IGameModuleSetting } from '../Components/Menu/Navbar';
+import { IGameModuleSetting } from '../model/GameModule'
 
 type GameProps = {
   gameModuleService: IGameModuleService | undefined,

@@ -7,13 +7,7 @@ import './Navbar.css'
 import Player from '../../model/Player'
 import PlayerSettingBox from './PlayerSettingBox';
 import ResetButton from '../../App/ResetButton';
-
-export interface IGameModuleSetting {
-  name: string,
-  active: boolean,
-  enable: boolean,
-  index: number
-}
+import { IGameModuleSetting } from '../../model/GameModule'
 
 export type NavbarProps = {
   updatePlayerName: any,

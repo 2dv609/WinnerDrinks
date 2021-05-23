@@ -5,7 +5,7 @@
  */
 
 class Player {
-    name: string; // The name of the player as registered in the input
+    private _name: string = ''; // The name of the player as registered in the input
     isActive: boolean; // Is the player currently playing or paused for e.g. a bathroom visit?
     score: number;
 
@@ -14,12 +14,6 @@ class Player {
      * @param name Must be at least 3 characters long and not exceed 10.
      */
     constructor(name: string) {
-        if (name.length < 1 || name.length > 10) {
-            throw Error("Name must be at least 1 characters and not exceed 10.");
-        };
-        if (name && !name.trim()) {
-            throw Error("Name cannot be empty.");
-        };
         this.name = name;
         this.isActive = true;
         this.score = 0;
@@ -46,13 +40,29 @@ class Player {
      */
     toString(debug?:boolean): string {
         if (debug) {
-            return `Name: ${this.name} Score: ${this.score} isActive: ${this.isActive}`;
+            return `Name: ${this._name} Score: ${this.score} isActive: ${this.isActive}`;
         }
-        return this.name;
+        return this._name;
     }
 
-    setName(name: string) {
-      this.name = name
+    /**
+     * Setter for property _name.
+     */
+    set name(name: string) {
+        if (name.length < 1 || name.length > 10) {
+            throw Error('Name must be at least 1 characters and not exceed 10.');
+        };
+        if (name.split(' ').length > 1) {
+            throw Error('Name can not contain any spaces.');
+        };
+        this._name = name;
+    }
+
+    /**
+     * Getter for property _name.
+     */
+    get name() {
+      return this._name
     }
 }
 
