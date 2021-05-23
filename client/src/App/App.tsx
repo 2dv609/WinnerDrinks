@@ -60,7 +60,6 @@ function App() {
       }
 
       const updatedPlayers: Player[] = [...players]
-      console.log(updatedPlayers)
       updatedPlayers.forEach((player: Player) => player.name === currentName ? player.name = newName : false)
       setPlayers(updatedPlayers)
     } catch (error) {

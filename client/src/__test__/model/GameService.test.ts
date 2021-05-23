@@ -61,13 +61,13 @@ describe('Test suite for class model/GameService.ts', () => {
         expect(currentGameIndex === newGameIndex).toBeFalsy()
     })
 
-    test('Method getPlayers should return Players[] with length determined by the parameter nrOfPlayers value.', () => {
+    test('Method getPlayers should return a list of players with length determined by the parameter nrOfPlayers value.', () => {
         const nrOfPlayers = 2
         const players = gameService.getPlayers(nrOfPlayers, mockPlayers)
         expect(players.length === nrOfPlayers).toBeTruthy()
     })
 
-    test('Method getRandomGameEvent should one random game event.', () => {
+    test('Method getRandomGameEvent should return one random game event.', () => {
         const gameEvent: IBackToBack | IParty | ITrivia = gameService.getRandomGameEvent(gameEventAPIMock)
         console.log(gameEvent)
         expect(isGameEventIncluded(gameEventAPIMock, gameEvent)).toBeTruthy()
