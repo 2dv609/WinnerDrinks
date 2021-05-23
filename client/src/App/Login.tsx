@@ -14,7 +14,7 @@ const Login: React.FC<LoginProps> = ({ addUser }) => {
       <input className="input" type="text" value={input} name="newname" id="newname" onChange={e => {
         if ((e.target as any).value.length > 10) return;
         setInput((e.target as any).value);
-      }} />
+      }} data-testid="player-name-field"/>
       </div>
       
       <div className="control block">
@@ -22,7 +22,7 @@ const Login: React.FC<LoginProps> = ({ addUser }) => {
         addUser(input);
         setInput('');
 
-      }} value="Add" id="newnamebtn" />
+      }} value="Add" id="newnamebtn" data-testid="add-user-button"/>
       </div>
       
     </div>

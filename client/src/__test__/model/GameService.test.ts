@@ -3,6 +3,7 @@ import { getGameService, getGameModuleSettings } from '../../model/ModelFactory'
 import Player from '../../model/Player'
 import WheelComponent from '../../Components/WheelComponent/WheelComponent'
 import Party from '../../Components/Party/Party'
+import { createPlayerName, isGameEventIncluded } from '../Common/TestHelpFunctions'
 
 describe('Test suite for class model/GameService.ts', () => {
 
@@ -72,24 +73,3 @@ describe('Test suite for class model/GameService.ts', () => {
         expect(isGameEventIncluded(gameEventAPIMock, gameEvent)).toBeTruthy()
     })
 })
-
-/* --------------------------------- */
-/* ----- Test help functions ------- */
-/* --------------------------------- */
-
-const createPlayerName = (lengthName: number): string => {
-    return Math.random().toString(36).substring(0, lengthName)
-}
-
-const isGameEventIncluded = (gameEventApiMock: GameEventAPI, gameEvent: IBackToBack | IParty | ITrivia): boolean => {
-    let isIncluded = false
-    
-    gameEventApiMock.questions.forEach((event: IBackToBack | IParty | ITrivia) => {
-        if (event === gameEvent) {
-            isIncluded = true
-            return
-        }
-    })
-
-    return isIncluded
-}
