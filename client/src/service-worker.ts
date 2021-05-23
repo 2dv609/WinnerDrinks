@@ -14,6 +14,7 @@ import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
 import { StaleWhileRevalidate } from 'workbox-strategies';
 import LocalDB from './util/LocalDB'
+import GameModule from './model/GameModule'
 
 declare const self: ServiceWorkerGlobalScope;
 
@@ -27,8 +28,6 @@ clientsClaim();
 // eslint-disable-next-line no-restricted-globals
 // Your custom service worker code goes here.
 precacheAndRoute(self.__WB_MANIFEST);
-
-console.log('self.__WB_MANIFEST:', self.__WB_MANIFEST)
 
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
@@ -87,9 +86,10 @@ self.addEventListener('message', (event) => {
 self.addEventListener('install', async (event) => {
   if (self.indexedDB) {
       console.log('IndexedDB is supported');
+      const gameModule = new GameModule()
       const db: LocalDB = new LocalDB();
-      await db.openLocalDB();
-      await db.loadDB();
+      await db.openLocalDB(gameModule.getNames());
+      await db.loadDB(gameModule.getNames());
 
   } else {
       console.log('IndexedDB is NOT supported');

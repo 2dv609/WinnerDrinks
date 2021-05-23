@@ -2,13 +2,18 @@ import Player from '../../model/Player'
 
 describe('Test suite for class model/Player.ts', () => {
 
-    test('An empty player name should throw error', () => {
-        expect(() => { new Player(' ')}).toThrow('Name cannot be empty.')
+    test('An player name whith spaces should throw error, constructor', () => {
+        expect(() => { new Player(' ') }).toThrow('Name can not contain any spaces.')
+    })
+
+    test('An player name whith spaces should throw error, setter', () => {
+        const player = new Player('Carl')
+        expect(() => { player.name = 'Carl C'}).toThrow('Name can not contain any spaces.')
     })
     
     test('A player name that exceed 10 or have no characters should throw error', () => {
-        expect(() => { new Player(createPlayerName(11))}).toThrow('Name must be at least 1 characters and not exceed 10.')
-        expect(() => { new Player(createPlayerName(0))}).toThrow('Name must be at least 1 characters and not exceed 10.')
+        expect(() => { new Player(createPlayerName(11)) }).toThrow('Name must be at least 1 characters and not exceed 10.')
+        expect(() => { new Player(createPlayerName(0)) }).toThrow('Name must be at least 1 characters and not exceed 10.')
     })
 
     test('A player name that have length 1 <= name.length <= 10 should set name', () => {

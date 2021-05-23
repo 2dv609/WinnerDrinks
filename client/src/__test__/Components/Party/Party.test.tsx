@@ -38,6 +38,10 @@ describe('Test suite for game module party', () => {
         partyEvents = await fs.readJson(partyEventsPath)
     })
 
+    /* --------------------------------- */
+    /* ---------- Test cases  ---------- */
+    /* --------------------------------- */
+
     test('Game module party should use props gameService, gameEvent and currentPlayers', () => {
         const div = document.createElement('div')
         ReactDOM.render(<Party currentPlayers={currentPlayers} gameService={gameServiceMock} gameEvent={partyQuestionMock}></Party>, div)

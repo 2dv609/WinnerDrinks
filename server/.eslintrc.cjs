@@ -15,6 +15,7 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    '@typescript-eslint/camelcase': 0
+    '@typescript-eslint/camelcase': 0,
+    'no-undef': 'off'
   }
 }

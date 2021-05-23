@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Server for WinnerDrinks",
   "type": "module",
-  "main": "server.js",
+  "main": "build/server.js",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint . --ext .ts /server/src/",
+    "lint": "eslint . --ext .ts src",
     "start:dev": "concurrently \"tsc -w\" \"nodemon -r dotenv/config build/server.js\"",
     "start:dev:init": "concurrently \"tsc -w\" \"nodemon -r dotenv/config build/server.js all\""
   },

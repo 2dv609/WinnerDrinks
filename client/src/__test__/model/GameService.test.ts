@@ -6,6 +6,10 @@ import Party from '../../Components/Party/Party'
 
 describe('Test suite for class model/GameService.ts', () => {
 
+    /* --------------------------------- */
+    /* ----- Test cases setup ---------- */
+    /* --------------------------------- */
+
     const gameService: GameService = getGameService()
     const mockPlayers: Player[] = []
     const gameModules = [WheelComponent, Party];
@@ -39,6 +43,10 @@ describe('Test suite for class model/GameService.ts', () => {
             new Player(createPlayerName(6))
         )
     })
+
+    /* --------------------------------- */
+    /* ---------- Test cases  ---------- */
+    /* --------------------------------- */
 
     test('Method addScore should add one point to a player\'s total score', () => {
         const mockPlayer = new Player(createPlayerName(4))

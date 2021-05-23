@@ -1,17 +1,18 @@
 import GameModuleService from './GameModuleService'
 import IGameModuleService from './IGameModuleService'
 import GameService from './GameService'
-import { IGameModuleSetting } from '../Components/Menu/Navbar'
+import GameModule from './GameModule'
+import { IGameModuleSetting } from './GameModule'
+import Player from './Player'
 
 /**
  * Factory method that return a promise of an instance 
  * of a type IGameModuleSerice with loaded game events or
  * undefined if GameModules coulde not be loaded.
  * 
- * @returns {Promis<IUtilservice | undefined>}
+ * @returns {Promise<IUtilservice | undefined>}
  */
 export async function getGameModuleService(): Promise<IGameModuleService | undefined> {
-
     const gameModuleSerivce: IGameModuleService = new GameModuleService()
     const gameEventIsLoaded: boolean = await gameModuleSerivce.loadGameEvents()
 
@@ -23,8 +24,7 @@ export async function getGameModuleService(): Promise<IGameModuleService | undef
 }
 
 /**
- * Factory method that return  an instance 
- * of a type IGameService.
+ * Factory method that return an object of type GameService.
  * 
  * @returns {GameService}
  */
@@ -32,12 +32,23 @@ export async function getGameModuleService(): Promise<IGameModuleService | undef
     return new GameService()
 }
 
-export function getGameModuleSettings(): IGameModuleSetting[] {
-    
-    return [
-        { name: 'Wheel', enable: true, active: true, index: 0 },
-        { name: 'Party', enable: true, active: true, index: 1 },
-        { name: 'BackToBack', enable: false, active: false, index: 2 },
-        { name: 'Trivia', enable: true, active: true, index: 3 },
-    ]
+/**
+ * Factory method that return an object of type IGameModuleSetting.
+ * 
+ * @returns {GameService}
+ */
+export function getGameModuleSettings(): IGameModuleSetting[] {   
+    const gameModule: GameModule = new GameModule()
+    return gameModule.getSettings()
+}
+
+
+/**
+ * Factory method that return an instance of Player.
+ * 
+ * @param {string[]} - A player name  
+ * @returns {Player} - A player.
+ */
+export function getPlayer(name: string): Player {   
+    return new Player(name)
 }

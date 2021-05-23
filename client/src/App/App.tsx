@@ -9,7 +9,7 @@ import Icon from '../Components/Menu/Icon'
 import IGameModuleService from '../model/IGameModuleService'
 import { getGameModuleService, getGameService, getGameModuleSettings } from '../model/ModelFactory'
 import GameService from '../model/GameService'
-import { IGameModuleSetting } from '../Components/Menu/Navbar'
+import { IGameModuleSetting } from '../model/GameModule'
 import { GameMode } from '../model/GameMode'
 import Footer from '../Components/Footer/Footer'
 
@@ -52,15 +52,20 @@ function App() {
   }
 
   const updatePlayerName = (currentName: string, newName: string) => {
-    const alreadyAdded = playerExistInArray(newName)
-    if (alreadyAdded) {
-      window.alert("Player's name already exists in the game!") //For now.
-      return
-    }
+    try {
+      const alreadyAdded = playerExistInArray(newName)
+      if (alreadyAdded) {
+        window.alert("Player's name already exists in the game!") //For now.
+        return
+      }
 
-    const updatedPlayers: Player[] = [...players]
-    updatedPlayers.forEach((player) => player.name === currentName ? player.name = newName : false)
-    setPlayers(updatedPlayers)
+      const updatedPlayers: Player[] = [...players]
+      console.log(updatedPlayers)
+      updatedPlayers.forEach((player: Player) => player.name === currentName ? player.name = newName : false)
+      setPlayers(updatedPlayers)
+    } catch (error) {
+      window.alert(error) //For now.
+    }
   }
 
   const gameModuleSettingUpdate = (gameModuleSettings: IGameModuleSetting[]): void => {
@@ -93,7 +98,6 @@ function App() {
     updateEnableGameModule(tooFew)
 
     setPlayers(updatedPlayers)
-    
   }
 
   /**
