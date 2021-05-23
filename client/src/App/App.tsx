@@ -55,7 +55,7 @@ function App() {
     try {
       const alreadyAdded = playerExistInArray(newName)
       if (alreadyAdded) {
-        window.alert("Player's name already exists in the game!") //For now.
+        activateErrorModal("Player's name already exists in the game!")
         return
       }
 
@@ -158,7 +158,7 @@ function App() {
     modal?.classList.add('is-active')
   })
 
-  modal?.addEventListener('click', ()=> {
+  modalBg?.addEventListener('click', ()=> {
     modal?.classList.remove('is-active')
   })
 
