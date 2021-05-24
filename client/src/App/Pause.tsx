@@ -1,3 +1,7 @@
+/**
+ * Component displaying a Pause screen.
+ */
+
 const Pause = () => {
     return (
     <div className="message is-danger" >
