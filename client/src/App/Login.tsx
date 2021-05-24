@@ -12,11 +12,11 @@ const Login: React.FC<LoginProps> = ({ addUser }) => {
     <div className="">
       <div className="control block">
         <FontAwesomeIcon 
-            className="ml-3 is-clickable has-text-success" 
-            data-testid="add-user-button" 
-            icon={faUserPlus} 
-            size="3x" 
-            onClick={(): void => {
+          className="ml-3 is-clickable has-text-success" 
+          data-testid="add-user-button" 
+          icon={faUserPlus} 
+          size="2x" 
+          onClick={(): void => {
               addUser(input)
               setInput('')
         }}/>
@@ -29,9 +29,16 @@ const Login: React.FC<LoginProps> = ({ addUser }) => {
           value={input}
           name="newname" 
           id="newname" 
-          onChange={e => {
+          onChange={(e): void => {
             if ((e.target as any).value.length > 10) return;
             setInput((e.target as any).value);
+          }}
+          onKeyUp={(e): void => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              addUser(input)
+              setInput('')
+            }
           }} 
           data-testid="player-name-field"
         />

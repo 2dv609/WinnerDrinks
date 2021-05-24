@@ -189,22 +189,6 @@ function App() {
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
           <h1 className="title -is-2">Winner Drinks</h1>
           <div className="box">
-            <Login addUser={addUser} />
-            <div className="control block">
-              <div className="block"></div>
-            </div>
-      
-
-            {/* Players */}
-            {players.slice().reverse().map((player: Player, index: number) => (
-              <PlayerSettingsBox 
-                player={player} 
-                deletePlayer={deleteUser} 
-                key={index} 
-                updatePlayerActive={updatePlayerActive}
-                updatePlayerName={updatePlayerName}>
-              </PlayerSettingsBox>)
-            )}
 
             {/* Start button */}  
             <div className="control block">
@@ -213,7 +197,7 @@ function App() {
                 className="ml-3 is-clickable has-text-success" 
                 data-testid="add-user-button" 
                 icon={faPlay} 
-                size="3x" 
+                size="2x" 
                 onClick={() => {
                   // must be at least two players. 
                   if (players.length < 2 || players == null) {
@@ -223,6 +207,20 @@ function App() {
                   }
                 }}/>
             </div>
+
+            {/* Select Game mode: Standard or Highscore */}
+            <div className="control select">
+              <select name="gamemode" id="gamemode" onChange={e => {
+                e.target.value === 'Standard' ? setGameMode(GameMode.STANDARD) : setGameMode(GameMode.HIGHSCORE)
+              }}>
+                <option value="Standard">Standard</option>
+                <option value="Highscore">Scoreboard</option>
+              </select>
+            </div>
+
+            <div className="control block"></div>  
+            <Login addUser={addUser} />
+            <div className="control block"></div>
 
             {/* Error message modal */}
             {/* <ErrorMsg message={error}></ErrorMsg> */}
@@ -235,15 +233,18 @@ function App() {
               <button className="modal-close is-large" aria-label="close"></button>
             </div>
 
-            {/* Select Game mode: Standard or Highscore */}
-            <div className="control select">
-              <select name="gamemode" id="gamemode" onChange={e => {
-                e.target.value === 'Standard' ? setGameMode(GameMode.STANDARD) : setGameMode(GameMode.HIGHSCORE)
-              }}>
-                <option value="Standard">Standard</option>
-                <option value="Highscore">Scoreboard</option>
-              </select>
-            </div>
+            {/* Players */}
+            <div className="block"></div>
+              {players.slice().reverse().map((player: Player, index: number) => (
+                <PlayerSettingsBox 
+                  player={player} 
+                  deletePlayer={deleteUser} 
+                  key={index} 
+                  updatePlayerActive={updatePlayerActive}
+                  updatePlayerName={updatePlayerName}>
+                </PlayerSettingsBox>)
+              )}  
+
             <div className="block"></div>    
           </div>
         </div>
