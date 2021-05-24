@@ -21,10 +21,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
       - uses: dawidd6/action-ansible-playbook@v2
         with: 
           playbook: deploy.yml
-          directory: ./
+          directory: ./github/workflows/
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [development]
