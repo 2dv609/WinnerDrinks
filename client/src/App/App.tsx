@@ -15,6 +15,7 @@ import Footer from '../Components/Footer/Footer'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import PlayerSettingsBox from '../Components/Menu/PlayerSettingBox'
+import { v1 as uuidv1 } from 'uuid'
 
 function App() {
   const gameService: GameService = getGameService();
@@ -235,11 +236,11 @@ function App() {
 
             {/* Players */}
             <div className="block"></div>
-              {players.slice().reverse().map((player: Player, index: number) => (
+              {players.slice().reverse().map((player: Player) => (
                 <PlayerSettingsBox 
                   player={player} 
                   deletePlayer={deleteUser} 
-                  key={index} 
+                  key={uuidv1()} 
                   updatePlayerActive={updatePlayerActive}
                   updatePlayerName={updatePlayerName}>
                 </PlayerSettingsBox>)
