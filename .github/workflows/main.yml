@@ -29,6 +29,7 @@ jobs:
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [development]
+            ansible_ssh_common_args='-o StrictHostKeyChecking=no'
             ${{secrets.IP_1}}
             ${{secrets.IP_2}}
             ${{secrets.IP_3}}
