@@ -1,5 +1,4 @@
 ---
----
 - name: Update WinnerDrinks
   hosts: development
   become: true
