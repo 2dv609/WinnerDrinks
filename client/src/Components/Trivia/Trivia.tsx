@@ -1,82 +1,75 @@
 import React, { useEffect, useState } from 'react'
-import { uuid } from 'uuidv4'
+import { v1 as uuidv1 } from 'uuid'
 import { formatAPIResponseString } from './utils/api-functions'
 import { shuffleArray } from './utils/functions'
 import './Trivia.css';
 import QuestionCard from './QuestionCard';
-import GameProps from '../GameProps';
+import { TextGameModuleProps } from '../GameModuleProps';
 
-const NUM_OF_PLAYERS = 1;
-
-const Trivia = (props: any) => {
-  const gp: GameProps = props.gp;
-  const [players, setPlayers] = useState(gp.getPlayers(NUM_OF_PLAYERS));
-  const [loadedQuestions, setLoadedQuestions] = useState<ITrivia[]>([]);
-  const [questionNumber, setQuestionNumber] = useState<number>(0);
+const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, currentPlayers}) => {
+  const [modefiedGameEvent, setModefiedGameEvent] = useState<ITrivia>();
 
   useEffect(() => {
-    console.log(props.event)
-    loadNewQuestions()
-  }, [])
-
-  useEffect(() => {
-    return () => { // Return a function for code cleanup. This will set new players 
-      setPlayers(gp.getPlayers(NUM_OF_PLAYERS));
-    }
-  }, [gp])
-
-  const loadNewQuestions = async () => {
-    const gameEvent: ITrivia = props.gameEvent
     let all_answers
-    all_answers = gameEvent.incorrect_answers
-    all_answers.push(gameEvent.correct_answer)
-    all_answers = shuffleArray(all_answers)
-    gameEvent.all_answers = all_answers
-    setLoadedQuestions([gameEvent]);
-  }
+    if ('incorrect_answers' in gameEvent) {
+      all_answers = gameEvent.incorrect_answers
+      all_answers.push(gameEvent.correct_answer)
+      all_answers = shuffleArray(all_answers)
+      gameEvent.all_answers = all_answers
+      setModefiedGameEvent(gameEvent);
+      
+    }
+  }, [gameEvent])
 
   const handleAnswer = (e: any) => {
-    if (e.target.innerText === loadedQuestions[questionNumber].correct_answer) {
-      gp.addScore(players[0], 1)
-      gp.chooseRandomNewGame()
-      gp.makeWinnerAlert(players[0])
-    } else {
-      setQuestionNumber(questionNumber + 1);
-      gp.chooseRandomNewGame()
-      gp.makeWinnerAlert(null)
+    if (!modefiedGameEvent) {
+      return
     }
+
+    if (e.target.innerText === modefiedGameEvent.correct_answer) {
+      gameService.addScore(currentPlayers[0]);
+      gameService.makeWinnerAlert(currentPlayers[0]); 
+    } else {
+      gameService.makeWinnerAlert(null, 'Wrong answer.'); 
+    }
+    gameService.chooseRandomNewGame()
+    
+  }
+
+  if (!modefiedGameEvent) {
+    return (
+      <button 
+        className="button" 
+        onClick={() => {
+        gameService.makeWinnerAlert(null)
+        gameService.chooseRandomNewGame()
+        }}>
+        Triva question could not be loaded!
+    </button>
+    )
   }
 
   return (
     <div className="box">
       <div id={'gameInfo'}>
-        <h4>Turn to answer a question: </h4>
+        <h4 className="title is-6">Turn to answer a question: </h4>
         <ul>
-          <li className="card" >{players[0].name}</li>
+          <li className="block tag is-medium" data-testid="current-player">{currentPlayers[0].name}</li>
         </ul>
-        {/* {players.length > 0 && (
-          <ul>
-            {players.map((player, i) => {
-              return <li key={uuid()}>{player.name}</li>
-            })}
-          </ul>
-        )} */}
       </div>
 
-      <br />
-      {loadedQuestions.length > 0 && (<h2>{formatAPIResponseString(loadedQuestions[questionNumber].question)}</h2>)}
 
-      {(loadedQuestions.length > 0) ?
-        <div className={'answersDiv'}>
-          <br />
-          {loadedQuestions[questionNumber].all_answers.map((answerString) => {
-            return <QuestionCard answer={formatAPIResponseString(answerString)} handleAnswer={handleAnswer} key={uuid()} />
-          })}
-        </div>
-        : <h4>Loading questions</h4>}
+      <h2 className="content block" data-testid="game-event">{formatAPIResponseString(gameEvent.question)}</h2>
+
+      <div className={'answersDiv is-centered columns'} >
+
+        {modefiedGameEvent.all_answers.map((answer: string) => {
+          return <QuestionCard answer={formatAPIResponseString(answer)} handleAnswer={handleAnswer} key={uuidv1()} />
+        })}
+      </div>
 
     </div>
-  );
+  )
 }
 
 export default Trivia;

@@ -1,0 +1,7 @@
+# .gitignore dist
+
+# dependencies
+/docker/winner-drinks/build
+/docker/winner-drinks/package-lock.json
+/docker/winner-drinks/package.json
+/ansible/inventory

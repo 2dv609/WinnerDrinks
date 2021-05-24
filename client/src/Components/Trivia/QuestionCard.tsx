@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import './QuestionCard.css';
 
 type Props = {
   answer: string;
-  handleAnswer: any;
+  handleAnswer: (e: any) => void;
 }
 
 const QuestionCard: React.FC<Props> = ({ answer, handleAnswer }) => {
 
-  useEffect(() => {
-  }, [])
-
   return (
-
-      <div className={'questionDiv card'}
-        onClick={handleAnswer}>
+    <div className="column" >
+      <div className={'button is-info is-light'}
+        onClick={handleAnswer} data-testid="answer-alternatives">
         {answer}
       </div>
-
+    </div>
   );
 }
 

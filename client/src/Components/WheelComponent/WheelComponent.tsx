@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import GameProps from '../GameProps';
+import React, { useEffect, useState } from 'react';
 import './WheelComponent.css'
+import { AnimationGameModuleProps } from '../GameModuleProps'
+import Player from '../../model/Player';
 
 const DEG = 360
 const colors = ['#9ede73', '#f7ea00', '#e48900', '#be0000']
@@ -18,27 +19,35 @@ let style = {
 };
 
 /**
+ * Function that generate random integer in span (min and max included).
+ * @param {Number} min Min number
+ * @param {Number} max Max number
+ * @returns {Number} Random number generated
+ */
+const randomIntFromInterval = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
+
+
+/**
  * 
  * @param {Array} users Array of participant names. 
  * @returns {jsx} Component
  */
-function WheelComponent(props: any) {
-  // Error checking number of users. If < 4 => duplicate one of the users / If > 4 => skip one of the users
-  const gp: GameProps = props.gp;
-  const list = gp.getPlayers(4);
-  const rotateDeg = DEG / list.length
-  const [isReset, setIsReset] = useState(true)
-  const [result, setResult] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
-  
-  /**
-   * Function that generate random integer in span (min and max included).
-   * @param {Number} min Min number
-   * @param {Number} max Max number
-   * @returns {Number} Random number generated
-   */
-  const randomIntFromInterval = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
+const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, currentPlayers }) =>  {
 
+  const [loading, setLoading] = useState(true)
+  const [rotateDeg, setRotateDeg] = useState(0)
+  const [isReset, setIsReset] = useState(true)
+
+  /**
+   * Function run once on render an every time gameService is changed.
+   * Function check how many players there are in the game and duplicate if they are too few.
+   */
+  useEffect(() => {
+    setRotateDeg(DEG / currentPlayers.length)
+    setLoading(false)
+
+  }, [currentPlayers.length])
+  
   /**
    * Function that generates random degrees that the wheel will spin.
    * @param {Number} index Index of the winning element
@@ -73,9 +82,8 @@ function WheelComponent(props: any) {
    */
   const startSpin = () => {
     if(isReset) {
-      setErrorMessage('')
 
-      const winnerIndex = randomIntFromInterval(1, list.length) - 1
+      const winnerIndex = randomIntFromInterval(1, currentPlayers.length) - 1
       const degrees = getRandomRotationDegrees(winnerIndex)
     
       let styleSheet = document.styleSheets[0];
@@ -90,7 +98,6 @@ function WheelComponent(props: any) {
     
       setTimeout(() => getWinner(winnerIndex), (TIME) * 1000 + 500);
     } else {
-      setErrorMessage('Please reset the wheel...')
       console.log('Please reset the wheel...')
     }
 
@@ -98,19 +105,23 @@ function WheelComponent(props: any) {
   }
 
   /**
+   * Function that call correct gameService methods with winner object.
+   * @param winner 
+   */
+  const addScore = (winner: Player) => {
+    gameService.addScore(winner)
+    gameService.makeWinnerAlert(winner)
+    gameService.chooseRandomNewGame()
+  }
+
+  /**
    * Function that gets and sets the winner.
    * @param {Number} index 
    */
   const getWinner = (index: number) => {
-    const winner = list[index]
-    console.log(`Winning value is: ${winner.toString()}`)
-    setResult(`${winner.toString()} won!`)
+    const aWinner = currentPlayers[index]
     reset();
-
-    gp.addScore(winner, 1)
-    gp.makeWinnerAlert(winner)
-    gp.chooseRandomNewGame()
-
+    addScore(aWinner)
   }
 
   /**
@@ -119,38 +130,42 @@ function WheelComponent(props: any) {
   const reset = () => {
     try {
       let styleSheet = document.styleSheets[0];
-      styleSheet.deleteRule(2)
+      // styleSheet.deleteRule(2)
+      styleSheet.deleteRule(styleSheet.cssRules.length - 1)
+
       setIsReset(true)
-      setErrorMessage('')
-      setResult('')
     } catch (error) {
       console.log('Stylesheet has already been reset...')
-      setErrorMessage('Stylesheet has already been reset...')
     }
   }
 
+  if(loading) return( <p>Loading...</p>)
+
   return (
-    
     <div className="WheelComponent">
       <span style={{margin: '0px'}}>|</span>
       <div onClick={startSpin} className="wheel" style={style}>
-      {list.map((val, index) => {
-        const degree = (index * rotateDeg) //- 45
-        
-        return (
-          <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `200px solid ${colors[index]}`}} className="arrow">
-            <span>{val.toString()}</span>
-          </div>
-        )
-      })}
-      </div>
-      <div className="d-flex">
-        <button onClick={startSpin}>Spin!</button>
-      </div>
-      <div>
-        <p>{errorMessage}</p>
-        <p>{result}</p>
-      </div>
+
+        {currentPlayers.map((player: Player, index: number) => {
+          const degree = (index * rotateDeg) //- 45
+          
+          return (
+            <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `150px solid ${colors[index]}`}} className="arrow">
+              <span data-testid={`wheel-section-${index}`}>{player.toString()}</span>
+            </div>
+          )
+        })}
+       </div>
+
+      {/*     
+        <div className="d-flex">
+          <button onClick={startSpin}>Spin!</button>
+        </div>
+        <div>
+          <p>{errorMessage}</p>
+          <p>{result}</p>
+        </div>
+      */}
     </div>
   )
 }

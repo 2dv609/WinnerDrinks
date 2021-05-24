@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# stops the specific .env file in this dir from being ignored (all other .env are ignored)
+!/.env
