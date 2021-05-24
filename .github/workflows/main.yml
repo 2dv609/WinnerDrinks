@@ -26,3 +26,10 @@ jobs:
           playbook: deploy.yml
           directory: ./
           key: ${{secrets.SSH_PRIVATE_KEY}}
+          inventory: |
+            [development]
+            ${{secrets.IP_1}}
+            ${{secrets.IP_2}}
+            ${{secrets.IP_3}}
+            
+          
