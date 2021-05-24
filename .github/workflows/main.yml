@@ -26,7 +26,7 @@ jobs:
         env: 
           ANSIBLE_HOST_KEY_CHECKING: False
         with: 
-          playbook: deploy.yml
+          playbook: update-winner-drinks.yaml
           directory: ./dist/ansible/
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
