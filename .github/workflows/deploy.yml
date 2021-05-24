@@ -1,0 +1,8 @@
+---
+- name: Update WinnerDrinks
+  hosts: development
+  become: ubuntu
+  tasks:
+
+    - name: Run docker compose
+      shell: /bin/bash /var/www/winner-drinks/run_app.sh 
