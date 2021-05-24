@@ -12,6 +12,9 @@ import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../model/GameModule'
 import { GameMode } from '../model/GameMode'
 import Footer from '../Components/Footer/Footer'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlay } from '@fortawesome/free-solid-svg-icons'
+import PlayerSettingsBox from '../Components/Menu/PlayerSettingBox'
 
 function App() {
   const gameService: GameService = getGameService();
@@ -184,23 +187,45 @@ function App() {
           updatePlayerActive={updatePlayerActive} />
 
         <div className="App section" onClick={() => navbarOpen ? setNavbarOpen(false) : undefined}>
+          <h1 className="title -is-2">Winner Drinks</h1>
           <div className="box">
             <Login addUser={addUser} />
             <div className="control block">
               <div className="block"></div>
-              <input id="doneBtn" className="button" type="button" value="Done" onClick={() => {
-                // must be at least two players. 
-                if (players.length < 2 || players == null) {
-                  setError("There needs to be at least two players to start the game!");
-                } else {
-                  setPlay(true);
-                }
-              }} />
             </div>
-              
+      
+
+            {/* Players */}
+            {players.slice().reverse().map((player: Player, index: number) => (
+              <PlayerSettingsBox 
+                player={player} 
+                deletePlayer={deleteUser} 
+                key={index} 
+                updatePlayerActive={updatePlayerActive}
+                updatePlayerName={updatePlayerName}>
+              </PlayerSettingsBox>)
+            )}
+
+            {/* Start button */}  
+            <div className="control block">
+              <FontAwesomeIcon
+                id="doneBtn" 
+                className="ml-3 is-clickable has-text-success" 
+                data-testid="add-user-button" 
+                icon={faPlay} 
+                size="3x" 
+                onClick={() => {
+                  // must be at least two players. 
+                  if (players.length < 2 || players == null) {
+                    setError("There needs to be at least two players to start the game!");
+                  } else {
+                    setPlay(true);
+                  }
+                }}/>
+            </div>
+
             {/* Error message modal */}
             {/* <ErrorMsg message={error}></ErrorMsg> */}
-
             <div className="modal">
               <div className="modal-background"></div>
                 <div className="modal-content has-background-warning py-5 px-5">
@@ -216,21 +241,14 @@ function App() {
                 e.target.value === 'Standard' ? setGameMode(GameMode.STANDARD) : setGameMode(GameMode.HIGHSCORE)
               }}>
                 <option value="Standard">Standard</option>
-                <option value="Highscore">Highscore</option>
+                <option value="Highscore">Scoreboard</option>
               </select>
             </div>
-            <div className="block"></div>
-
-            <h2 className="title is-5" >Players</h2>
-            <ul className="columns">
-              {players.map(player =>
-                (<li className="column" key={player.toString()}>{player.toString()}</li>)
-              )}
-            </ul>
+            <div className="block"></div>    
           </div>
         </div>
       
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   } else {

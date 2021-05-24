@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 
 type LoginProps = {
   addUser: (newPlayerName: string) => void
@@ -9,20 +10,31 @@ const Login: React.FC<LoginProps> = ({ addUser }) => {
   const [input, setInput] = useState('');
   return (
     <div className="">
-      <h1 className="title">Add players</h1>
       <div className="control block">
-      <input className="input" type="text" value={input} name="newname" id="newname" onChange={e => {
-        if ((e.target as any).value.length > 10) return;
-        setInput((e.target as any).value);
-      }} data-testid="player-name-field"/>
+        <FontAwesomeIcon 
+            className="ml-3 is-clickable has-text-success" 
+            data-testid="add-user-button" 
+            icon={faUserPlus} 
+            size="3x" 
+            onClick={(): void => {
+              addUser(input)
+              setInput('')
+        }}/>
       </div>
-      
       <div className="control block">
-      <input className="button" type="button" onClick={() => {
-        addUser(input);
-        setInput('');
-
-      }} value="Add" id="newnamebtn" data-testid="add-user-button"/>
+        <input 
+          className="input has-text-centered" 
+          type="text"
+          placeholder="Add players"
+          value={input}
+          name="newname" 
+          id="newname" 
+          onChange={e => {
+            if ((e.target as any).value.length > 10) return;
+            setInput((e.target as any).value);
+          }} 
+          data-testid="player-name-field"
+        />
       </div>
       
     </div>
