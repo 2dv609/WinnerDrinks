@@ -27,7 +27,7 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: False
         with: 
           playbook: update-winner-drinks.yaml
-          directory: ./dist/ansible/
+          directory: ./.github/workflows
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [development]
