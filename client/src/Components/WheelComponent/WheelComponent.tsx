@@ -146,12 +146,12 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
       <span style={{margin: '0px'}}>|</span>
       <div onClick={startSpin} className="wheel" style={style}>
 
-        {currentPlayers.map((val, index) => {
+        {currentPlayers.map((player: Player, index: number) => {
           const degree = (index * rotateDeg) //- 45
           
           return (
             <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `150px solid ${colors[index]}`}} className="arrow">
-              <span>{val.toString()}</span>
+              <span data-testid={`wheel-section-${index}`}>{player.toString()}</span>
             </div>
           )
         })}

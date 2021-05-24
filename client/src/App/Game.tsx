@@ -8,6 +8,7 @@ import IGameModuleService from '../model/IGameModuleService'
 import GameService from '../model/GameService'
 import WinnerAlert from './WinnerAlert'
 import Scoreboard from './Scoreboard';
+import Pause from './Pause'
 import SkipGame from './SkipGame';
 import { GameMode } from '../model/GameMode'
 import { IGameModuleSetting } from '../model/GameModule'
@@ -172,13 +173,7 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
 
   // If to many paused players
   if (gameService.getNumActivePlayers(players) < 2) {
-    return <div className="message is-danger" >
-      <div className="message-header">Sorry!</div>
-      <div className="message-body">
-        <p>Too many players are paused. </p>
-        <p>Please wait for them and start their session again!</p>
-      </div>
-    </div>
+    return <Pause />
   }
 
   let currentGame;

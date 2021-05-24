@@ -1,4 +1,5 @@
 import Player from '../../model/Player'
+import { createPlayerName } from '../Common/TestHelpFunctions'
 
 describe('Test suite for class model/Player.ts', () => {
 
@@ -41,11 +42,3 @@ describe('Test suite for class model/Player.ts', () => {
         expect(player.score === 10).toBeTruthy()
     })
 })
-
-/* --------------------------------- */
-/* ----- Test help functions ------- */
-/* --------------------------------- */
-
-const createPlayerName = (lengthName: number): string => {
-    return Math.random().toString(36).substring(0, lengthName)
-}

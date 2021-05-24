@@ -86,11 +86,11 @@ describe('Test suite for game module back to back', () => {
     test('T1.MBB.UI.2: Game module back to back should display a back to back game event', () => {
         const { getByTestId } = render(<BackToBack currentPlayers={currentPlayers} gameService={gameServiceMock} gameEvent={backToBackQuestionMock}></BackToBack>)
         expect(getByTestId('game-event')).toHaveTextContent(backToBackQuestionMock.question)
-        expect(getByTestId('button-correct')).toHaveTextContent('They were correct!')
-        expect(getByTestId('button-incorrect')).toHaveTextContent('They were wrong!')
+        expect(getByTestId('button-correct')).toHaveTextContent('Yes!')
+        expect(getByTestId('button-incorrect')).toHaveTextContent('No!')
     })
 
-    test('T1.MBB.UI.3: Select back to back events result should trigger transition to next game round, button correct', () => {
+    test('T1.MBB.UI.3: Button "They were correct" should trigger transition to next game round', () => {
         const { getByTestId } = render(<BackToBack currentPlayers={currentPlayers} gameService={gameServiceMock} gameEvent={backToBackQuestionMock}></BackToBack>)
         
         const addScoreSpy = jest.spyOn(gameServiceMock, 'addScore')
@@ -104,7 +104,7 @@ describe('Test suite for game module back to back', () => {
         expect(chooseNewRandomGameSpy).toBeCalled()
     })
 
-    test('T1.MBB.UI.3: Select back to back events result should trigger transition to next game round, button incorrect', () => {
+    test('T1.MBB.UI.3: Button "They were wrong" should trigger transition to next game round', () => {
         const { getByTestId } = render(<BackToBack currentPlayers={currentPlayers} gameService={gameServiceMock} gameEvent={backToBackQuestionMock}></BackToBack>)
         
         const makeWinnerAlertSpy = jest.spyOn(gameServiceMock, 'makeWinnerAlert')
