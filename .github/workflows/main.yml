@@ -27,7 +27,7 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: False
         with: 
           playbook: deploy.yml
-          directory: ./.github/workflows/
+          directory: ./dist/ansible/
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [development]
