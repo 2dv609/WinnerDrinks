@@ -46,7 +46,7 @@ function PlayerSettingBox({player, updatePlayerActive, deletePlayer, updatePlaye
       <div className="box is-flex is-flex-direction-row is-align-items-center is-justify-content-space-between" >
         <article className="message is-danger m-0">
           <div className="message-header">
-            <p>Are you sure to delete?!</p>
+            <p>Are you sure?</p>
           </div>
         </article>
         <div className="btn-group is-flex">

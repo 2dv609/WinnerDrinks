@@ -55,7 +55,7 @@ function App() {
     try {
       const alreadyAdded = playerExistInArray(newName)
       if (alreadyAdded) {
-        window.alert("Player's name already exists in the game!") //For now.
+        activateErrorModal("Player's name already exists in the game!")
         return
       }
 
@@ -63,7 +63,7 @@ function App() {
       updatedPlayers.forEach((player: Player) => player.name === currentName ? player.name = newName : false)
       setPlayers(updatedPlayers)
     } catch (error) {
-      window.alert(error) //For now.
+      activateErrorModal(error.msg)
     }
   }
 
@@ -120,13 +120,13 @@ function App() {
   const addUser = (newPlayerName: string): void => {
     try {
       if (players.length >= MAX_PLAYERS) {
-        window.alert(`Cannot add more players, max players are ${MAX_PLAYERS}`) //For now.
+        activateErrorModal(`Cannot add more players, max players are ${MAX_PLAYERS}`)
         return
       }
 
       const alreadyAdded = playerExistInArray(newPlayerName)
       if (alreadyAdded) {
-        window.alert('Player is already added to the game!') //For now.
+        activateErrorModal('Player is already added to the game!')
         return
       }
 
@@ -139,9 +139,27 @@ function App() {
 
       setPlayers([...players, newPlayer]);
     } catch (error) {
-      window.alert(error) //For now.
+      activateErrorModal(error.message)
     }
   };
+
+  const activateErrorModal = (msg: string): void => {
+    setError(msg)
+    modal?.classList.add('is-active')
+  }
+
+  // Error message modal variables and listeners
+  const doneBtn = document.querySelector('#doneBtn')
+  const modalBg= document.querySelector('.modal-background')
+  const modal= document.querySelector('.modal')
+
+  doneBtn?.addEventListener('click', ()=> {
+    modal?.classList.add('is-active')
+  })
+
+  modalBg?.addEventListener('click', ()=> {
+    modal?.classList.remove('is-active')
+  })
 
   if (!gameModuleService) {
     return (<h1 className="section container">
@@ -170,16 +188,28 @@ function App() {
             <Login addUser={addUser} />
             <div className="control block">
               <div className="block"></div>
-              <input className="button" type="button" value="Done" onClick={() => {
+              <input id="doneBtn" className="button" type="button" value="Done" onClick={() => {
                 // must be at least two players. 
-                if (players.length < 2) {
+                if (players.length < 2 || players == null) {
                   setError("There needs to be at least two players to start the game!");
                 } else {
                   setPlay(true);
                 }
               }} />
             </div>
-            <ErrorMsg message={error}></ErrorMsg>
+              
+            {/* Error message modal */}
+            {/* <ErrorMsg message={error}></ErrorMsg> */}
+
+            <div className="modal">
+              <div className="modal-background"></div>
+                <div className="modal-content has-background-warning py-5 px-5">
+                  <div className="is-size-4">ERROR</div>
+                  <div className="is-size-5">{error}</div>
+                </div>
+              <button className="modal-close is-large" aria-label="close"></button>
+            </div>
+
             {/* Select Game mode: Standard or Highscore */}
             <div className="control select">
               <select name="gamemode" id="gamemode" onChange={e => {

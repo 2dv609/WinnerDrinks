@@ -585,31 +585,31 @@
       "category": "History",
       "type": "multiple",
       "difficulty": "medium",
-      "question": "När uppfanns ölet?",
-      "correct_answer": "3500 f Kr",
+      "question": "When was beer invented?",
+      "correct_answer": "3500 BC",
       "incorrect_answers": [
-        "2000 f Kr",
-        "200 f Kr",
-        "Sent 500-tal"
+        "2000 BC",
+        "200 BC",
+        "Late 500:s"
       ]
     },
     {
       "category": "General Knowledge",
       "type": "multiple",
       "difficulty": "medium",
-      "question": "Vilken är Södermanlands landskapsblomma?",
-      "correct_answer": "Vit näckros",
+      "question": "What is the species of plant depicted on the flag of Canada?",
+      "correct_answer": "Maple",
       "incorrect_answers": [
-        "Röd trädgårdsros",
-        "Blåsippa",
-        "Gullregn"
+        "Cedar",
+        "Cypress",
+        "Hemlock"
       ]
     },
     {
       "category": "History",
       "type": "multiple",
       "difficulty": "medium",
-      "question": "Vad hette den första webbläsaren?",
+      "question": "What was the name of the first web browser?",
       "correct_answer": "World Wide Web",
       "incorrect_answers": [
         "Netscape",
@@ -621,7 +621,7 @@
       "category": "History",
       "type": "multiple",
       "difficulty": "medium",
-      "question": "När uppfanns internet?",
+      "question": "When was the Internet invented?",
       "correct_answer": "1969",
       "incorrect_answers": [
         "1982",
@@ -633,12 +633,12 @@
       "category": "General Knowledge",
       "type": "multiple",
       "difficulty": "medium",
-      "question": "Vilka uppfann popcornen?",
-      "correct_answer": "Aztekerna",
+      "question": "Who invented popcorn?",
+      "correct_answer": "The Aztecs",
       "incorrect_answers": [
         "USA",
-        "Mongolerna",
-        "Nordamerikas ursprungsbefolkning"
+        "The Mongols",
+        "Native Americans"
       ]
     }
     
