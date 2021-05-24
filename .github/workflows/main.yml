@@ -23,13 +23,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: dawidd6/action-ansible-playbook@v2
+        env: 
+          ANSIBLE_HOST_KEY_CHECKING: False
         with: 
           playbook: deploy.yml
           directory: ./.github/workflows/
           key: ${{secrets.SSH_PRIVATE_KEY}}
           inventory: |
             [development]
-            ansible_ssh_common_args='-o StrictHostKeyChecking=no'
             ${{secrets.IP_1}}
             ${{secrets.IP_2}}
             ${{secrets.IP_3}}
