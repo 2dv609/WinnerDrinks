@@ -197,7 +197,7 @@ function App() {
             </div>
 
             {/* Select Game mode: Standard or Highscore */}
-            <div className="control select">
+            <div className="control select is-multiple">
               <select name="gamemode" id="gamemode" onChange={e => {
                 e.target.value === 'Standard' ? setGameMode(GameMode.STANDARD) : setGameMode(GameMode.HIGHSCORE)
               }}>
