@@ -7,8 +7,9 @@
 function ErrorMsg(props: any) {
     if (props.message) {
         return (
-            <div className="box nameerror">
-                {props.message}
+            <div className="message is-danger nameerror">
+                <div className="message-body">{props.message}</div>
+                
             </div>
             );
     } else {

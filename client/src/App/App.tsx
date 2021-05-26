@@ -124,7 +124,7 @@ function App() {
   const addUser = (newPlayerName: string): void => {
     try {
       if (players.length >= MAX_PLAYERS) {
-        activateErrorModal(`Cannot add more players, max players are ${MAX_PLAYERS}`)
+        activateErrorModal(`Cannot add more players. Max players are ${MAX_PLAYERS}.`)
         return
       }
 
@@ -166,9 +166,9 @@ function App() {
   })
 
   if (!gameModuleService) {
-    return (<h1 className="section container">
+    return (<div className="section container">
       <progress className="progress is-large is-info" max="100">Loading</progress>
-    </h1>)
+    </div>)
   }
 
   if (!play) {
@@ -224,15 +224,7 @@ function App() {
             <div className="control block"></div>
 
             {/* Error message modal */}
-            {/* <ErrorMsg message={error}></ErrorMsg> */}
-            <div className="modal">
-              <div className="modal-background"></div>
-                <div className="modal-content has-background-warning py-5 px-5">
-                  <div className="is-size-4">ERROR</div>
-                  <div className="is-size-5">{error}</div>
-                </div>
-              <button className="modal-close is-large" aria-label="close"></button>
-            </div>
+            <ErrorMsg message={error}></ErrorMsg>
 
             {/* Players */}
             <div className="block"></div>
