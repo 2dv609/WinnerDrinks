@@ -1,5 +1,4 @@
 import { GameMode } from '../model/GameMode'
-import { v1 as uuidv1 } from 'uuid'
 
 /**
  * Component displaying a game mode button.
@@ -10,6 +9,8 @@ type GameModeButtonProps = {
 }
 
 const GameModeButton: React.FC<GameModeButtonProps> = ({ changeGameMode }) => {
+  const keyStandard: number = 1
+  const keyScoreboard: number = 2
 
   const handleGameMode = (event: React.ChangeEvent<HTMLSelectElement>) : void => {
     event.target.value === 'Standard' ? changeGameMode(GameMode.STANDARD) : changeGameMode(GameMode.HIGHSCORE)
@@ -17,9 +18,9 @@ const GameModeButton: React.FC<GameModeButtonProps> = ({ changeGameMode }) => {
   
   return (
     <div className="control select is-multiple">
-      <select multiple size={2} name="gamemode" id="gamemode" onChange={handleGameMode}>
-        <option value="Standard" key={uuidv1()}>Standard</option>
-        <option value="Highscore" key={uuidv1()}>Scoreboard</option>
+      <select name="gamemode" id="gamemode" onChange={handleGameMode}>
+        <option value="Standard" key={keyStandard}>Standard</option>
+        <option value="Highscore" key={keyScoreboard}>Scoreboard</option>
       </select>
       <br/>
     </div>
