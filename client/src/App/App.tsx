@@ -3,6 +3,8 @@ import Login from './Login'
 import Game from './Game'
 import Player from '../model/Player'
 import 'bulma'
+import StartButton from './StartButton'
+import GameModeMenu from './GameModeButton'
 import ErrorMsg from './ErrorMsg'
 import Navbar from '../Components/Menu/Navbar'
 import Icon from '../Components/Menu/Icon'
@@ -12,8 +14,6 @@ import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../model/GameModule'
 import { GameMode } from '../model/GameMode'
 import Footer from '../Components/Footer/Footer'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import PlayerSettingsBox from '../Components/Menu/PlayerSettingBox'
 import { v1 as uuidv1 } from 'uuid'
 
@@ -23,7 +23,7 @@ function App() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [gameMode, setGameMode] = useState(GameMode.STANDARD);
+  const [gameMode, setGameMode] = useState<GameMode>(GameMode.STANDARD);
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>(getGameModuleSettings);
   const MAX_PLAYERS = 10
@@ -151,6 +151,26 @@ function App() {
     setError(msg)
   }
 
+  /**
+   * Update state play.
+   */
+  const changePlayStatus = (): void => {
+      // must be at least two players. 
+      if (players.length < 2 || players == null) {
+        setError("There needs to be at least two players to start the game!");
+      } else {
+        setPlay(true);
+      }
+  }
+
+  /**
+   * Update state gameMode.
+   * 
+   * @param {GameMode} gameMode - A game mode
+   */
+  const changeGameMode = (gameMode: GameMode): void => {
+    setGameMode(gameMode)
+  }
 
   if (!gameModuleService) {
     return (<div className="section container">
@@ -178,38 +198,9 @@ function App() {
           <h1 className="title -is-2">Winner Drinks</h1>
           <div className="box">
 
-            {/* Start button */}  
-            <div className="control block">
-              <FontAwesomeIcon
-                id="doneBtn" 
-                className="ml-3 is-clickable has-text-success" 
-                data-testid="add-user-button" 
-                icon={faPlay} 
-                size="2x" 
-                onClick={() => {
-                  // must be at least two players. 
-                  if (players.length < 2 || players == null) {
-                    setError("There needs to be at least two players to start the game!");
-                  } else {
-                    setPlay(true);
-                  }
-                }}/>
-            </div>
-
-            {/* Select Game mode: Standard or Highscore */}
-            <div className="control select is-multiple">
-              <select multiple size={2} name="gamemode" id="gamemode" onChange={e => {
-                e.target.value === 'Standard' ? setGameMode(GameMode.STANDARD) : setGameMode(GameMode.HIGHSCORE)
-              }}>
-                <option value="Standard">Standard</option>
-                <option value="Highscore">Scoreboard</option>
-              </select>
-            </div>
-
-            <div className="control block"></div>  
+            <StartButton changePlayStatus={changePlayStatus} />
+            <GameModeMenu changeGameMode={changeGameMode}/>  
             <Login addUser={addUser} />
-            <div className="control block"></div>
-
             {/* Error message modal */}
             <ErrorMsg message={error} setError={setError} ></ErrorMsg>
 

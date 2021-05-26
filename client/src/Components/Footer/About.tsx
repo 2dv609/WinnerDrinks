@@ -40,7 +40,7 @@ function About() {
                             <strong>Winner Drinks</strong> by
           {authors.map((author, index) => {
                                 const end = index === authors.length - 1 ? '. ' : ', '
-                                return <a target="_blank" href={author.github} rel="noreferrer"> {author.name}{end}</a>
+                                return <a target="_blank" href={author.github} rel="noreferrer" key={index}> {author.name}{end}</a>
                             })}
                         </p>
                         <p>This web app was built as a student project in the course 2DV609 at Linneaus University in 2021.</p>
