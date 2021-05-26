@@ -2,15 +2,14 @@
 * A component that renders an error message on the start screen.
 * 
 * @author Susanna Persson
+* @author Delfi Sehidic
 */
-import { useState} from 'react'
 
 function ErrorMsg(props: any) {
-    const [isActive, setActive] = useState(' is-active')
     if (props.message) {
         return (
             <div>
-            <div className={"modal" + isActive} >
+            <div className="modal is-active" >
                 <div className="modal-background"></div>
                 <div className="modal-card">
                     <header className="modal-card-head">
@@ -21,8 +20,6 @@ function ErrorMsg(props: any) {
                         <div className="content">
                         {props.message}
                         </div>
-
-
                     <button className="button is-success" onClick={() => props.setError(null)} >Oh, okay!</button>
                     </section>
                     
