@@ -1,4 +1,3 @@
-
 import About from './About'
 import Instructions from './Instructions'
 
