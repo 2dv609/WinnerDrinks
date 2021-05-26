@@ -13,7 +13,6 @@ const GameModeButton: React.FC<GameModeButtonProps> = ({ changeGameMode }) => {
 
   const handleGameMode = (event: React.ChangeEvent<HTMLSelectElement>) : void => {
     event.target.value === 'Standard' ? changeGameMode(GameMode.STANDARD) : changeGameMode(GameMode.HIGHSCORE)
-    console.log(event.target.value)
   }
   
   return (
