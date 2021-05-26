@@ -211,7 +211,7 @@ function App() {
             <div className="control block"></div>
 
             {/* Error message modal */}
-            <ErrorMsg message={error}></ErrorMsg>
+            <ErrorMsg message={error} setError={setError} ></ErrorMsg>
 
             {/* Players */}
             <div className="block"></div>
