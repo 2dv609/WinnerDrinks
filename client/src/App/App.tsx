@@ -149,21 +149,8 @@ function App() {
 
   const activateErrorModal = (msg: string): void => {
     setError(msg)
-    modal?.classList.add('is-active')
   }
 
-  // Error message modal variables and listeners
-  const doneBtn = document.querySelector('#doneBtn')
-  const modalBg= document.querySelector('.modal-background')
-  const modal= document.querySelector('.modal')
-
-  doneBtn?.addEventListener('click', ()=> {
-    modal?.classList.add('is-active')
-  })
-
-  modalBg?.addEventListener('click', ()=> {
-    modal?.classList.remove('is-active')
-  })
 
   if (!gameModuleService) {
     return (<div className="section container">
@@ -243,6 +230,7 @@ function App() {
         </div>
       
         {/* <Footer /> */}
+        <Footer/>
       </div>
     );
   } else {

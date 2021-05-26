@@ -105,6 +105,7 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
                 addUser(inputName)
                 setInputName('')
                 }}>Add</button>
+                
             </div>
           </div>
           {/* Names */}
