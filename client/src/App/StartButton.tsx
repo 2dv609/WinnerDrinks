@@ -18,12 +18,12 @@ const StartButton: React.FC<GameModeMenuProps> = ({ changePlayStatus }) => {
   return (
     <div className="control block">
         <FontAwesomeIcon
-        id="doneBtn" 
-        className="ml-3 is-clickable has-text-success" 
-        data-testid="add-user-button" 
-        icon={faPlay} 
-        size="2x" 
-        onClick={handlePlayStatus}/>
+          id="doneBtn" 
+          className="ml-3 is-clickable has-text-success" 
+          data-testid="add-user-button" 
+          icon={faPlay} 
+          size="2x" 
+          onClick={handlePlayStatus}/>
     </div>
   )
 }
