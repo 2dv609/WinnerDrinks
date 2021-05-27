@@ -1,5 +1,5 @@
 /**
- * Menu for configuring various settings. 
+ * Menu for configuring various settings.
  * @author Caesar
  */
 import React, { useState } from 'react';
@@ -22,9 +22,8 @@ export type NavbarProps = {
 }
 
 const Navbar: React.FC<NavbarProps> = ({
-updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
+  updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
   updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
-
   const [inputName, setInputName] = useState('')
 
   /**
@@ -33,7 +32,6 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
   const updateActiveGameModule = (e: any, moduleName: string) => {
     e.preventDefault()
 
-    console.log(moduleName)
     let activeModules = 0
 
     for (let i = 0; i < gameModuleSettings.length; i++) {
@@ -47,7 +45,6 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
         if (copiedArray[i].active) {
           // 2 game modules must be active!
           if (activeModules === 2) {
-            console.log('Atleast 2 game modules must be enabled')
             return
           }
         }
@@ -61,20 +58,24 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
 
   return (
     <nav>
-      <div id="navDiv" className={("links") + (navbarOpen ? " nav-open" : "")}>
+      <div id="navDiv" className={`links ${(navbarOpen ? ' nav-open' : '')}`}>
         {/* Bulma menu */}
         <aside className="menu is-flex is-flex-direction-column p-3" style={{ height: '100%' }}>
 
           <div className="level is-mobile">
             <div className="level-left">
-            <h2 className="subtitle level-item">Settings</h2>
+              <h2 className="subtitle level-item">Settings</h2>
             </div>
             <div className="level-right">
-                {/* Delete button for closing the menu. @author Delfi */}
-                <button className="delete level-item" onClick={() => {
-              setNavBarOpen(false)
-              document.querySelector('#navDiv')?.classList.toggle('nav-open');
-            }}>Close</button>
+              {/* Delete button for closing the menu. @author Delfi */}
+              <button
+                className="delete level-item"
+                onClick={() => {
+                  setNavBarOpen(false)
+                  document.querySelector('#navDiv')?.classList.toggle('nav-open');
+                }}>
+                Close
+              </button>
             </div>
           </div>
 
@@ -88,9 +89,10 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
                     <label className="checkbox mr-3">
                       <input type="checkbox" disabled={!module.enable} className="mr-3" onChange={() => (module.active)} checked={module.active} />
                       {module.name}
-                      </label>
+                    </label>
                   </a>
-                </li>)
+                </li>
+              )
             })}
           </ul>
 
@@ -101,11 +103,15 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
               <input className="input" type="text" value={inputName} placeholder="Input name" onChange={e => setInputName(e.target.value)} />
             </div>
             <div className="control">
-              <button className="button is-info" onClick={() => {
-                addUser(inputName)
-                setInputName('')
-                }}>Add</button>
-                
+              <button
+                className="button is-info"
+                onClick={() => {
+                  addUser(inputName)
+                  setInputName('')
+                }}>
+                Add
+              </button>
+
             </div>
           </div>
           {/* Names */}
@@ -116,7 +122,7 @@ updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
             })}
           </ul>
           {/* Reset page */}
-          <div className="menu-label"></div>
+          <div className="menu-label" />
           <ResetButton />
         </aside>
       </div>

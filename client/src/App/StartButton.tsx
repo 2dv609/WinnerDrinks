@@ -10,20 +10,19 @@ type GameModeMenuProps = {
 }
 
 const StartButton: React.FC<GameModeMenuProps> = ({ changePlayStatus }) => {
-
   const handlePlayStatus = (event: React.MouseEvent<SVGSVGElement>): void => {
     changePlayStatus()
   }
-  
+
   return (
     <div className="control block">
-        <FontAwesomeIcon
-          id="doneBtn" 
-          className="ml-3 is-clickable has-text-success" 
-          data-testid="add-user-button" 
-          icon={faPlay} 
-          size="2x" 
-          onClick={handlePlayStatus}/>
+      <FontAwesomeIcon
+        id="doneBtn"
+        className="ml-3 is-clickable has-text-success"
+        data-testid="add-user-button"
+        icon={faPlay}
+        size="2x"
+        onClick={handlePlayStatus} />
     </div>
   )
 }
