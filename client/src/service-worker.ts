@@ -84,6 +84,7 @@ self.addEventListener('message', (event) => {
 
 // Load IndexedDB
 self.addEventListener('install', async (event) => {
+  console.log('Winner Drinks version:', process.env.REACT_APP_VERSION);
   if (self.indexedDB) {
     console.log('IndexedDB is supported');
     const gameModule = new GameModule()
