@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 function Instructions() {
   const [isActive, setActive] = useState('')
   return (
-    <div>
+    <div className="column">
       <div className="button" onClick={() => setActive(' is-active')}>Instructions</div>
       <div className={`modal${isActive}`}>
         <div className="modal-background" />
