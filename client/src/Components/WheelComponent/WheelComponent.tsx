@@ -93,8 +93,6 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
       styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
 
       setTimeout(() => getWinner(winnerIndex), (TIME) * 1000 + 500);
-    } else {
-      console.log('Please reset the wheel...')
     }
 
     setIsReset(false)

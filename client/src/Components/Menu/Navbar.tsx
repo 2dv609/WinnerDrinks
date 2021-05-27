@@ -32,7 +32,6 @@ const Navbar: React.FC<NavbarProps> = ({
   const updateActiveGameModule = (e: any, moduleName: string) => {
     e.preventDefault()
 
-    console.log(moduleName)
     let activeModules = 0
 
     for (let i = 0; i < gameModuleSettings.length; i++) {
@@ -46,7 +45,6 @@ const Navbar: React.FC<NavbarProps> = ({
         if (copiedArray[i].active) {
           // 2 game modules must be active!
           if (activeModules === 2) {
-            console.log('Atleast 2 game modules must be enabled')
             return
           }
         }

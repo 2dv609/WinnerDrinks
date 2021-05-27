@@ -18,7 +18,8 @@ export default class LocalDB implements IUtilService {
      */
     public async openLocalDB(tableNames: string[]): Promise<void> {
       try {
-        this.db = await openDB(this.dbName, this.dbVersion, { // use undefined for current version https://github.com/jakearchibald/idb#opendb
+        // use undefined for current version https://github.com/jakearchibald/idb#opendb
+        this.db = await openDB(this.dbName, this.dbVersion, {
           upgrade(db: IDBPDatabase, oldVersion, newVersion, transaction) {
             for (const tableName of tableNames) {
               if (!db.objectStoreNames.contains(tableName)) {
