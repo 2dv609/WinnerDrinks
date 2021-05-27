@@ -26,7 +26,7 @@ const authors = [
 function About() {
   const [isActive, setActive] = useState('')
   return (
-    <div>
+    <div className="column">
       <div className="button" onClick={() => setActive(' is-active')}>About</div>
       <div className={`modal${isActive}`}>
         <div className="modal-background" />
