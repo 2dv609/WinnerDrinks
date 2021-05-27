@@ -118,7 +118,7 @@ export default class LocalDB implements IUtilService {
      *
      * @return {Promise<void>}
      */
-    public async deleteLocalDB(): Promise<void> {
+    private async deleteLocalDB(): Promise<void> {
       await deleteDB(this.dbName)
     }
 }
