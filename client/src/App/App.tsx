@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { v1 as uuidv1 } from 'uuid'
 import Login from './Login'
 import Game from './Game'
 import Player from '../model/Player'
@@ -15,7 +16,6 @@ import { IGameModuleSetting } from '../model/GameModule'
 import { GameMode } from '../model/GameMode'
 import Footer from '../Components/Footer/Footer'
 import PlayerSettingsBox from '../Components/Menu/PlayerSettingBox'
-import { v1 as uuidv1 } from 'uuid'
 
 function App() {
   const gameService: GameService = getGameService();
@@ -64,7 +64,8 @@ function App() {
       }
 
       const updatedPlayers: Player[] = [...players]
-      updatedPlayers.forEach((player: Player) => player.name === currentName ? player.name = newName : false)
+      // eslint-disable-next-line no-unused-expressions
+      updatedPlayers.forEach((player: Player) => { player.name === currentName ? player.name = newName : false })
       setPlayers(updatedPlayers)
     } catch (error) {
       activateErrorModal(error.msg)
@@ -93,6 +94,7 @@ function App() {
    */
   const updatePlayerActive = (playerName: string): void => {
     const updatedPlayers: Player[] = [...players]
+    // eslint-disable-next-line no-return-assign
     updatedPlayers.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
 
     // Update game module back to back
@@ -155,17 +157,17 @@ function App() {
    * Update state play.
    */
   const changePlayStatus = (): void => {
-      // must be at least two players. 
-      if (players.length < 2 || players == null) {
-        setError("There needs to be at least two players to start the game!");
-      } else {
-        setPlay(true);
-      }
+    // must be at least two players.
+    if (players.length < 2 || players == null) {
+      setError('There needs to be at least two players to start the game!');
+    } else {
+      setPlay(true);
+    }
   }
 
   /**
    * Update state gameMode.
-   * 
+   *
    * @param {GameMode} gameMode - A game mode
    */
   const changeGameMode = (gameMode: GameMode): void => {
@@ -173,9 +175,11 @@ function App() {
   }
 
   if (!gameModuleService) {
-    return (<div className="section container">
-      <progress className="progress is-large is-info" max="100">Loading</progress>
-    </div>)
+    return (
+      <div className="section container">
+        <progress className="progress is-large is-info" max="100">Loading</progress>
+      </div>
+    )
   }
 
   if (!play) {
@@ -199,27 +203,27 @@ function App() {
           <div className="box">
 
             <StartButton changePlayStatus={changePlayStatus} />
-            <GameModeMenu changeGameMode={changeGameMode}/>  
+            <GameModeMenu changeGameMode={changeGameMode}/>
             <Login addUser={addUser} />
             {/* Error message modal */}
             <ErrorMsg message={error} setError={setError} ></ErrorMsg>
 
             {/* Players */}
             <div className="block"></div>
-              {players.slice().reverse().map((player: Player) => (
-                <PlayerSettingsBox 
-                  player={player} 
-                  deletePlayer={deleteUser} 
-                  key={uuidv1()} 
-                  updatePlayerActive={updatePlayerActive}
-                  updatePlayerName={updatePlayerName}>
-                </PlayerSettingsBox>)
-              )}  
+            {players.slice().reverse().map((player: Player) => (
+              <PlayerSettingsBox
+                player={player}
+                deletePlayer={deleteUser}
+                key={uuidv1()}
+                updatePlayerActive={updatePlayerActive}
+                updatePlayerName={updatePlayerName}>
+              </PlayerSettingsBox>
+            ))}
 
-            <div className="block"></div>    
+            <div className="block"></div>
           </div>
         </div>
-      
+
         {/* <Footer /> */}
         <Footer/>
       </div>
@@ -246,7 +250,7 @@ function App() {
         </div>
       </div>
     )
-  };
+  }
 
 }
 

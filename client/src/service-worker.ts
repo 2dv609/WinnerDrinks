@@ -82,16 +82,16 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Load IndexedDB 
+// Load IndexedDB
 self.addEventListener('install', async (event) => {
   if (self.indexedDB) {
-      console.log('IndexedDB is supported');
-      const gameModule = new GameModule()
-      const db: LocalDB = new LocalDB();
-      await db.openLocalDB(gameModule.getNames());
-      await db.loadDB(gameModule.getNames());
+    console.log('IndexedDB is supported');
+    const gameModule = new GameModule()
+    const db: LocalDB = new LocalDB();
+    await db.openLocalDB(gameModule.getNames());
+    await db.loadDB(gameModule.getNames());
 
   } else {
-      console.log('IndexedDB is NOT supported');
+    console.log('IndexedDB is NOT supported');
   }
 })

@@ -1,12 +1,15 @@
 import './App.css';
 
 function ComponentGetToKnow() {
-    return(        
+  return(
     <div >
-        <button className="button is-danger" onClick={() => {
-            window.location.reload();
-        }}>Reset page</button>
-    </div>);
+      <button className="button is-danger" onClick={() => {
+        window.location.reload();
+      }}>
+        Reset page
+      </button>
+    </div>
+  );
 }
 
 export default ComponentGetToKnow;

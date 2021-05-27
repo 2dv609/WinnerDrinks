@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPause, faPlayCircle, faTrashAlt, faEdit, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 
-const iconDefault = "ml-3 is-clickable"
+const iconDefault = 'ml-3 is-clickable'
 
-function PlayerSettingBox({player, updatePlayerActive, deletePlayer, updatePlayerName}: any) {
+function PlayerSettingBox({ player, updatePlayerActive, deletePlayer, updatePlayerName }: any) {
   const [edit, setEdit] = useState(false)
   const [value, setValue] = useState(player.name)
   const [deleteConfirm, setDeleteConfirm] = useState(false)
@@ -59,18 +59,18 @@ function PlayerSettingBox({player, updatePlayerActive, deletePlayer, updatePlaye
 
   return (
     <div className="box is-flex is-flex-direction-row is-align-items-center is-justify-content-space-between" >
-      <p className="subtitle m-0">{player.name}</p>      
+      <p className="subtitle m-0">{player.name}</p>
       <div className="btn-group is-flex">
         <FontAwesomeIcon className={`${iconDefault} has-text-warning`} icon={faEdit} onClick={() => setEdit(true)}/>
-        
+
         {/* Display pause-icon if player is active, else start-icon */}
         {player.isActive ? (
           <FontAwesomeIcon className={`${iconDefault} has-text-warning`} icon={faPause} onClick={() => updatePlayerActive(player.name)}/>
         ) : (
           <FontAwesomeIcon className={`${iconDefault} has-text-success`} icon={faPlayCircle} onClick={() => updatePlayerActive(player.name)}/>
         )}
-        
-        <FontAwesomeIcon className={`${iconDefault} has-text-danger`} icon={faTrashAlt} onClick={() => setDeleteConfirm(true) }/>
+
+        <FontAwesomeIcon className={`${iconDefault} has-text-danger`} icon={faTrashAlt} onClick={() => setDeleteConfirm(true)}/>
       </div>
 
     </div>

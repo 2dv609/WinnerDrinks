@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import React, { useState, useEffect } from 'react';
 import Party from '../Components/Party/Party'
 import WheelComponent from '../Components/WheelComponent/WheelComponent'
@@ -44,11 +45,11 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
   }, [gameModuleService])
 
   /**
-   * This function is sent to game modules as a prop. 
+   * This function is sent to game modules as a prop.
    * If any winner is declared, they are passed as parameters to this function
-   * 
-   * @param p The winner(s). Null means no points awarded. 
-   * @param message A custom flash message for the winner, for example "Wrong answer". 
+   *
+   * @param p The winner(s). Null means no points awarded.
+   * @param message A custom flash message for the winner, for example "Wrong answer".
    * @author Delfi
    */
   const makeWinnerAlert = (p: Player | Player[] | null, message?: string): void => {
@@ -57,9 +58,9 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
     } else if (p === null) { // null == no points awarded, lost game
       setWinners(null);
     } else if (p instanceof Player) { // Just one player?
-      setWinners([p]); // Send an array with only that player. 
+      setWinners([p]); // Send an array with only that player.
     } else {
-      throw new Error("You need to pass an array of Players, a Player or null.");
+      throw new Error('You need to pass an array of Players, a Player or null.');
     }
     if (message) {
       setFlash(message);
@@ -101,7 +102,7 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
 
   /**
    * Function that get question from current game-module and save it in state.
-   * 
+   *
    */
   const setEventCurrentQuestion = (currentGameIndex: number) => {
     let currentGame: any;
@@ -127,8 +128,8 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
   /**
    * TODO: Explain method
    * @author Anonymous
-   * @param gameEventId 
-   * @param gameEvents 
+   * @param gameEventId
+   * @param gameEvents
    */
   const removeGameEvent = (gameEventId: string, gameEvents: GameEventAPI): void => {
     gameEvents.questions.filter((question: ITrivia | IParty | IBackToBack) => {

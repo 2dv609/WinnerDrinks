@@ -42,7 +42,8 @@
     "fix": "eslint \"**/*.{ts,tsx}\" --fix"
   },
   "eslintIgnore": [
-    "*.test.ts"
+    "*.test.ts",
+    "src/__test__"
   ],
   "browserslist": {
     "production": [
