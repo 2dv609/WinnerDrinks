@@ -12,10 +12,9 @@ type ScoreBoardProps = {
 }
 
 const Scoreboard: React.FC<ScoreBoardProps> = ({ players, message }) => {
-
   if (players == null) {
     return (
-      <div className="box">{'No scores yet!'}</div>
+      <div className="box">No scores yet!</div>
     )
   } else if (players) {
     return (
@@ -38,7 +37,7 @@ const Scoreboard: React.FC<ScoreBoardProps> = ({ players, message }) => {
     );
   } else {
     return (
-      <span style={{ display: 'none' }}></span>
+      <span style={{ display: 'none' }} />
     );
   }
 }

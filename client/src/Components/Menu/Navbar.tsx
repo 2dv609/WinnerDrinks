@@ -24,7 +24,6 @@ export type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({
   updatePlayerName, navbarOpen, setNavBarOpen, players, gameModuleSettings,
   updatePlayerActive, onGameModuleSettingUpdate, deleteUser, addUser }) => {
-
   const [inputName, setInputName] = useState('')
 
   /**
@@ -61,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav>
-      <div id="navDiv" className={('links') + (navbarOpen ? ' nav-open' : '')}>
+      <div id="navDiv" className={`links ${(navbarOpen ? ' nav-open' : '')}`}>
         {/* Bulma menu */}
         <aside className="menu is-flex is-flex-direction-column p-3" style={{ height: '100%' }}>
 
@@ -71,10 +70,12 @@ const Navbar: React.FC<NavbarProps> = ({
             </div>
             <div className="level-right">
               {/* Delete button for closing the menu. @author Delfi */}
-              <button className="delete level-item" onClick={() => {
-                setNavBarOpen(false)
-                document.querySelector('#navDiv')?.classList.toggle('nav-open');
-              }}>
+              <button
+                className="delete level-item"
+                onClick={() => {
+                  setNavBarOpen(false)
+                  document.querySelector('#navDiv')?.classList.toggle('nav-open');
+                }}>
                 Close
               </button>
             </div>
@@ -104,10 +105,12 @@ const Navbar: React.FC<NavbarProps> = ({
               <input className="input" type="text" value={inputName} placeholder="Input name" onChange={e => setInputName(e.target.value)} />
             </div>
             <div className="control">
-              <button className="button is-info" onClick={() => {
-                addUser(inputName)
-                setInputName('')
-              }}>
+              <button
+                className="button is-info"
+                onClick={() => {
+                  addUser(inputName)
+                  setInputName('')
+                }}>
                 Add
               </button>
 
@@ -121,7 +124,7 @@ const Navbar: React.FC<NavbarProps> = ({
             })}
           </ul>
           {/* Reset page */}
-          <div className="menu-label"></div>
+          <div className="menu-label" />
           <ResetButton />
         </aside>
       </div>

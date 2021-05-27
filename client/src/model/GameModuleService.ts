@@ -10,7 +10,6 @@ import IGameModuleService from './IGameModuleService'
  * @implements IGameModuleService
  */
 export default class GameModuleService implements IGameModuleService {
-
     // Data game events
     private triviaEvents: GameEventAPI | undefined
     private partyEvents: GameEventAPI | undefined

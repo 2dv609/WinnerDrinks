@@ -8,8 +8,8 @@ import IUtilService from './IUtilService'
  */
 export default class LocalDB implements IUtilService {
     private db: any
-    private readonly dbName: string  = 'WinnerDrinks'
-    private readonly dbVersion: number  = 1
+    private readonly dbName: string = 'WinnerDrinks'
+    private readonly dbVersion: number = 1
 
     /**
      * Open the database and upgrades it if needed.
@@ -21,10 +21,9 @@ export default class LocalDB implements IUtilService {
         this.db = await openDB(this.dbName, this.dbVersion, { // use undefined for current version https://github.com/jakearchibald/idb#opendb
           upgrade(db: IDBPDatabase, oldVersion, newVersion, transaction) {
             for (const tableName of tableNames) {
-              if (db.objectStoreNames.contains(tableName)) {
-                continue;
+              if (!db.objectStoreNames.contains(tableName)) {
+                db.createObjectStore(tableName, { keyPath: '_id' })
               }
-              db.createObjectStore(tableName, { keyPath: '_id' })
             }
           },
           blocked() {
@@ -73,7 +72,7 @@ export default class LocalDB implements IUtilService {
         }
 
         this.loadTable(gameEvents, gameModuleName)
-      }  catch (error) {
+      } catch (error) {
         console.log(`Error when loading game events for game module ${gameModuleName}:`, error)
       }
     }

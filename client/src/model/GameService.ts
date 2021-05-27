@@ -6,7 +6,6 @@ import { IGameModuleSetting } from './GameModule'
  * Class GameService containing commmon logic for the Application.
  */
 export default class GameService {
-
     /**
      * Add one point to a players total score.
      *
@@ -31,6 +30,7 @@ export default class GameService {
       }
       return newIndex
     }
+
     /**
      * Get the players for a game event.
      *
@@ -45,7 +45,6 @@ export default class GameService {
         if (players[i].isActive) {
           activePlayers.push(players[i])
         }
-
       }
       const shuffledActivePlayers = this.shuffle(activePlayers)
 

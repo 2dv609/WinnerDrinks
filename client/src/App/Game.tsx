@@ -23,7 +23,6 @@ type GameProps = {
 }
 
 const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameService, activeGames }) => {
-
   const gameModules = [WheelComponent, Party, BackToBack, Trivia];
   const [currentGameIndex, setCurrentGameIndex] = useState(1);
   const [triviaEvents, setTriviaEvents] = useState<GameEventAPI | undefined>(undefined)
@@ -41,7 +40,6 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
     setTriviaEvents(gameModuleService.getTriviaEvents())
     setBackToBackEvents(gameModuleService.getBackToBackEvents())
     setPartyEvents(gameModuleService.getPartyEvents())
-
   }, [gameModuleService])
 
   /**
@@ -169,7 +167,7 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
   };
 
   if (!triviaEvents || !backToBackEvents || !partyEvents) {
-    return (<div className="button is-loading"></div>)
+    return (<div className="button is-loading" />)
   }
 
   // If to many paused players

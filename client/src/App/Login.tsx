@@ -19,7 +19,7 @@ const Login: React.FC<LoginProps> = ({ addUser }) => {
           onClick={(): void => {
             addUser(input)
             setInput('')
-          }}/>
+          }} />
       </div>
       <div className="control block">
         <input

@@ -7,7 +7,6 @@ import IUtilService from './IUtilService'
  * @implements {IUtilService}
  */
 export default class API implements IUtilService {
-
   private readonly baseUrl: string = `${process.env.REACT_APP_SERVER_URL}/api/`
 
   /**
@@ -19,7 +18,6 @@ export default class API implements IUtilService {
       const response: AxiosResponse<connectionAPI> = await axios.get(`${this.baseUrl}status`)
 
       return response.data.connectionAPI === 1
-
     } catch (error) {
       console.log('No contact with the server API:', error)
       return false
@@ -39,7 +37,6 @@ export default class API implements IUtilService {
       const response: AxiosResponse<GameEventAPI> = await axios.get(this.baseUrl + apiPath)
 
       return response.data
-
     } catch (error) {
       console.log(`Error fetching game events for path ${this.baseUrl}${apiPath}:`, error)
     }

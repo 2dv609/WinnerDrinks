@@ -5,12 +5,12 @@ function Instructions() {
   return (
     <div>
       <div className="button" onClick={() => setActive(' is-active')}>Instructions</div>
-      <div className={'modal' + isActive} >
-        <div className="modal-background"></div>
+      <div className={`modal${isActive}`}>
+        <div className="modal-background" />
         <div className="modal-card">
           <header className="modal-card-head">
             <p className="modal-card-title">How to use this app</p>
-            <button className="delete" onClick={() => setActive('')} aria-label="close"></button>
+            <button className="delete" onClick={() => setActive('')} aria-label="close" />
           </header>
           <section className="modal-card-body">
             <h5>Set up</h5>
@@ -66,7 +66,7 @@ function Instructions() {
             <p>There's no end. You must keep playing this game forever. Have fun and drink responsibly! </p>
           </section>
           <footer className="modal-card-foot">
-            <button className="button is-success" onClick={() => setActive('')} >Got it!</button>
+            <button className="button is-success" onClick={() => setActive('')}>Got it!</button>
 
           </footer>
         </div>

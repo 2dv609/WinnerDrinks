@@ -9,18 +9,18 @@ function ErrorMsg(props: any) {
   if (props.message) {
     return (
       <div>
-        <div className="modal is-active" >
-          <div className="modal-background"></div>
+        <div className="modal is-active">
+          <div className="modal-background" />
           <div className="modal-card">
             <header className="modal-card-head">
               <p className="modal-card-title">Whoopsie</p>
-              <button className="delete" onClick={() => props.setError(null)} aria-label="close"></button>
+              <button className="delete" onClick={() => props.setError(null)} aria-label="close" />
             </header>
             <section className="modal-card-body">
               <div className="content">
                 {props.message}
               </div>
-              <button className="button is-success" onClick={() => props.setError(null)} >Oh, okay!</button>
+              <button className="button is-success" onClick={() => props.setError(null)}>Oh, okay!</button>
             </section>
 
           </div>
@@ -29,10 +29,9 @@ function ErrorMsg(props: any) {
     );
   } else {
     return (
-      <span style={{ display: 'none' }}></span>
+      <span style={{ display: 'none' }} />
     )
   }
-
 }
 
 export default ErrorMsg;

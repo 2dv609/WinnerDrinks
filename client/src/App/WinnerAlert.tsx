@@ -13,7 +13,6 @@ type WinnerAlertProps = {
 }
 
 const WinnerAlert: React.FC<WinnerAlertProps> = ({ winners, message }) => {
-
   if (winners == null) { // Null means that no one won anything.
     return (
       <div className="message is-danger">
@@ -33,7 +32,6 @@ const WinnerAlert: React.FC<WinnerAlertProps> = ({ winners, message }) => {
 
     );
   } else if (winners.length > 1) { // If there are several winners, display them all.
-
     return (
       <div className="message is-success">
         <div className="message-header">{message || 'A sip each to: '}</div>
@@ -46,10 +44,9 @@ const WinnerAlert: React.FC<WinnerAlertProps> = ({ winners, message }) => {
   } else {
     // Initial state. No winner or loser, just an empty span.
     return (
-      <span style={{ display: 'none' }}></span>
+      <span style={{ display: 'none' }} />
     );
   }
-
 }
 
 export default WinnerAlert;

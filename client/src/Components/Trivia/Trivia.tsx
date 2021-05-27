@@ -17,7 +17,6 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, current
       all_answers = shuffleArray(all_answers)
       gameEvent.all_answers = all_answers
       setModefiedGameEvent(gameEvent);
-
     }
   }, [gameEvent])
 
@@ -33,7 +32,6 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, current
       gameService.makeWinnerAlert(null, 'Wrong answer.');
     }
     gameService.chooseRandomNewGame()
-
   }
 
   if (!modefiedGameEvent) {
@@ -51,7 +49,7 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, current
 
   return (
     <div className="box">
-      <div id={'gameInfo'}>
+      <div id="gameInfo">
         <h4 className="title is-6">Turn to answer a question: </h4>
         <ul>
           <li className="block tag is-medium" data-testid="current-player">{currentPlayers[0].name}</li>
@@ -60,7 +58,7 @@ const Trivia: React.FC<TextGameModuleProps> = ({ gameService, gameEvent, current
 
       <h2 className="content block" data-testid="game-event">{formatAPIResponseString(gameEvent.question)}</h2>
 
-      <div className={'answersDiv is-centered columns'} >
+      <div className="answersDiv is-centered columns">
 
         {modefiedGameEvent.all_answers.map((answer: string) => {
           return <QuestionCard answer={formatAPIResponseString(answer)} handleAnswer={handleAnswer} key={uuidv1()} />

@@ -23,7 +23,7 @@ const GameModeButton: React.FC<GameModeButtonProps> = ({ changeGameMode }) => {
         <option value="Standard" key={keyStandard}>Standard</option>
         <option value="Highscore" key={keyScoreboard}>Scoreboard</option>
       </select>
-      <br/>
+      <br />
     </div>
   )
 }

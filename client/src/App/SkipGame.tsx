@@ -15,11 +15,13 @@ type SkipGameProps = {
 const SkipGame: React.FC<SkipGameProps> = ({ makeWinnerAlert, chooseRandomNewGame }) => {
   return (
     <div className="block">
-      <button className="button is-danger" data-testid="skip-button"
+      <button
+        className="button is-danger"
+        data-testid="skip-button"
         onClick={() => {
           makeWinnerAlert(null, 'Skipped.');
           chooseRandomNewGame();
-        }} >
+        }}>
         Skip
       </button>
     </div>

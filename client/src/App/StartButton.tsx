@@ -10,7 +10,6 @@ type GameModeMenuProps = {
 }
 
 const StartButton: React.FC<GameModeMenuProps> = ({ changePlayStatus }) => {
-
   const handlePlayStatus = (event: React.MouseEvent<SVGSVGElement>): void => {
     changePlayStatus()
   }
@@ -23,7 +22,7 @@ const StartButton: React.FC<GameModeMenuProps> = ({ changePlayStatus }) => {
         data-testid="add-user-button"
         icon={faPlay}
         size="2x"
-        onClick={handlePlayStatus}/>
+        onClick={handlePlayStatus} />
     </div>
   )
 }

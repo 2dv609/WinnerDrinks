@@ -31,8 +31,7 @@ const randomIntFromInterval = (min: number, max: number): number => Math.floor(M
  * @param {Array} users Array of participant names.
  * @returns {jsx} Component
  */
-const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, currentPlayers }) =>  {
-
+const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, currentPlayers }) => {
   const [loading, setLoading] = useState(true)
   const [rotateDeg, setRotateDeg] = useState(0)
   const [isReset, setIsReset] = useState(true)
@@ -44,7 +43,6 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
   useEffect(() => {
     setRotateDeg(DEG / currentPlayers.length)
     setLoading(false)
-
   }, [currentPlayers.length])
 
   /**
@@ -81,7 +79,6 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
    */
   const startSpin = () => {
     if(isReset) {
-
       const winnerIndex = randomIntFromInterval(1, currentPlayers.length) - 1
       const degrees = getRandomRotationDegrees(winnerIndex)
 

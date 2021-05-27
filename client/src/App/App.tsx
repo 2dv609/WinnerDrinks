@@ -203,29 +203,28 @@ function App() {
           <div className="box">
 
             <StartButton changePlayStatus={changePlayStatus} />
-            <GameModeMenu changeGameMode={changeGameMode}/>
+            <GameModeMenu changeGameMode={changeGameMode} />
             <Login addUser={addUser} />
             {/* Error message modal */}
-            <ErrorMsg message={error} setError={setError} ></ErrorMsg>
+            <ErrorMsg message={error} setError={setError} />
 
             {/* Players */}
-            <div className="block"></div>
+            <div className="block" />
             {players.slice().reverse().map((player: Player) => (
               <PlayerSettingsBox
                 player={player}
                 deletePlayer={deleteUser}
                 key={uuidv1()}
                 updatePlayerActive={updatePlayerActive}
-                updatePlayerName={updatePlayerName}>
-              </PlayerSettingsBox>
+                updatePlayerName={updatePlayerName} />
             ))}
 
-            <div className="block"></div>
+            <div className="block" />
           </div>
         </div>
 
         {/* <Footer /> */}
-        <Footer/>
+        <Footer />
       </div>
     );
   } else {
@@ -251,7 +250,6 @@ function App() {
       </div>
     )
   }
-
 }
 
 export default App;
