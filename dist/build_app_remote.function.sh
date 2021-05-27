@@ -3,6 +3,8 @@
 # ---------------------------------------
 
 function build_app_remote {
+
+    WINNER_DRINKS_VERSION=1.0.0
     
     # Check if server/.env exists if not abort
     F0=../server/.env
@@ -19,6 +21,7 @@ function build_app_remote {
 
     else # Write .env to build for production 
         echo "REACT_APP_SERVER_URL=https://winner-drinks.xyz
+    REACT_APP_VERSION=${WINNER_DRINKS_VERSION}
     PUBLIC_URL=https://winner-drinks.xyz" > $F1    
 
     fi
@@ -96,5 +99,6 @@ function build_app_remote {
 
     # Roleback client/.env file
     echo "REACT_APP_SERVER_URL=http://localhost:4000 
+    REACT_APP_VERSION=${WINNER_DRINKS_VERSION}
     PUBLIC_URL=http://localhost:4000" > $F1
 }
