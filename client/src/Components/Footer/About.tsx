@@ -27,7 +27,7 @@ function About() {
   const [isActive, setActive] = useState('')
   return (
     <div className="column">
-      <div className="button" onClick={() => setActive(' is-active')}>About</div>
+      <div className="button is-fullwidth" onClick={() => setActive(' is-active')}>About</div>
       <div className={`modal${isActive}`}>
         <div className="modal-background" />
         <div className="modal-card">
