@@ -1,5 +1,8 @@
+/**
+ * A setting box where the user can delete, pause and rename any player.
+ * @author Caesar Lennartsson
+ */
 import React, { useState } from 'react';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPause, faPlayCircle, faTrashAlt, faEdit, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons'
 

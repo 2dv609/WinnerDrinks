@@ -1,3 +1,7 @@
+/**
+ * Game Module Party.
+ * @author Delfi Sehidic
+ */
 import React from 'react';
 import { TextGameModuleProps } from '../GameModuleProps';
 
