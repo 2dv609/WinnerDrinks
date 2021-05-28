@@ -1,3 +1,7 @@
+/**
+ * A clickable button that displays more information on how to use the application.
+ * @author Delfi Sehidic
+ */
 import React, { useState } from 'react';
 
 function Instructions() {

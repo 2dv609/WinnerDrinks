@@ -1,3 +1,6 @@
+/**
+ * Shown at the starting page where the user can add new players and set the game mode.
+ */
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'

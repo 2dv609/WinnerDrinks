@@ -1,3 +1,7 @@
+/**
+ * A button the user can click to get information about the app and its creators.
+ * @author Delfi Sehidic
+ */
 import React, { useState } from 'react';
 
 const authors = [

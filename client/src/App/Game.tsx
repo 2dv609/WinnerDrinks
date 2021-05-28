@@ -1,3 +1,7 @@
+/**
+ * Gameplay component.
+ * Displays the current game module, flash messages, winning messages, etc.
+ */
 /* eslint-disable default-case */
 import React, { useState, useEffect } from 'react';
 import Party from '../Components/Party/Party'
@@ -48,7 +52,8 @@ const Game: React.FC<GameProps> = ({ gameModuleService, gameMode, players, gameS
    *
    * @param p The winner(s). Null means no points awarded.
    * @param message A custom flash message for the winner, for example "Wrong answer".
-   * @author Delfi
+   * @author Delfi Sehidic
+   * @author Susanna Persson
    */
   const makeWinnerAlert = (p: Player | Player[] | null, message?: string): void => {
     if (Array.isArray(p)) { // If there are several winners

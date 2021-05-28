@@ -1,6 +1,6 @@
 /**
  * Menu for configuring various settings.
- * @author Caesar
+ * @author Caesar Lennartsson
  */
 import React, { useState } from 'react';
 import './Navbar.css'

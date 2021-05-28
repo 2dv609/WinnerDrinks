@@ -1,3 +1,10 @@
+/**
+ * Interface for the settings of the game modules.
+ * @property { string } name Name of the game module (minigame)
+ * @property { boolean } active Only active if certain criteria are met.
+ * @property { boolean } enable Enabled if the user has not disabled it.
+ * @property { number } index Identifier for the game module in the list of modules.
+ */
 export interface IGameModuleSetting {
     name: string,
     active: boolean,

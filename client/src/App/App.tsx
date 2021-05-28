@@ -1,4 +1,8 @@
-import React, { useState, useEffect } from 'react'
+/**
+ * Starting point of the application. Has responsibility for the state of the overall application such
+ * as current players, settings and selection of the next game module.
+ */
+import { useState, useEffect } from 'react'
 import { v1 as uuidv1 } from 'uuid'
 import Login from './Login'
 import Game from './Game'
