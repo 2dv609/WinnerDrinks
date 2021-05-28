@@ -1,3 +1,7 @@
+/**
+ * A button the user can click to get recomendations on sound alcoholic consumption.
+ * @author Joel Martelleur
+ */
 import React, { useState } from 'react';
 
 function AlcoholRecommendation() {

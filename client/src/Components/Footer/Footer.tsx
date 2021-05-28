@@ -1,4 +1,7 @@
-import React from 'react'
+/**
+ * A footer containing some clickable buttons with extra information.
+ * @author Caesar Lennartsson
+ */
 import About from './About'
 import AlcoholRecommendation from './AlcoholRecommendation'
 import Instructions from './Instructions'

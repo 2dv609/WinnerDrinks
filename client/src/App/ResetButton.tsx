@@ -1,3 +1,6 @@
+/**
+ * Refreshes the page if the user wants to clear the game data and start over.
+ */
 import './App.css';
 
 function ComponentGetToKnow() {

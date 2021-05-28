@@ -97,8 +97,10 @@ Open localhost:4000 on your computer, obs can take some minute.
 
 ## Contributors ✨
 
-<a href="https://github.com/Lennca"><img src="https://avatars.githubusercontent.com/lennca" title="Caesar Lennartsson" width="80" height="80"></a>
-<a href="https://github.com/Martelleur"><img src="https://avatars.githubusercontent.com/martelleur" title="Joel Martelleur" width="80" height="80"></a>
-<a href="https://github.com/delsehi"><img src="https://avatars.githubusercontent.com/delsehi" title="Delfi Šehidić" width="80" height="80"></a>
-<a href="https://github.com/SusannaP2018"><img src="https://avatars.githubusercontent.com/SusannaP2018" title="Susanna Persson" width="80" height="80"></a>
-<a href="https://github.com/lucasj96"><img src="https://avatars.githubusercontent.com/lucasj96" title="Lucas Sjölander" width="80" height="80"></a>
+<div style="displat: flex;">
+  <a href="https://github.com/Lennca"><img src="https://avatars.githubusercontent.com/lennca" title="Caesar Lennartsson" width="80" height="80"></a>
+  <a href="https://github.com/Martelleur"><img src="https://avatars.githubusercontent.com/martelleur" title="Joel Martelleur" width="80" height="80"></a>
+  <a href="https://github.com/delsehi"><img src="https://avatars.githubusercontent.com/delsehi" title="Delfi Šehidić" width="80" height="80"></a>
+  <a href="https://github.com/SusannaP2018"><img src="https://avatars.githubusercontent.com/SusannaP2018" title="Susanna Persson" width="80" height="80"></a>
+  <a href="https://github.com/lucasj96"><img src="https://avatars.githubusercontent.com/lucasj96" title="Lucas Sjölander" width="80" height="80"></a>
+</div>
