@@ -7,7 +7,7 @@ const DEG = 360
 const colors = ['#9ede73', '#f7ea00', '#e48900', '#be0000']
 const TIME = 3
 
-let style = {
+const style = {
   animationName: 'spin',
   animationTimingFunction: 'ease-in-out',
   animationDuration: `${TIME}s`,
@@ -26,14 +26,12 @@ let style = {
  */
 const randomIntFromInterval = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
 
-
 /**
- * 
- * @param {Array} users Array of participant names. 
+ *
+ * @param {Array} users Array of participant names.
  * @returns {jsx} Component
  */
-const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, currentPlayers }) =>  {
-
+const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, currentPlayers }) => {
   const [loading, setLoading] = useState(true)
   const [rotateDeg, setRotateDeg] = useState(0)
   const [isReset, setIsReset] = useState(true)
@@ -45,9 +43,8 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
   useEffect(() => {
     setRotateDeg(DEG / currentPlayers.length)
     setLoading(false)
-
   }, [currentPlayers.length])
-  
+
   /**
    * Function that generates random degrees that the wheel will spin.
    * @param {Number} index Index of the winning element
@@ -69,36 +66,33 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
         degreeWinner = randomIntFromInterval(0, 45)
         break
       default:
-      break
+        break
     }
 
     const rotateDegrees = 360 * 4 + degreeWinner
     return rotateDegrees
   }
-  
+
   /**
    * Function that is called when user click spin-button.
    * Calls the other function and set the winner.
    */
   const startSpin = () => {
     if(isReset) {
-
       const winnerIndex = randomIntFromInterval(1, currentPlayers.length) - 1
       const degrees = getRandomRotationDegrees(winnerIndex)
-    
-      let styleSheet = document.styleSheets[0];
 
-      let keyframes = `
+      const styleSheet = document.styleSheets[0];
+
+      const keyframes = `
       @keyframes spin {
         from {transform:rotate(0deg);}
         to {transform:rotate(${degrees}deg);}
       }`
-    
+
       styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-    
+
       setTimeout(() => getWinner(winnerIndex), (TIME) * 1000 + 500);
-    } else {
-      console.log('Please reset the wheel...')
     }
 
     setIsReset(false)
@@ -106,7 +100,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
 
   /**
    * Function that call correct gameService methods with winner object.
-   * @param winner 
+   * @param winner
    */
   const addScore = (winner: Player) => {
     gameService.addScore(winner)
@@ -116,7 +110,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
 
   /**
    * Function that gets and sets the winner.
-   * @param {Number} index 
+   * @param {Number} index
    */
   const getWinner = (index: number) => {
     const aWinner = currentPlayers[index]
@@ -129,7 +123,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
    */
   const reset = () => {
     try {
-      let styleSheet = document.styleSheets[0];
+      const styleSheet = document.styleSheets[0];
       // styleSheet.deleteRule(2)
       styleSheet.deleteRule(styleSheet.cssRules.length - 1)
 
@@ -139,25 +133,25 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
     }
   }
 
-  if(loading) return( <p>Loading...</p>)
+  if(loading) return(<p>Loading...</p>)
 
   return (
     <div className="WheelComponent">
-      <span style={{margin: '0px'}}>|</span>
+      <span style={{ margin: '0px' }}>|</span>
       <div onClick={startSpin} className="wheel" style={style}>
 
         {currentPlayers.map((player: Player, index: number) => {
-          const degree = (index * rotateDeg) //- 45
-          
+          const degree = (index * rotateDeg) // - 45
+
           return (
-            <div key={index} style={{transform: `rotate(${degree}deg)`, borderRight: `150px solid ${colors[index]}`}} className="arrow">
+            <div key={index} style={{ transform: `rotate(${degree}deg)`, borderRight: `150px solid ${colors[index]}` }} className="arrow">
               <span data-testid={`wheel-section-${index}`}>{player.toString()}</span>
             </div>
           )
         })}
-       </div>
+      </div>
 
-      {/*     
+      {/*
         <div className="d-flex">
           <button onClick={startSpin}>Spin!</button>
         </div>

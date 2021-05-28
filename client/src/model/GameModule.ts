@@ -15,28 +15,28 @@ export default class GameModule {
 
     /**
      * Get game module names to use for api calls and indexeDB tables.
-     * 
+     *
      * @returns {string[]} - Array of string for api calls and indexedDB tables.
      */
     public getNames(): string[] {
-        return [
-            this.TRIVIA,
-            this.PARTY,
-            this.BACK_TO_BACK
-        ]
+      return [
+        this.TRIVIA,
+        this.PARTY,
+        this.BACK_TO_BACK
+      ]
     }
 
     /**
-     * Get default game module settings. 
-     * 
+     * Get default game module settings.
+     *
      * @returns {IGameModuleSetting[]} - An array of game module settings.
      */
     public getSettings(): IGameModuleSetting[] {
-        return [
-            { name: 'Wheel', enable: true, active: true, index: 0 },
-            { name: 'Party', enable: true, active: true, index: 1 },
-            { name: 'BackToBack', enable: false, active: false, index: 2 },
-            { name: 'Trivia', enable: true, active: true, index: 3 },
-        ] 
+      return [
+        { name: 'Wheel', enable: true, active: true, index: 0 },
+        { name: 'Party', enable: true, active: true, index: 1 },
+        { name: 'BackToBack', enable: false, active: false, index: 2 },
+        { name: 'Trivia', enable: true, active: true, index: 3 },
+      ]
     }
 }

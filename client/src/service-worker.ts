@@ -55,7 +55,7 @@ registerRoute(
     // Return true to signal that we want to use the handler.
     return true;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
+  createHandlerBoundToURL(`${process.env.PUBLIC_URL}/index.html`)
 );
 
 // An example runtime caching route for requests that aren't handled by the
@@ -82,16 +82,16 @@ self.addEventListener('message', (event) => {
   }
 });
 
-// Load IndexedDB 
+// Load IndexedDB
 self.addEventListener('install', async (event) => {
+  console.log('Winner Drinks version:', process.env.REACT_APP_VERSION);
   if (self.indexedDB) {
-      console.log('IndexedDB is supported');
-      const gameModule = new GameModule()
-      const db: LocalDB = new LocalDB();
-      await db.openLocalDB(gameModule.getNames());
-      await db.loadDB(gameModule.getNames());
-
+    console.log('IndexedDB is supported');
+    const gameModule = new GameModule()
+    const db: LocalDB = new LocalDB();
+    await db.openLocalDB(gameModule.getNames());
+    await db.loadDB(gameModule.getNames());
   } else {
-      console.log('IndexedDB is NOT supported');
+    console.log('IndexedDB is NOT supported');
   }
 })

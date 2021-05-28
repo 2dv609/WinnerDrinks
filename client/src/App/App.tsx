@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { v1 as uuidv1 } from 'uuid'
 import Login from './Login'
 import Game from './Game'
 import Player from '../model/Player'
 import 'bulma'
+import StartButton from './StartButton'
+import GameModeMenu from './GameModeButton'
 import ErrorMsg from './ErrorMsg'
 import Navbar from '../Components/Menu/Navbar'
 import Icon from '../Components/Menu/Icon'
@@ -12,8 +15,6 @@ import GameService from '../model/GameService'
 import { IGameModuleSetting } from '../model/GameModule'
 import { GameMode } from '../model/GameMode'
 import Footer from '../Components/Footer/Footer'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay } from '@fortawesome/free-solid-svg-icons'
 import PlayerSettingsBox from '../Components/Menu/PlayerSettingBox'
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [play, setPlay] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [gameMode, setGameMode] = useState(GameMode.STANDARD);
+  const [gameMode, setGameMode] = useState<GameMode>(GameMode.STANDARD);
   const [navbarOpen, setNavbarOpen] = useState(false);
   const [gameModuleSettings, setGameModuleSettings] = useState<IGameModuleSetting[]>(getGameModuleSettings);
   const MAX_PLAYERS = 10
@@ -63,7 +64,8 @@ function App() {
       }
 
       const updatedPlayers: Player[] = [...players]
-      updatedPlayers.forEach((player: Player) => player.name === currentName ? player.name = newName : false)
+      // eslint-disable-next-line no-unused-expressions
+      updatedPlayers.forEach((player: Player) => { player.name === currentName ? player.name = newName : false })
       setPlayers(updatedPlayers)
     } catch (error) {
       activateErrorModal(error.msg)
@@ -92,6 +94,7 @@ function App() {
    */
   const updatePlayerActive = (playerName: string): void => {
     const updatedPlayers: Player[] = [...players]
+    // eslint-disable-next-line no-return-assign
     updatedPlayers.forEach((player) => player.name === playerName ? player.isActive = !player.isActive : false)
 
     // Update game module back to back
@@ -123,7 +126,7 @@ function App() {
   const addUser = (newPlayerName: string): void => {
     try {
       if (players.length >= MAX_PLAYERS) {
-        activateErrorModal(`Cannot add more players, max players are ${MAX_PLAYERS}`)
+        activateErrorModal(`Cannot add more players. Max players are ${MAX_PLAYERS}.`)
         return
       }
 
@@ -148,26 +151,35 @@ function App() {
 
   const activateErrorModal = (msg: string): void => {
     setError(msg)
-    modal?.classList.add('is-active')
   }
 
-  // Error message modal variables and listeners
-  const doneBtn = document.querySelector('#doneBtn')
-  const modalBg= document.querySelector('.modal-background')
-  const modal= document.querySelector('.modal')
+  /**
+   * Update state play.
+   */
+  const changePlayStatus = (): void => {
+    // must be at least two players.
+    if (players.length < 2 || players == null) {
+      setError('There needs to be at least two players to start the game!');
+    } else {
+      setPlay(true);
+    }
+  }
 
-  doneBtn?.addEventListener('click', ()=> {
-    modal?.classList.add('is-active')
-  })
-
-  modalBg?.addEventListener('click', ()=> {
-    modal?.classList.remove('is-active')
-  })
+  /**
+   * Update state gameMode.
+   *
+   * @param {GameMode} gameMode - A game mode
+   */
+  const changeGameMode = (gameMode: GameMode): void => {
+    setGameMode(gameMode)
+  }
 
   if (!gameModuleService) {
-    return (<h1 className="section container">
-      <progress className="progress is-large is-info" max="100">Loading</progress>
-    </h1>)
+    return (
+      <div className="section container">
+        <progress className="progress is-large is-info" max="100">Loading</progress>
+      </div>
+    )
   }
 
   if (!play) {
@@ -190,66 +202,29 @@ function App() {
           <h1 className="title -is-2">Winner Drinks</h1>
           <div className="box">
 
-            {/* Start button */}  
-            <div className="control block">
-              <FontAwesomeIcon
-                id="doneBtn" 
-                className="ml-3 is-clickable has-text-success" 
-                data-testid="add-user-button" 
-                icon={faPlay} 
-                size="2x" 
-                onClick={() => {
-                  // must be at least two players. 
-                  if (players.length < 2 || players == null) {
-                    setError("There needs to be at least two players to start the game!");
-                  } else {
-                    setPlay(true);
-                  }
-                }}/>
-            </div>
-
-            {/* Select Game mode: Standard or Highscore */}
-            <div className="control select">
-              <select name="gamemode" id="gamemode" onChange={e => {
-                e.target.value === 'Standard' ? setGameMode(GameMode.STANDARD) : setGameMode(GameMode.HIGHSCORE)
-              }}>
-                <option value="Standard">Standard</option>
-                <option value="Highscore">Scoreboard</option>
-              </select>
-            </div>
-
-            <div className="control block"></div>  
+            <StartButton changePlayStatus={changePlayStatus} />
+            <GameModeMenu changeGameMode={changeGameMode} />
             <Login addUser={addUser} />
-            <div className="control block"></div>
-
             {/* Error message modal */}
-            {/* <ErrorMsg message={error}></ErrorMsg> */}
-            <div className="modal">
-              <div className="modal-background"></div>
-                <div className="modal-content has-background-warning py-5 px-5">
-                  <div className="is-size-4">ERROR</div>
-                  <div className="is-size-5">{error}</div>
-                </div>
-              <button className="modal-close is-large" aria-label="close"></button>
-            </div>
+            <ErrorMsg message={error} setError={setError} />
 
             {/* Players */}
-            <div className="block"></div>
-              {players.slice().reverse().map((player: Player, index: number) => (
-                <PlayerSettingsBox 
-                  player={player} 
-                  deletePlayer={deleteUser} 
-                  key={index} 
-                  updatePlayerActive={updatePlayerActive}
-                  updatePlayerName={updatePlayerName}>
-                </PlayerSettingsBox>)
-              )}  
+            <div className="block" />
+            {players.slice().reverse().map((player: Player) => (
+              <PlayerSettingsBox
+                player={player}
+                deletePlayer={deleteUser}
+                key={uuidv1()}
+                updatePlayerActive={updatePlayerActive}
+                updatePlayerName={updatePlayerName} />
+            ))}
 
-            <div className="block"></div>    
+            <div className="block" />
           </div>
         </div>
-      
+
         {/* <Footer /> */}
+        <Footer />
       </div>
     );
   } else {
@@ -274,8 +249,7 @@ function App() {
         </div>
       </div>
     )
-  };
-
+  }
 }
 
 export default App;
