@@ -124,7 +124,6 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
   const reset = () => {
     try {
       const styleSheet = document.styleSheets[0];
-      // styleSheet.deleteRule(2)
       styleSheet.deleteRule(styleSheet.cssRules.length - 1)
 
       setIsReset(true)
@@ -150,16 +149,6 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
           )
         })}
       </div>
-
-      {/*
-        <div className="d-flex">
-          <button onClick={startSpin}>Spin!</button>
-        </div>
-        <div>
-          <p>{errorMessage}</p>
-          <p>{result}</p>
-        </div>
-      */}
     </div>
   )
 }
