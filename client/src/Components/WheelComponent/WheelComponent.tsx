@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { keyframes } from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import './WheelComponent.css'
 import { AnimationGameModuleProps } from '../GameModuleProps'
 import Player from '../../model/Player';
@@ -169,7 +169,7 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
         onClick={startSpin}
         className="wheel"
         style={{
-          WebkitAnimationName: 'webkit-spin',
+          WebkitAnimationName: 'spin',
           WebkitAnimationTimingFunction: 'ease-in-out',
           WebkitAnimationDuration: `${TIME}s`,
           WebkitAnimationDelay: '0.0s',
