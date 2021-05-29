@@ -18,9 +18,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: admin    
-    secrets: 
-      - mongodb_username
-      - mongodb_password
   
   winner-drinks:
     container_name: winner-drinks
@@ -42,12 +39,6 @@ services:
     depends_on:
       - mongodb
     restart: on-failure
-
-secrets:
-  mongodb_username:
-    file: ./secrets/mongodb_pw
-  mongodb_password:
-    file: ./secrets/mongodb_un
 
 
 volumes:

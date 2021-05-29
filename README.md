@@ -1,52 +1,64 @@
 # WinnerDrinks
 
-This is the complete repository for the WinnerDrinks application. 
+Live demo of the application can be found at [winner-drinks.xyz](https://winner-drinks.xyz/)
 
-You'll find the client side code built in React and TypeScript in the directory *client*
+## About
 
-and the server side code in the directory *server*. 
+This is the complete repository for the WinnerDrinks application.
+
+You'll find the client side code built using React/TypeScript in the directory *client* and the server side code in the directory *server*. 
 
 
-### Notes on running the app locally for development
-Make sure Docker is running on your computer.  
-Run `npm ci` in both the server and client directory and
-create a server/.env   
-Then... 
+<!-- GETTING STARTED -->
+## ⚡️ Getting Started
 
-```
-cd dist
-```
+### Prerequisites
 
-```
-./start_mongodb_container_development.sh
-```
+Make sure to have the following installed:
 
-```
-cd ../server
-```
+* [Node.js](https://nodejs.org/en/) (version <= 14.15.4)
 
-```
-npm run start:dev:init
-```
+* 🐳 [Docker](https://docs.docker.com/get-docker/) (version <= 20.10.3)
 
-```
-cd ../client
-```
+* [Docker-compose](https://docs.docker.com/compose/install/) (version <= 14.15.4)
 
-```
-npm run start
-```
+#### For remote deployment:
 
-Open localhost:3000 on your computer. 
+* [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (version <= 2.9.6)
 
+* [Python](https://www.python.org/downloads/) (version <= 3.8.5)
+
+### Installation
+
+1. Install NPM packages
+  ```sh
+  npm install
+  ```
+
+2. Rename /server/.env.example to .env
+
+3. Run start script (may be run as root 'sudo')
+  ```
+  ./dist/start_mongodb_container_development.sh
+  ```
+
+4. Start the application locally
+  * Alt 1 - Start and initialize data
+    ```sh
+      npm start:dev:init
+    ```
+  * Alt 2 - Start <strong>without</strong> initialize data
+    ```sh
+      npm start:dev
+    ```
+
+5. Open [localhost](http://localhost:3000/) on port 3000 in your web-browser and start using the application.
+
+
+## Deployment
 
 ### Build and deploy app for production
 
-Make sure ansible and python is running on your computer, 
-the scripts is tested with
-
-* Ansible version 2.9.6
-* Python version 3.8.5
 
 ```
 cd dist
@@ -56,17 +68,17 @@ cd dist
 ./deploy_app_remote.sh <path_to_ssh_key> <public_ip_addres_machine_1> <public_ip_addres_machine_2> <public_ip_addres_machine_3>
 ```
 
-Open winner-drinks.xyz, obs can take some minute. 
+Open [winner-drinks.xyz](https://winner-drinks.xyz) (OBS! Can take some minute). 
 
-OBS! Application is cached and you may have to 
+🔔 Please note: Application is cached and you may have to:
 
-* Unregister service-woker
+* Unregister Service Worker
 * Delete cached storage
 * Delete indexedDB 
 * Reload the page to get the latest update visible. 
 
 
-### Build and deploy for local production, for testing of serviceworkers and IndexedDB etc
+### Build and deploy for local production, for testing of Service Workers and IndexedDB etc
 
 ```
 cd dist
@@ -78,92 +90,19 @@ cd dist
 
 Open localhost:4000 on your computer, obs can take some minute.
 
-OBS! Application is cached and you may have to 
+## Screenshots
 
-* Unregister service-woker
-* Delete cached storage
-* Delete indexedDB 
-* Reload the page to get the latest update visible. 
+<!-- ![Start page](./image/startpage.png) -->
+<img title="Start page" src="./readme_image/startpage.png" width="30%">
+<img title="Settings tab" src="./readme_image/settings.png" width="30%">
+<img title="Party game, 1 of 4 game-modules available" src="./readme_image/gamemodule.png" width="30%">
 
+## Contributors ✨
 
-### Git Workflow
-
-#### 1. Clone the dev branch and checkout your new branch
-
-```
-git clone --single-branch --branch=dev yourgitrepourl
-  
-git checkout -b yourbranchname
-```
-
-#### 2. Work on the new branch locally
-
-```
-git add .
-
-git commit -m 'your commit message'
-```
-
-#### 3. If wrong last commit
-
-```
-git reset --soft HEAD~1
-```
-
-#### 4. Push your new branch to remote git repository
-
-```
-git push
-```
-
-If pushing branch for the first time:
-
-```
-git push --set-upstream origin yourbranchname
-```
-
-#### 5. (Optional) Merge new changes from dev INTO your branch __(dev --> yourbranch)__
-
-Commit your changes in your branch. Then:
-
-```
-git checkout dev
-
-git pull
-
-git checkout yourbranchname
-
-git merge dev
-```
-
-#### 6. Merge your branch INTO dev __(yourbranch --> dev)__
-
-Commit your changes in your branch. Then:
-
-```
-git checkout dev
-
-git pull
-
-git merge yourbranchname
-
-git push
-```
-
-#### 7. Delete your branch locally
-
-```
-git checkout anyotherbranch
-
-git branch -d yourbranchname
-```
-
-#### 8. Delete your branch in remote repo
-
-```
-git checkout anyotherbranch
-
-git push origin --delete yourbranchname
-```
-  
-  * If merge conflicts try to solve it or ask for help.  
+<div style="displat: flex;">
+  <a href="https://github.com/Lennca"><img src="https://avatars.githubusercontent.com/lennca" title="Caesar Lennartsson" width="80" height="80"></a>
+  <a href="https://github.com/Martelleur"><img src="https://avatars.githubusercontent.com/martelleur" title="Joel Martelleur" width="80" height="80"></a>
+  <a href="https://github.com/delsehi"><img src="https://avatars.githubusercontent.com/delsehi" title="Delfi Šehidić" width="80" height="80"></a>
+  <a href="https://github.com/SusannaP2018"><img src="https://avatars.githubusercontent.com/SusannaP2018" title="Susanna Persson" width="80" height="80"></a>
+  <a href="https://github.com/lucasj96"><img src="https://avatars.githubusercontent.com/lucasj96" title="Lucas Sjölander" width="80" height="80"></a>
+</div>
