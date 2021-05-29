@@ -30,6 +30,8 @@ Make sure to have the following installed:
 
 ### Installation
 
+> Run each command from same directory as this README-file
+
 1. Install NPM packages
   ```sh
   npm install
@@ -37,7 +39,7 @@ Make sure to have the following installed:
 
 2. Rename /server/.env.example to .env
 
-3. Run start script (may be run as root 'sudo')
+3. Run start script (if permission denied -> run as root 'sudo')
   ```
   ./dist/start_mongodb_container_development.sh
   ```
@@ -59,14 +61,15 @@ Make sure to have the following installed:
 
 ### Build and deploy app for production
 
+1. Change directory to '/dist'
+  ```
+  cd dist
+  ```
 
-```
-cd dist
-```
-
-```
-./deploy_app_remote.sh <path_to_ssh_key> <public_ip_addres_machine_1> <public_ip_addres_machine_2> <public_ip_addres_machine_3>
-```
+2. Run deployment script (if permission denied -> run as root 'sudo')
+  ```
+  ./deploy_app_remote.sh <path_to_ssh_key> <public_ip_addres_machine_1> <public_ip_addres_machine_2> <public_ip_addres_machine_3>
+  ```
 
 Open [winner-drinks.xyz](https://winner-drinks.xyz) (OBS! Can take some minute). 
 
@@ -80,13 +83,15 @@ Open [winner-drinks.xyz](https://winner-drinks.xyz) (OBS! Can take some minute).
 
 ### Build and deploy for local production, for testing of Service Workers and IndexedDB etc
 
-```
-cd dist
-```
+1. Change directory to '/dist'
+  ```
+  cd dist
+  ```
 
-```
-./deploy_app_local.sh
-```
+2. Run local deployment script (if permission denied -> run as root 'sudo')
+  ```
+  ./deploy_app_local.sh
+  ```
 
 Open localhost:4000 on your computer, obs can take some minute.
 
