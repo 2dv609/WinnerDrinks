@@ -45,11 +45,11 @@ Make sure to have the following installed:
 4. Start the application locally
   * Alt 1 - Start and initialize data
     ```sh
-      npm start:dev:init
+      npm run start:dev:init
     ```
   * Alt 2 - Start <strong>without</strong> initialize data
     ```sh
-      npm start:dev
+      npm run start:dev
     ```
 
 5. Open [localhost](http://localhost:3000/) on port 3000 in your web-browser and start using the application.
