@@ -10,29 +10,6 @@ html, #root, body {
   padding: 3rem;
 }
 
-/* .wheel {
-  position: relative;
-  height: 400px;
-  width: 400px;
-  border-radius: 50%;
-  background-color: honeydew;
-  overflow: hidden;
-}
-
-.arrow {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-top: 200px solid transparent;
-  border-bottom: 200px solid transparent;
-  border-left: 200px solid transparent;
-}
-
-
-span {
-  margin-left: 160px;
-} */
-
 /* On screens that are 992px or less */
 .wheel {
   position: relative;
@@ -49,7 +26,6 @@ span {
   height: 0;
   border-top: 150px solid transparent;
   border-bottom: 150px solid transparent;
-  /* border-right: 150px solid green; */
   border-left: 150px solid transparent;
 }
 

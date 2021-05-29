@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { keyframes } from 'styled-components'
 import './WheelComponent.css'
 import { AnimationGameModuleProps } from '../GameModuleProps'
 import Player from '../../model/Player';
@@ -8,6 +9,13 @@ const colors = ['#9ede73', '#f7ea00', '#e48900', '#be0000']
 const TIME = 3
 
 const style = {
+  WebkitAnimationName: 'webkit-spin',
+  WebkitAnimationTimingFunction: 'ease-in-out',
+  WebkitAnimationDuration: `${TIME}s`,
+  WebkitAnimationDelay: '0.0s',
+  WebkitAnimationIterationCount: 1,
+  WebkitAnimationDirection: 'normal',
+  WebkitAnimationFillMode: 'forwards',
   animationName: 'spin',
   animationTimingFunction: 'ease-in-out',
   animationDuration: `${TIME}s`,
@@ -84,14 +92,32 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
 
       const styleSheet = document.styleSheets[0];
 
-      const keyframes = `
+      const keyFrames = `
       @keyframes spin {
-        from {transform:rotate(0deg);}
-        to {transform:rotate(${degrees}deg);}
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(${degrees}deg);
+        }
+      }
+      `
+
+      const keyFramesWebkit = `
+      @-webkit-keyframes spin {
+        from {
+          -webkit-transform: rotate(0deg)
+        }
+        to {
+          -webkit-transform: rotate(${degrees}deg);
+        }
       }`
 
-      styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+      styleSheet.insertRule(keyFrames, styleSheet.cssRules.length);
+      styleSheet.insertRule(keyFramesWebkit, styleSheet.cssRules.length);
 
+      console.log('ss', document.styleSheets[0].cssRules[styleSheet.cssRules.length - 2]);
+      console.log('ss', document.styleSheets[0].cssRules[styleSheet.cssRules.length - 1]);
       setTimeout(() => getWinner(winnerIndex), (TIME) * 1000 + 500);
     }
 
@@ -123,9 +149,10 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
    */
   const reset = () => {
     try {
-      const styleSheet = document.styleSheets[0];
+      // const styleSheet = document.styleSheets[0];
       // styleSheet.deleteRule(2)
-      styleSheet.deleteRule(styleSheet.cssRules.length - 1)
+      /* styleSheet.deleteRule(styleSheet.cssRules.length - 1)
+      styleSheet.deleteRule(styleSheet.cssRules.length - 1) */
 
       setIsReset(true)
     } catch (error) {
@@ -138,7 +165,26 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
   return (
     <div className="WheelComponent">
       <span style={{ margin: '0px' }}>|</span>
-      <div onClick={startSpin} className="wheel" style={style}>
+      <div
+        onClick={startSpin}
+        className="wheel"
+        style={{
+          WebkitAnimationName: 'webkit-spin',
+          WebkitAnimationTimingFunction: 'ease-in-out',
+          WebkitAnimationDuration: `${TIME}s`,
+          WebkitAnimationDelay: '0.0s',
+          WebkitAnimationIterationCount: 1,
+          WebkitAnimationDirection: 'normal',
+          WebkitAnimationFillMode: 'forwards',
+          animationName: 'spin',
+          animationTimingFunction: 'ease-in-out',
+          animationDuration: `${TIME}s`,
+          animationDelay: '0.0s',
+          animationIterationCount: 1,
+          animationDirection: 'normal',
+          animationFillMode: 'forwards',
+          marginBottom: '2rem'
+        }}>
 
         {currentPlayers.map((player: Player, index: number) => {
           const degree = (index * rotateDeg) // - 45
@@ -150,16 +196,6 @@ const WheelComponent: React.FC<AnimationGameModuleProps> = ({ gameService, curre
           )
         })}
       </div>
-
-      {/*
-        <div className="d-flex">
-          <button onClick={startSpin}>Spin!</button>
-        </div>
-        <div>
-          <p>{errorMessage}</p>
-          <p>{result}</p>
-        </div>
-      */}
     </div>
   )
 }
