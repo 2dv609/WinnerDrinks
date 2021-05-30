@@ -34,10 +34,10 @@ Make sure to have the following installed:
 
 1. Install NPM packages
   ```sh
-  npm install
+  npm ci
   ```
 
-2. Rename /server/.env.example to .env
+2. Rename /server/.env.example to /server/.env
 
 3. Run start script (if permission denied -> run as root 'sudo')
   ```
@@ -49,7 +49,7 @@ Make sure to have the following installed:
     ```sh
       npm run start:dev:init
     ```
-  * Alt 2 - Start <strong>without</strong> initialize data
+  * Alt 2 - Start <strong>without</strong> initialize data (Command is dependent on Alt 1, please run Alt at least 1 time first!)
     ```sh
       npm run start:dev
     ```
@@ -95,9 +95,13 @@ Open [winner-drinks.xyz](https://winner-drinks.xyz) (OBS! Can take some minute).
 
 Open localhost:4000 on your computer, obs can take some minute.
 
+### Notes
+
+* The animation for the Spin-the-wheel game doesn't work on Safari due to their web-engine (WebKit).
+* Starting the software locally, deploy for local production and deploy for release works without any problem on Ubuntu > 18.04
+
 ## Screenshots
 
-<!-- ![Start page](./image/startpage.png) -->
 <img title="Start page" src="./readme_image/startpage.png" width="30%">
 <img title="Settings tab" src="./readme_image/settings.png" width="30%">
 <img title="Party game, 1 of 4 game-modules available" src="./readme_image/gamemodule.png" width="30%">
