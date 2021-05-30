@@ -41,7 +41,7 @@ describe('Test suite for game module back to back', () => {
     ReactDOM.render(<BackToBack currentPlayers={currentPlayers} gameService={gameServiceMock} gameEvent={backToBackQuestionMock} />, div)
   })
 
-  test.skip('T1.MBB.S.1: Back to back game events should contain at least 20 game events', () => {
+  test('T1.MBB.S.1: Back to back game events should contain at least 20 game events', () => {
     if (!backToBackEvents) {
       return
     }
