@@ -9,7 +9,7 @@ import IUtilService from './IUtilService'
 export default class LocalDB implements IUtilService {
     private db: any
     private readonly dbName: string = 'WinnerDrinks'
-    private readonly dbVersion: number = 1
+    private readonly dbVersion: number = this.getVersion()
 
     /**
      * Open the database and upgrades it if needed.
@@ -40,6 +40,21 @@ export default class LocalDB implements IUtilService {
       } catch (error) {
         console.log('createObjectStores error:', error)
       }
+    }
+
+    /**
+     * Get the database version from env variable REACT_APP_VERSION.
+     *
+     * @returns the version or 1 if REACT_APP_VERSION can not be converted to a number.
+     */
+    public getVersion(): number {
+      const version: number = Number(process.env.REACT_APP_VERSION?.replaceAll('.', ''))
+
+      if (Number.isNaN(version)) {
+        return 1
+      }
+
+      return version
     }
 
     /**
@@ -118,7 +133,7 @@ export default class LocalDB implements IUtilService {
      *
      * @return {Promise<void>}
      */
-    private async deleteLocalDB(): Promise<void> {
+    public async deleteLocalDB(): Promise<void> {
       await deleteDB(this.dbName)
     }
 }
