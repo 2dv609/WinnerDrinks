@@ -102,9 +102,9 @@ Open localhost:4000 on your computer, obs can take some minute.
 
 ## Screenshots
 
-<img title="Start page" src="./readme_image/startpage.png" width="30%">
-<img title="Settings tab" src="./readme_image/settings.png" width="30%">
-<img title="Party game, 1 of 4 game-modules available" src="./readme_image/gamemodule.png" width="30%">
+<img title="Start page" src="./readme/startpage.png" width="30%">
+<img title="Settings tab" src="./readme/settings.png" width="30%">
+<img title="Party game, 1 of 4 game-modules available" src="./readme/gamemodule.png" width="30%">
 
 ## Contributors ✨
 
