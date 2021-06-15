@@ -2,6 +2,8 @@
 
 Live demo of the application can be found at [winner-drinks.xyz](https://winner-drinks.xyz/)
 
+You can also watch a short demo [on Youtube.](https://www.youtube.com/watch?v=8Et55sYjz24)
+
 ## About
 
 This is the complete repository for the WinnerDrinks application.
